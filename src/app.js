@@ -15,8 +15,16 @@ app.use(express.urlencoded({ extended: true }));
 app.use(`/api/products`, ProductRouter);
 app.use(`/api/carts`, CartRouter);
 
+//HANDLEBARS
+app.engine("handlebars", handlebars.engine());
+app.set("views", __dirname + "/views");
+app.set("view engine", "handlebars");
+
+//STATIC
+app.use(express.static(__dirname + "/public"));
 app.use(express.static(__dirname + `/public/img`));
 
+//SERVER
 const httpserver = app.listen(PORT, () => {
   console.log(`Server on port: ${PORT}`);
 });
@@ -38,9 +46,4 @@ socketServer.on("connection", (socket) => {
   socket.broadcast.emit("mensajeKey", "Mensaje desde server para todos");
 
   socketServer.emit("eventoTodos", "Imprime para todos");
-});
-
-app.listen(PORT, () => {
-  console.log(`Server port on ${PORT}`);
-  console.log(__dirname);
 });

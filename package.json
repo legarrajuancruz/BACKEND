@@ -1,11 +1,11 @@
 {
   "name": "coderhouse---backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "app.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "nodemon ./src/index.js"
+    "server": "nodemon ./src/app.js"
   },
   "keywords": [],
   "author": "",
