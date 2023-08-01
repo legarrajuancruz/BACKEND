@@ -1,8 +1,8 @@
 import { promises as fs } from "fs";
 
-class ProductManager {
+export default class ProductManager {
   constructor() {
-    this.path = "./Products.json";
+    this.path = "src/Products.json";
     this.products = [];
   }
   static id = 0;
@@ -33,6 +33,11 @@ class ProductManager {
     console.log("CONVERSION A OBJ");
     let OBJ = JSON.parse(respuesta);
     console.log(OBJ);
+  };
+
+  readProducts = async () => {
+    let respuesta = await fs.readFile(this.path, "utf-8");
+    return JSON.parse(respuesta);
   };
 
   getProductById = async (id) => {
@@ -70,18 +75,26 @@ class ProductManager {
     let modificado = [{ ...nuevo, id: id }, ...busquedaFiltrada];
     console.log(modificado);
 
-    await fs.writeFile(this.path, JSON.stringify(busqueda, null, 2, `\t`));
+    //await fs.writeFile(this.path, JSON.stringify(modificado, null, 2, `\t`));
   };
 }
 const productos = new ProductManager();
 
-//productos.addProduct("Miel", "liquida", 500, "sin imagen", "abc123", 10);
-//productos.addProduct("Leche", "entera", 300, "sin imagen", "abc123", 15);
-//productos.addProduct("Mermelada", "Ciruela", 200, "sin imagen", "abc123", 25);
+// productos.addProduct("Miel", "liquida", 500, "sin imagen", "abc123", 10);
+// productos.addProduct("Leche", "entera", 300, "sin imagen", "abc123", 15);
+// productos.addProduct("Mermelada", "Ciruela", 200, "sin imagen", "abc123", 25);
+// productos.addProduct("Azucar", "Chango", 250, "sin imagen", "abc123", 35);
+// productos.addProduct("Mayonesa", "Hellmas", 550, "sin imagen", "abc123", 13);
+// productos.addProduct("Carne", "Vacuna", 750, "sin imagen", "abc123", 11);
+// productos.addProduct("Choclos", "Naturales", 450, "sin imagen", "abc123", 23);
+// productos.addProduct("Cocacola", "Zero", 250, "sin imagen", "abc123", 33);
+// productos.addProduct("Atun", "Noruego", 150, "sin imagen", "abc123", 63);
+// productos.addProduct("Whiskas", "Sarnida", 450, "sin imagen", "abc123", 53);
 
-productos.getProducts();
+//productos.getProducts();
 
-productos.getProductById(1);
+//productos.getProductById(1);
+//productos.deleteProductById(2);
 
 //let reemplazo = {
 //  title: "Cocacola",
@@ -94,5 +107,3 @@ productos.getProductById(1);
 //};
 
 //productos.updateProduct(1, reemplazo);
-
-//productos.deleteProductById(2);

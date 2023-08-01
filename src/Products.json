@@ -1,0 +1,92 @@
+[
+  {
+    "title": "Miel",
+    "description": "liquida",
+    "price": 500,
+    "thumbnail": "sin imagen",
+    "code": "abc123",
+    "stock": 10,
+    "id": 1
+  },
+  {
+    "title": "Leche",
+    "description": "entera",
+    "price": 300,
+    "thumbnail": "sin imagen",
+    "code": "abc123",
+    "stock": 15,
+    "id": 2
+  },
+  {
+    "title": "Mermelada",
+    "description": "Ciruela",
+    "price": 200,
+    "thumbnail": "sin imagen",
+    "code": "abc123",
+    "stock": 25,
+    "id": 3
+  },
+  {
+    "title": "Azucar",
+    "description": "Chango",
+    "price": 250,
+    "thumbnail": "sin imagen",
+    "code": "abc123",
+    "stock": 35,
+    "id": 4
+  },
+  {
+    "title": "Mayonesa",
+    "description": "Hellmas",
+    "price": 550,
+    "thumbnail": "sin imagen",
+    "code": "abc123",
+    "stock": 13,
+    "id": 5
+  },
+  {
+    "title": "Carne",
+    "description": "Vacuna",
+    "price": 750,
+    "thumbnail": "sin imagen",
+    "code": "abc123",
+    "stock": 11,
+    "id": 6
+  },
+  {
+    "title": "Choclos",
+    "description": "Naturales",
+    "price": 450,
+    "thumbnail": "sin imagen",
+    "code": "abc123",
+    "stock": 23,
+    "id": 7
+  },
+  {
+    "title": "Cocacola",
+    "description": "Zero",
+    "price": 250,
+    "thumbnail": "sin imagen",
+    "code": "abc123",
+    "stock": 33,
+    "id": 8
+  },
+  {
+    "title": "Atun",
+    "description": "Noruego",
+    "price": 150,
+    "thumbnail": "sin imagen",
+    "code": "abc123",
+    "stock": 63,
+    "id": 9
+  },
+  {
+    "title": "Whiskas",
+    "description": "Sarnida",
+    "price": 450,
+    "thumbnail": "sin imagen",
+    "code": "abc123",
+    "stock": 53,
+    "id": 10
+  }
+]
