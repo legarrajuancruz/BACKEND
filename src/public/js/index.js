@@ -7,7 +7,7 @@ document.getElementById("miFormulario").addEventListener("submit", (event) => {
   const formData = {
     Title: document.getElementById("title").value,
     Description: document.getElementById("description").value,
-    price: document.getElementById("price").value,
+    Price: document.getElementById("price").value,
     img: "Sin imagen",
   };
   socket.emit("mensajeKey", formData);
