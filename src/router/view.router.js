@@ -12,4 +12,12 @@ router.get("/", async (req, res) => {
   });
 });
 
+router.get("/realtimeproducts", async (req, res) => {
+  let allProducts = await products.getProducts();
+  res.render("realtimeproducts", {
+    title: "Listado de productos - handlebars",
+    products: allProducts,
+  });
+});
+
 export default router;
