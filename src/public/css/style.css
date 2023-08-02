@@ -15,4 +15,9 @@ h2 {
   border: 1px solid;
   width: 300px;
   height: 150px;
+  margin-right: 1%;
+}
+#acciones {
+  display: flex;
+  flex-direction: row;
 }

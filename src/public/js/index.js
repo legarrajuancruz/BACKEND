@@ -13,6 +13,18 @@ document.getElementById("miFormulario").addEventListener("submit", (event) => {
   socket.emit("mensajeKey", formData);
 });
 
+document
+  .getElementById("miFormularioDos")
+  .addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const id = document.getElementById("id").value;
+
+    console.log(id);
+    socket.emit("mensajeID", id);
+  });
+
+socket;
 socket.on("msgServer", (data) => {
   console.log(data);
 });

@@ -38,6 +38,7 @@ const socketServer = new Server(httpserver);
 socketServer.on("connection", (socket) => {
   console.log(`Nuevo cliente conectado`);
 
+  //CREAR PRODUCTO
   socket.on("mensajeKey", (data) => {
     const productos = new ProductManager();
 
@@ -47,6 +48,17 @@ socketServer.on("connection", (socket) => {
     productos.addProducts(data);
     socket.emit("msgServer", "Nuevo Producto agregado");
     socket.emit("msgServer", data);
+  });
+
+  //ELIMINAR POR ID
+  socket.on("mensajeID", (data) => {
+    const productos = new ProductManager();
+    console.log("Se envio ID");
+    console.log(data);
+    let ID = parseInt(data);
+
+    productos.deleteById(ID);
+    socket.emit("msgServer", "Producto eliminado");
   });
 
   socket.broadcast.emit(
