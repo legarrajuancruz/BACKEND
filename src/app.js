@@ -49,5 +49,8 @@ socketServer.on("connection", (socket) => {
     socket.emit("msgServer", data);
   });
 
-  socket.broadcast.emit("mensajeKey", "Mensaje desde server para todos");
+  socket.broadcast.emit(
+    "mensajeKey",
+    "Hay un nuevo producto en la base de datos"
+  );
 });

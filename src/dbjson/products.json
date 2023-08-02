@@ -40,5 +40,19 @@
     "Price": "650",
     "img": "Sin imagen",
     "id": 5
+  },
+  {
+    "Title": "Pepsi",
+    "Description": "Envase 1lt",
+    "Price": "650",
+    "img": "Sin imagen",
+    "id": 6
+  },
+  {
+    "Title": "Fanta",
+    "Description": "Envase 1lt",
+    "Price": "650",
+    "img": "Sin imagen",
+    "id": 7
   }
 ]

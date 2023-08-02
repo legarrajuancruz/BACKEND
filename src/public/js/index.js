@@ -18,7 +18,7 @@ socket.on("msgServer", (data) => {
 });
 
 socket.on("mensajeKey", (data) => {
-  console.log("Mensaje Broadcast");
+  console.log("Se agrego un nuevo producto");
 });
 
 socket.on("eventoTodos", (data) => {
