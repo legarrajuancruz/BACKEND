@@ -34,7 +34,6 @@ const httpserver = app.listen(PORT, () => {
 //SOCKET SERVER CONECCTION
 const socketServer = new Server(httpserver);
 
-let nuevoOBJ = {};
 //SE ABRE CANAL
 socketServer.on("connection", (socket) => {
   console.log(`Nuevo cliente conectado`);
@@ -42,15 +41,13 @@ socketServer.on("connection", (socket) => {
   socket.on("mensajeKey", (data) => {
     const productos = new ProductManager();
 
+    console.log("Se agrego producto");
     console.log(data);
 
     productos.addProducts(data);
-    socket.emit("msgServer", `otro producto agregado`);
+    socket.emit("msgServer", "Nuevo Producto agregado");
+    socket.emit("msgServer", data);
   });
 
-  socket.emit("msgServer", "Mensaje desde server");
-
   socket.broadcast.emit("mensajeKey", "Mensaje desde server para todos");
-
-  socketServer.emit("eventoTodos", "Imprime para todos");
 });
