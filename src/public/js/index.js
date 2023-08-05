@@ -1,6 +1,7 @@
 //DESDE CLIENTE AL SERVER
 const socket = io();
 
+// CREAR DESDE HTML Y ENVIAR A SERVER
 document.getElementById("miFormulario").addEventListener("submit", (event) => {
   event.preventDefault();
 
@@ -13,6 +14,7 @@ document.getElementById("miFormulario").addEventListener("submit", (event) => {
   socket.emit("mensajeKey", formData);
 });
 
+//ELIMINAR POR ID DESDE HTML Y ENVIAR A SERVER
 document
   .getElementById("miFormularioDos")
   .addEventListener("submit", (event) => {
@@ -24,11 +26,13 @@ document
     socket.emit("mensajeID", id);
   });
 
+//ELIMINAR DESDE BOTON DESDE CLIENTE HTML Y ENVIAR A SERVER
 function enviarId(id) {
   console.log("Producto a eliminar", id);
   socket.emit("mensajeID", id);
 }
 
+//RECIBE NOTIFICACIONES DESDE SERVER
 socket;
 socket.on("msgServer", (data) => {
   console.log(data);
