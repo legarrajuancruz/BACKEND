@@ -58,7 +58,7 @@ socketServer.on("connection", (socket) => {
     let ID = parseInt(data);
 
     productos.deleteById(ID);
-    socket.emit("msgServer", "Producto eliminado");
+    socket.emit("msgServer", "Producto eliminado de servidor");
   });
 
   socket.broadcast.emit(

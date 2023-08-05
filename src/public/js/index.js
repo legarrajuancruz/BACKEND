@@ -24,6 +24,11 @@ document
     socket.emit("mensajeID", id);
   });
 
+function enviarId(id) {
+  console.log("Producto a eliminar", id);
+  socket.emit("mensajeID", id);
+}
+
 socket;
 socket.on("msgServer", (data) => {
   console.log(data);

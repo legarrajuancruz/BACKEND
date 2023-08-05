@@ -2,10 +2,13 @@
   <h2>TODOS LOS PRODUCTOS</h2>
   <div>
     {{#each products}}
-
-      <h3>{{this.Title}} {{this.Description}}</h3>
-      <p>Precio: {{this.Price}}</p>
-      <p>ID: {{this.id}}</p>
+      <div id="listadoProductos">
+        <h3>{{this.Title}}
+          {{this.Description}}</h3>
+        <p>Precio: {{this.Price}}</p>
+        <p>ID: {{this.id}}</p>
+        <button onclick="enviarId({{this.id}})">Eliminar</button>
+      </div>
 
     {{/each}}
     <br />
@@ -30,7 +33,7 @@
     </div>
 
     <div id="nuevo">
-      <h3>ELIMINAR PRODUCTO</h3>
+      <h3>ELIMINAR PRODUCTO POR ID</h3>
       <form id="miFormularioDos" onsubmit>
         <label for="id">id:</label>
         <input type="text" id="id" name="id" required />
