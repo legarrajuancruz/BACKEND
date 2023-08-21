@@ -1,30 +1,36 @@
 import express from "express";
 import handlebars from "express-handlebars";
 import __dirname from "./utils.js";
-import ProductRouter from "./router/product.routes.js";
-import CartRouter from "./router/cart.routes.js";
-import viewRouter from "./router/view.router.js";
 import { Server } from "socket.io";
-import ProductManager from "./controllers/ProductManager.js";
+import mongoose from "mongoose";
+//IMPORTACION RUTAS
+import ProductRouter from "./routes/product.routes.js";
+import CartRouter from "./routes/cart.routes.js";
+import viewRouter from "./routes/view.router.js";
+import ProductManager from "./dao/fileManager/controllers/ProductManager.js";
+
+import MessagesManager from "./dao/mongoManager/messageManagerMongo.js";
 
 const app = express();
-const PORT = 8080;
+
+const PORT = process.env.PORT || 8080;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(`/api/products`, ProductRouter);
-app.use(`/api/carts`, CartRouter);
-app.use("/", viewRouter);
+//STATIC
+app.use(express.static(__dirname + "/public"));
+app.use(express.static(__dirname + `/public/img`));
 
 //HANDLEBARS
 app.engine("handlebars", handlebars.engine());
 app.set("views", __dirname + "/views");
 app.set("view engine", "handlebars");
 
-//STATIC
-app.use(express.static(__dirname + "/public"));
-app.use(express.static(__dirname + `/public/img`));
+//RUTAS
+app.use(`/api/products`, ProductRouter);
+app.use(`/api/carts`, CartRouter);
+app.use("/", viewRouter);
 
 //SERVER
 const httpserver = app.listen(PORT, () => {
@@ -36,8 +42,6 @@ const socketServer = new Server(httpserver);
 
 //SE ABRE CANAL
 socketServer.on("connection", (socket) => {
-  console.log(`Nuevo cliente conectado`);
-
   //CREAR PRODUCTO
   socket.on("mensajeKey", (data) => {
     const productos = new ProductManager();
@@ -65,4 +69,47 @@ socketServer.on("connection", (socket) => {
     "mensajeKey",
     "Hay un nuevo producto en la base de datos"
   );
+
+  /*===================
+  |        CHAT       |
+  ===================*/
+
+  //CONVERSACION EN ARRAY
+  const messagesManager = new MessagesManager();
+  const mensajes = [];
+
+  //RECIBE
+  socket.on("message", async (data) => {
+    mensajes.push(data);
+    console.log(data);
+    await messagesManager.createMessage(data);
+    //EMITE
+    socketServer.emit("conversacion", mensajes);
+
+    console.log(mensajes);
+  });
+  socket.on("userConnected", (data) => {
+    console.log(data);
+    socket.broadcast.emit("userConnected", data);
+  });
+  socket.on("closeChat", (data) => {
+    if (data.close == "close") {
+      socket.disconnect();
+    }
+  });
 });
+
+const DB =
+  "mongodb+srv://legarrajuan:21dBt5XzVUd2DOlQ@cluster0.ftgsun9.mongodb.net/ecommerse?retryWrites=true&w=majority";
+
+const connectMongoDB = async () => {
+  try {
+    await mongoose.connect(DB);
+    console.log("Conectado con exito a MongoDB usando mongoose");
+  } catch (error) {
+    console.error("No se pude conectar con la base de datos" + error);
+    process.exit();
+  }
+};
+
+connectMongoDB();

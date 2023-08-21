@@ -33,5 +33,19 @@
     "Price": "650",
     "img": "Sin imagen",
     "id": 4
+  },
+  {
+    "Title": "Dulce de leche",
+    "Description": "La serenisima",
+    "Price": "1200",
+    "img": "C:\\Users\\LEGA\\Desktop\\BACKEND\\Desafio_06\\src\\public\\img\\DulceDeLechhe.jpg",
+    "id": 5
+  },
+  {
+    "Title": "Mermelada",
+    "Description": "Marolio",
+    "Price": "1050",
+    "img": "Sin imagen",
+    "id": 6
   }
 ]

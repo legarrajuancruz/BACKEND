@@ -2,7 +2,7 @@ import { promises as fs } from "fs";
 
 class ProductManager {
   constructor() {
-    this.path = "./src/dbjson/products.json";
+    this.path = "./src/dao/filemanager/dbjson/products.json";
   }
 
   /*==========
