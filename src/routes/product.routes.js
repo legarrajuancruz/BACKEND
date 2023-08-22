@@ -4,7 +4,7 @@ import ProductService from "../dao/mongoManager/productManagerMongo.js";
 //import ProductManager from "../dao/fileManager/controllers/ProductManager.js";
 //import { uploader } from "../utils.js";
 
-const router = Router();
+const productRouter = Router();
 const productService = new ProductService();
 
 /*===========
@@ -58,7 +58,7 @@ const productService = new ProductService();
 ==============*/
 
 //LEER
-router.get("/", async (req, res) => {
+productRouter.get("/", async (req, res) => {
   try {
     let products = await productService.getAll();
     res.send(products);
@@ -71,7 +71,7 @@ router.get("/", async (req, res) => {
 });
 
 //LEER ID
-router.get("/:id", async (req, res) => {
+productRouter.get("/:id", async (req, res) => {
   try {
     let _id = req.params.id;
     console.log(_id);
@@ -92,7 +92,7 @@ router.get("/:id", async (req, res) => {
 });
 
 //CREAR
-router.post("/", async (req, res) => {
+productRouter.post("/", async (req, res) => {
   try {
     let producto = await productService.save(req.body);
     res.status(201).send(producto);
@@ -105,7 +105,7 @@ router.post("/", async (req, res) => {
 });
 
 //ELIMINAR
-router.delete("/:id", async (req, res) => {
+productRouter.delete("/:id", async (req, res) => {
   try {
     let _id = req.params.id;
     console.log(_id);
@@ -127,7 +127,7 @@ router.delete("/:id", async (req, res) => {
 });
 
 //MODIFICAR
-router.put("/:id", async (req, res) => {
+productRouter.put("/:id", async (req, res) => {
   try {
     let productUpdated = req.body;
 
@@ -148,4 +148,4 @@ router.put("/:id", async (req, res) => {
     });
   }
 });
-export default router;
+export default productRouter;
