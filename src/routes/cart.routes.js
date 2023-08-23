@@ -54,8 +54,8 @@ CartRouter.get("/:id", async (req, res) => {
 //CREAR
 CartRouter.post("/", async (req, res) => {
   try {
-    let producto = await cart.addCarts(req.body);
-    res.status(201).send(producto);
+    let carritoNuevo = await cart.addCarts(req.body);
+    res.status(201).send(carritoNuevo);
   } catch (error) {
     console.error(error);
     res
@@ -93,6 +93,7 @@ CartRouter.post("/:cid/products/:pid", async (req, res) => {
 
   const pid = req.params.pid;
   console.log("product ID" + pid);
+
   const { quantity } = 1;
 
   try {
@@ -116,7 +117,6 @@ CartRouter.post("/:cid/products/:pid", async (req, res) => {
       _id: pid,
       quantity: quantity,
     });
-
     return res.status(200).send({
       message: `Producto con ID: ${pid} fue agregado al carito con ID: ${cid}`,
       cart: result,

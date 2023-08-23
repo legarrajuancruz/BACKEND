@@ -10,9 +10,10 @@ class CartService {
   /*===============
   -   ADD Carts   -
   ================*/
-  addCarts = async (product) => {
-    let carts = await CartsModel.create(product);
-    return carts;
+  addCarts = async (carritoNuevo) => {
+    let carritos = await CartsModel.find();
+    let cart = await CartsModel.create(carritoNuevo);
+    return cart;
   };
 
   /*==============
