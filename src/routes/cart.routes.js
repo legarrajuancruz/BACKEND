@@ -97,6 +97,7 @@ CartRouter.post("/:cid/products/:pid", async (req, res) => {
 
   try {
     const checkIdProduct = await productAll.getProductById(pid);
+    console.log(checkIdProduct);
     if (!checkIdProduct) {
       return res
         .status(404)
@@ -104,6 +105,7 @@ CartRouter.post("/:cid/products/:pid", async (req, res) => {
     }
 
     const checkIdCart = await cart.getCartsById(cid);
+    console.log(checkIdCart);
     if (!checkIdCart) {
       return res
         .status(404)
@@ -114,7 +116,7 @@ CartRouter.post("/:cid/products/:pid", async (req, res) => {
       _id: pid,
       quantity: quantity,
     });
-    console.log(result);
+
     return res.status(200).send({
       message: `Producto con ID: ${pid} fue agregado al carito con ID: ${cid}`,
       cart: result,

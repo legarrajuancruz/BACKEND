@@ -47,13 +47,14 @@ class CartService {
     try {
       const filter = { _id: cid, "products._id": pid };
       const cart = await CartsModel.getCartsById(cid);
+      console.log("carrito en managerMongo" + cart);
+
       const findProduct = cart.products.some(
         (product) => product._id.toString() === pid
       );
 
       if (findProduct) {
         const update = { $inc: { "products.$.quantity": obj.quantity } };
-        await CartsModel.updateOne(filter, update);
       } else {
         const update = {
           $push: { products: { _id: obj._id, quantity: obj.quantity } },
@@ -61,7 +62,7 @@ class CartService {
         await CartsModel.updateOne({ _id: cid }, update);
       }
 
-      return await cartModel.findById(cid);
+      return await CartsModel.getCartsById(cid);
     } catch (err) {
       console.error("Error al agregar el producto al carrito:", err.message);
       return err;
