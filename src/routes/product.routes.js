@@ -5,6 +5,7 @@ import ProductService from "../dao/mongoManager/productManagerMongo.js";
 //import { uploader } from "../utils.js";
 
 const productRouter = Router();
+//const product = new ProductManager()
 const productService = new ProductService();
 
 /*===========
