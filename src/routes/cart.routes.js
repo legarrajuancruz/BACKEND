@@ -64,14 +64,14 @@ CartRouter.post("/", async (req, res) => {
   }
 });
 
-//ELIMINAR
+//ELIMINAR POR ID
 CartRouter.delete("/:id", async (req, res) => {
   try {
     let _id = req.params.id;
     console.log(_id);
 
     let eliminado = await cart.getCartsById({ _id });
-    await cartService.deleteCart({ _id });
+    await cart.deleteCart({ _id });
 
     res.status(202).send({
       result: "Carrito eliminado con exito",
@@ -86,12 +86,14 @@ CartRouter.delete("/:id", async (req, res) => {
   }
 });
 
-//MODIFICAR
+//AGREGAR AL CARRITO
 CartRouter.post("/:cid/products/:pid", async (req, res) => {
   const cid = req.params.cid;
-  const pid = req.params.pid;
+  console.log("cart ID" + cid);
 
-  const { quantity } = req.body;
+  const pid = req.params.pid;
+  console.log("product ID" + pid);
+  const { quantity } = 1;
 
   try {
     const checkIdProduct = await productAll.getProductById(pid);

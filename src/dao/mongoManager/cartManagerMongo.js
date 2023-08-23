@@ -36,6 +36,7 @@ class CartService {
   ==================*/
   deleteCart = async (id) => {
     let result = await CartsModel.deleteOne(id);
+    return result;
   };
 
   /*==========================
