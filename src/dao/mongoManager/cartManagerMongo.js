@@ -11,7 +11,6 @@ class CartService {
   -   ADD Carts   -
   ================*/
   addCarts = async (carritoNuevo) => {
-    let carritos = await CartsModel.find();
     let cart = await CartsModel.create(carritoNuevo);
     return cart;
   };

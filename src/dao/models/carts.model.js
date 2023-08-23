@@ -9,24 +9,23 @@ const cartsSchema = new mongoose.Schema({
     required: true,
   },
   products: {
-    type: {
-      product: {
-        type: Array,
+    type: [
+      {
+        _id: {
+          type: mongoose.Types.ObjectId,
+          ref: "Products",
+        },
+        quantity: {
+          type: Number,
+          default: 1,
+        },
       },
-      _id: {
-        type: mongoose.Types.ObjectId,
-        ref: "Products",
-      },
-      quantity: {
-        type: Number,
-        default: 1,
-      },
-    },
+    ],
     default: [],
   },
 });
 
-// cartsSchema.pre("findOne", function () {
+//cartsSchema.pre("findOne", function () {
 //   this.populate("products.product");
 // });
 

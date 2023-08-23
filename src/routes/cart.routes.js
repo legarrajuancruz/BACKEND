@@ -19,7 +19,7 @@ CartRouter.get("/", async (req, res) => {
 
     res.status(202).send({
       result: "Carrito obtenido con exito",
-      carritos: producto,
+      products: producto,
     });
   } catch (error) {
     console.error("No se pudo obtener carrito con mongoose:" + error);
@@ -54,7 +54,8 @@ CartRouter.get("/:id", async (req, res) => {
 //CREAR
 CartRouter.post("/", async (req, res) => {
   try {
-    let carritoNuevo = await cart.addCarts(req.body);
+    let carro = req.body;
+    let carritoNuevo = await cart.addCarts(carro);
     res.status(201).send(carritoNuevo);
   } catch (error) {
     console.error(error);
@@ -85,6 +86,15 @@ CartRouter.delete("/:id", async (req, res) => {
     });
   }
 });
+
+// /*==============
+//   -    POST FS   -
+//   ============*/
+//   CartRouter.post("/:cartId/products/:productId", async (req, res) => {
+//     let cartId = req.params.cartId;
+//     let productId = parseInt(req.params.productId);
+//     res.send(await cart.addProductToCart(cartId, productId));
+//   });
 
 //AGREGAR AL CARRITO
 CartRouter.post("/:cid/products/:pid", async (req, res) => {
