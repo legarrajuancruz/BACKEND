@@ -1,15 +1,33 @@
 import { Router } from "express";
 //import CartManager from "../dao/fileManager/controllers/CartManager.js";
+//import ProductManager from "../dao/fileManager/controllers/ProductManager.js";
 import CartService from "../dao/mongoManager/cartManagerMongo.js";
-import ProductManager from "../dao/mongoManager/productManagerMongo.js";
-
-//const cart = new CartManager();
+import ProductService from "../dao/mongoManager/productManagerMongo.js";
 
 const CartRouter = Router();
-const cartService = new CartService();
-//const pm = new ProductManager();
 
-//FileSystem
+//const cart = new CartManager();
+const cart = new CartService();
+
+//const productAll = new ProductManager();
+const productAll = new ProductService();
+
+/*==============
+|  FileSystem  |
+==============*/
+
+//LEER
+// CartRouter.get("/", async (req, res) => {
+//   try {
+//     let products = await cart.readCarts();
+//     res.send(products);
+//   } catch (error) {
+//     console.error(error);
+//     res
+//       .status(500)
+//       .send({ error: error, message: "No se pudo obtener el carrito." });
+//   }
+// });
 
 // /*============
 //  -     GET    -
@@ -50,13 +68,18 @@ const cartService = new CartService();
 //LEER
 CartRouter.get("/", async (req, res) => {
   try {
-    let products = await cartService.getAll();
-    res.send(products);
+    let producto = await cart.getCarts();
+
+    res.status(202).send({
+      result: "Carrito obtenido con exito",
+      producto: producto,
+    });
   } catch (error) {
-    console.error(error);
-    res
-      .status(500)
-      .send({ error: error, message: "No se pudo obtener el producto." });
+    console.error("No se pudo obtener carrito con mongoose:" + error);
+    res.status(500).send({
+      error: "No se pudo obtener el carrito con mongoose",
+      message: error,
+    });
   }
 });
 
@@ -66,16 +89,16 @@ CartRouter.get("/:id", async (req, res) => {
     let _id = req.params.id;
     console.log(_id);
 
-    let producto = await cartService.getProductbyId({ _id });
+    let producto = await cart.getCartsById({ _id });
 
     res.status(202).send({
-      result: "Producto obtenido con exito",
+      result: "Carrito obtenido con exito",
       producto: producto,
     });
   } catch (error) {
-    console.error("No se pudo obtener producto con mongoose:" + error);
+    console.error("No se pudo obtener carrito con mongoose:" + error);
     res.status(500).send({
-      error: "No se pudo obtener el producto con mongoose",
+      error: "No se pudo obtener el carrito con mongoose",
       message: error,
     });
   }
@@ -84,13 +107,13 @@ CartRouter.get("/:id", async (req, res) => {
 //CREAR
 CartRouter.post("/", async (req, res) => {
   try {
-    let producto = await cartService.save(req.body);
+    let producto = await cart.addCarts(req.body);
     res.status(201).send(producto);
   } catch (error) {
     console.error(error);
     res
       .status(500)
-      .send({ error: error, message: "No se pudo guardar el producto." });
+      .send({ error: error, message: "No se pudo guardar el Carrito." });
   }
 });
 
@@ -100,17 +123,17 @@ CartRouter.delete("/:id", async (req, res) => {
     let _id = req.params.id;
     console.log(_id);
 
-    let eliminado = await cartService.getProductbyId({ _id });
-    await productService.deleteOne({ _id });
+    let eliminado = await cart.getCartsById({ _id });
+    await cartService.deleteCart({ _id });
 
     res.status(202).send({
-      result: "Producto eliminado con exito",
+      result: "Carrito eliminado con exito",
       producto: eliminado,
     });
   } catch (error) {
-    console.error("No se pudo obtener producto con mongoose:" + error);
+    console.error("No se pudo obtener carrito con mongoose:" + error);
     res.status(500).send({
-      error: "No se pudo eliminar el producto con mongoose",
+      error: "No se pudo eliminar el carrito con mongoose",
       message: error,
     });
   }
@@ -121,7 +144,7 @@ CartRouter.put("/:id", async (req, res) => {
   try {
     let productUpdated = req.body;
 
-    let productoActualizado = await cartService.updateProduct(
+    let productoActualizado = await cart.addProductToCart(
       req.params.id,
       productUpdated
     );

@@ -65,6 +65,21 @@ class CartManager {
     return carts.find((eL) => eL.id === id);
   };
 
+  /*=================
+    -     DELETE Id    -
+    ==================*/
+  deleteById = async (id) => {
+    let cart = await this.readCarts();
+    let busquedaId = cart.some((eL) => eL.id === id);
+
+    if (busquedaId) {
+      let filtrados = cart.filter((eL) => eL.id != id);
+      await this.writeProducts(filtrados);
+      return `Producto eliminado`;
+    }
+    return "Producto no existe";
+  };
+
   /*==========================
   -   ADD Products to Cart   -
   ==========================*/

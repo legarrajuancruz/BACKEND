@@ -7,8 +7,22 @@ const cartsSchema = new mongoose.Schema({
     type: String,
     unique: true,
     required: true,
-    products: [],
   },
+  products: {
+    type: [
+      {
+        product: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "products",
+        },
+      },
+    ],
+    default: [],
+  },
+});
+
+cartsSchema.pre("findOne", function () {
+  this.populate("products.product");
 });
 
 const CartsModel = mongoose.model(collectionName, cartsSchema);
