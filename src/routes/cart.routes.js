@@ -12,59 +12,6 @@ const cart = new CartService();
 //const productAll = new ProductManager();
 const productAll = new ProductService();
 
-/*==============
-|  FileSystem  |
-==============*/
-
-//LEER
-// CartRouter.get("/", async (req, res) => {
-//   try {
-//     let products = await cart.readCarts();
-//     res.send(products);
-//   } catch (error) {
-//     console.error(error);
-//     res
-//       .status(500)
-//       .send({ error: error, message: "No se pudo obtener el carrito." });
-//   }
-// });
-
-// /*============
-//  -     GET    -
-//  ============*/
-// CartRouter.get(`/`, async (req, res) => {
-//   res.send(await cart.readCarts());
-// });
-
-// /*==============
-//   -    POST    -
-//   ============*/
-// CartRouter.post("/", async (req, res) => {
-//   let newCart = req.body;
-//   res.send(await cart.addCarts(newCart));
-// });
-
-// /*==============
-//   -   GET ID   -
-//   ============*/
-// CartRouter.get(`/:id`, async (req, res) => {
-//   let id = req.params.id;
-//   res.send(await cart.getCartsById(id));
-// });
-
-// /*==============
-//   -    POST    -
-//   ============*/
-// CartRouter.post("/:cartId/products/:productId", async (req, res) => {
-//   let cartId = req.params.cartId;
-//   let productId = parseInt(req.params.productId);
-//   res.send(await cart.addProductToCart(cartId, productId));
-// });
-
-/*==============
-| MongoManager |
-==============*/
-
 //LEER
 CartRouter.get("/", async (req, res) => {
   try {
@@ -72,7 +19,7 @@ CartRouter.get("/", async (req, res) => {
 
     res.status(202).send({
       result: "Carrito obtenido con exito",
-      producto: producto,
+      carritos: producto,
     });
   } catch (error) {
     console.error("No se pudo obtener carrito con mongoose:" + error);
@@ -93,7 +40,7 @@ CartRouter.get("/:id", async (req, res) => {
 
     res.status(202).send({
       result: "Carrito obtenido con exito",
-      producto: producto,
+      carrito: producto,
     });
   } catch (error) {
     console.error("No se pudo obtener carrito con mongoose:" + error);
@@ -140,23 +87,40 @@ CartRouter.delete("/:id", async (req, res) => {
 });
 
 //MODIFICAR
-CartRouter.put("/:id", async (req, res) => {
+CartRouter.post("/:cid/products/:pid", async (req, res) => {
+  const cid = req.params.cid;
+  const pid = req.params.pid;
+
+  const { quantity } = req.body;
+
   try {
-    let productUpdated = req.body;
+    const checkIdProduct = await productAll.getProductById(pid);
+    if (!checkIdProduct) {
+      return res
+        .status(404)
+        .send({ message: `Producto con ID: ${pid} no fue encontrado` });
+    }
 
-    let productoActualizado = await cart.addProductToCart(
-      req.params.id,
-      productUpdated
-    );
+    const checkIdCart = await cart.getCartsById(cid);
+    if (!checkIdCart) {
+      return res
+        .status(404)
+        .send({ message: `Carrito con ID: ${cid} no fue encontrado` });
+    }
 
-    res.status(202).send({
-      result: "Producto modificado con exito",
-      payload: productoActualizado,
+    const result = await cart.addProductToCart(cid, {
+      _id: pid,
+      quantity: quantity,
+    });
+    console.log(result);
+    return res.status(200).send({
+      message: `Producto con ID: ${pid} fue agregado al carito con ID: ${cid}`,
+      cart: result,
     });
   } catch (error) {
-    console.error("No se pudo actualizar usuario con mongoose:" + error);
+    console.error("No se pudo actualizar carrito con mongoose:" + error);
     res.status(500).send({
-      error: "No se pudo actualizar el usuario con mongoose",
+      error: "No se pudo actualizar el carrito con mongoose",
       message: error,
     });
   }

@@ -1,6 +1,9 @@
 import CartsModel from "../models/carts.model.js";
+import ProductService from "./productManagerMongo.js";
 
-export default class CartService {
+const productAll = new ProductService();
+
+class CartService {
   constructor() {
     console.log("Carts with Database persistence in mongodb");
   }
@@ -8,31 +11,24 @@ export default class CartService {
   -   ADD Carts   -
   ================*/
   addCarts = async (product) => {
-    let result = await CartsModel.create(product);
-    return result;
+    let carts = await CartsModel.create(product);
+    return carts;
   };
 
   /*==============
   -   GET Carts  -
   ===============*/
   getCarts = async () => {
-    let carts = await CartsModel.find();
-    return carts.map((eL) => eL.toObject());
+    let cart = await CartsModel.find();
+    return cart;
   };
 
   /*================
   -   GET Carts ID  -
   ==================*/
   getCartsById = async (id) => {
-    return await CartsModel.findById(id);
-  };
-
-  /*==================
-  - EXISTE Carrito ? -
-  ==================*/
-  existe = async (id) => {
-    let carts = await CartsModel.getCarts();
-    return carts.find((eL) => eL.id === id);
+    const cart = await CartsModel.findById(id);
+    return cart;
   };
 
   /*==================
@@ -46,33 +42,29 @@ export default class CartService {
   -   ADD Products to Cart   -
   ==========================*/
 
-  addProductToCart = async (cartId, productId) => {
-    let cartsById = await this.existe(cartId);
-    if (!cartsById) return "Carrito no encontrado";
-    let productById = await productAll.existe(productId);
-    if (!productById) return "Producto no encontrado";
-
-    let cartsAll = await this.readCarts();
-    let cartFilter = cartsAll.filter((eL) => eL.id != cartId);
-
-    if (cartsById.products.some((eL) => eL.id === productId)) {
-      let moreProductsInCart = cartsById.products.find(
-        (eL) => eL.id === productId
+  addProductToCart = async (cid, pid) => {
+    try {
+      const filter = { _id: cid, "products._id": pid };
+      const cart = await CartsModel.getCartsById(cid);
+      const findProduct = cart.products.some(
+        (product) => product._id.toString() === pid
       );
-      moreProductsInCart.cantidad++;
 
-      let cartsConcat = [cartsById, ...cartFilter];
-      await this.writeCarts(cartsConcat);
-      return "Producto sumado con exito";
+      if (findProduct) {
+        const update = { $inc: { "products.$.quantity": obj.quantity } };
+        await CartsModel.updateOne(filter, update);
+      } else {
+        const update = {
+          $push: { products: { _id: obj._id, quantity: obj.quantity } },
+        };
+        await CartsModel.updateOne({ _id: cid }, update);
+      }
+
+      return await cartModel.findById(cid);
+    } catch (err) {
+      console.error("Error al agregar el producto al carrito:", err.message);
+      return err;
     }
-
-    cartsById.products.push({ id: productById.id, cantidad: 1 });
-    let cartsConcat = [cartsById, ...cartFilter];
-    await this.writeCarts(cartsConcat);
-    return "Producto agregado al carrito";
-  };
-
-  addProductToCart = async (cartId, productId) => {
-    let result = await CartsModel.updateOne({ _id: id }, cartUpdated);
   };
 }
+export default CartService;

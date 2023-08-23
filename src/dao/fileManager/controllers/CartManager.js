@@ -74,7 +74,7 @@ class CartManager {
 
     if (busquedaId) {
       let filtrados = cart.filter((eL) => eL.id != id);
-      await this.writeProducts(filtrados);
+      await this.writeCarts(filtrados);
       return `Producto eliminado`;
     }
     return "Producto no existe";

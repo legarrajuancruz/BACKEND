@@ -10,7 +10,7 @@ export default class ProductService {
     return products.map((eL) => eL.toObject());
   };
 
-  getProductbyId = async (id) => {
+  getProductById = async (id) => {
     return await ProductsModel.findById(id);
   };
 
