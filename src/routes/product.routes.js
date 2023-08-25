@@ -96,6 +96,7 @@ productRouter.get("/:id", async (req, res) => {
 productRouter.post("/", async (req, res) => {
   try {
     let producto = await productService.save(req.body);
+    producto.img = req.file.path;
     res.status(201).send(producto);
   } catch (error) {
     console.error(error);

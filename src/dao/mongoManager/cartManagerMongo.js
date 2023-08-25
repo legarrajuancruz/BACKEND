@@ -1,7 +1,7 @@
 import CartsModel from "../models/carts.model.js";
 import ProductService from "./productManagerMongo.js";
 
-const pm = new ProductService();
+const productAll = new ProductService();
 
 class CartService {
   constructor() {
@@ -10,24 +10,9 @@ class CartService {
   /*===============
   -   ADD Carts   -
   ================*/
-  //   addCarts = async (carritoNuevo) => {
-  //     let cart = await CartsModel.create(carritoNuevo);
-  //     return cart;
-  //   };
-
-  addCart = async (products) => {
-    try {
-      let cartData = {};
-      if (products && products.length > 0) {
-        cartData.products = products;
-      }
-
-      const cart = await cartModel.create(cartData);
-      return cart;
-    } catch (err) {
-      console.error("Error al crear el carrito:", err.message);
-      return err;
-    }
+  addCarts = async (carritoNuevo) => {
+    let cart = await CartsModel.create(carritoNuevo);
+    return cart;
   };
 
   /*==============
@@ -58,42 +43,18 @@ class CartService {
   -   ADD Products to Cart   -
   ==========================*/
 
-  //   addProductToCart = async (cid, pid) => {
-  //     try {
-  //       const filter = { _id: cid, "products._id": pid };
-  //       const cart = await CartsModel.getCartsById(cid);
-  //       console.log("carrito en managerMongo" + cart);
-
-  //       const findProduct = cart.products.some(
-  //         (product) => product._id.toString() === pid
-  //       );
-
-  //       if (findProduct) {
-  //         const update = { $inc: { "products.$.quantity": obj.quantity } };
-  //       } else {
-  //         const update = {
-  //           $push: { products: { _id: obj._id, quantity: obj.quantity } },
-  //         };
-  //         await CartsModel.updateOne({ _id: cid }, update);
-  //       }
-
-  //       return await CartsModel.getCartsById(cid);
-  //     } catch (err) {
-  //       console.error("Error al agregar el producto al carrito:", err.message);
-  //       return err;
-  //     }
-  //   };
-  addProductInCart = async (cid, obj) => {
+  addProductToCart = async (cid, pid) => {
     try {
-      const filter = { _id: cid, "products._id": obj._id };
-      const cart = await CartsModel.findById(cid);
+      const filter = { _id: cid, "products._id": pid };
+      const cart = await CartsModel.getCartsById(cid);
+      console.log("carrito en managerMongo" + cart);
+
       const findProduct = cart.products.some(
-        (product) => product._id.toString() === obj._id
+        (product) => product._id.toString() === pid
       );
 
       if (findProduct) {
         const update = { $inc: { "products.$.quantity": obj.quantity } };
-        await CartsModel.updateOne(filter, update);
       } else {
         const update = {
           $push: { products: { _id: obj._id, quantity: obj.quantity } },
@@ -101,7 +62,7 @@ class CartService {
         await CartsModel.updateOne({ _id: cid }, update);
       }
 
-      return await CartsModel.findById(cid);
+      return await CartsModel.getCartsById(cid);
     } catch (err) {
       console.error("Error al agregar el producto al carrito:", err.message);
       return err;
