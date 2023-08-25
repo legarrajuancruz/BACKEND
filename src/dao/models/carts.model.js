@@ -3,29 +3,17 @@ import mongoose from "mongoose";
 const collectionName = "Carts";
 
 const cartsSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    unique: true,
-    required: true,
-  },
-  products: {
-    type: [
-      {
-        _id: {
-          type: mongoose.Types.ObjectId,
-          ref: "Products",
-        },
-        quantity: {
-          type: Number,
-          default: 1,
-        },
-      },
-    ],
-    default: [],
-  },
+  _id: mongoose.Schema.Types.ObjectId,
+  title: String,
+  productos: [
+    {
+      producto: { type: mongoose.Schema.Types.ObjectId, ref: "Producto" },
+      cantidad: Number,
+    },
+  ],
 });
 
-//cartsSchema.pre("findOne", function () {
+// cartsSchema.pre("findOne", function () {
 //   this.populate("products.product");
 // });
 
