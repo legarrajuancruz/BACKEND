@@ -130,9 +130,10 @@ productRouter.delete("/:id", async (req, res) => {
 });
 
 //MODIFICAR
-productRouter.put("/:id", async (req, res) => {
+productRouter.put("/:id", uploader.single("file"), async (req, res) => {
   try {
     let productUpdated = req.body;
+    productUpdated.img = req.file.path;
 
     let productoActualizado = await productService.updateProduct(
       req.params.id,
@@ -144,9 +145,9 @@ productRouter.put("/:id", async (req, res) => {
       payload: productoActualizado,
     });
   } catch (error) {
-    console.error("No se pudo actualizar usuario con mongoose:" + error);
+    console.error("No se pudo actualizar el producto con mongoose:" + error);
     res.status(500).send({
-      error: "No se pudo actualizar el usuario con mongoose",
+      error: "No se pudo actualizar el producto con mongoose",
       message: error,
     });
   }

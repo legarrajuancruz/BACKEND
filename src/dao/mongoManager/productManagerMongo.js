@@ -18,12 +18,17 @@ export default class ProductService {
     let result = await ProductsModel.create(product);
     return result;
   };
+
   borrarProducto = async ({ id }) => {
     let productoBorrado = await ProductsModel.deleteOne({ id });
     return productoBorrado;
   };
 
   updateProduct = async (id, productUpdated) => {
-    let result = await ProductsModel.updateOne({ _id: id }, productUpdated);
+    let productoActualizado = await ProductsModel.updateOne(
+      { _id: id },
+      productUpdated
+    );
+    return productoActualizado;
   };
 }
