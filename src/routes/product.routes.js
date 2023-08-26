@@ -1,5 +1,6 @@
 import { Router } from "express";
 import ProductService from "../dao/mongoManager/productManagerMongo.js";
+import { __dirname } from "../utils.js";
 
 //import ProductManager from "../dao/fileManager/controllers/ProductManager.js";
 //import { uploader } from "../utils.js";

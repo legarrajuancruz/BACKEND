@@ -54,8 +54,7 @@ CartRouter.get("/:id", async (req, res) => {
 //CREAR
 CartRouter.post("/", async (req, res) => {
   try {
-    let carro = req.body;
-    let carritoNuevo = await cart.addCarts(carro);
+    let carritoNuevo = await cart.addCarts(req.body);
     res.status(201).send(carritoNuevo);
   } catch (error) {
     console.error(error);
