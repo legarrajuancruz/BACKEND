@@ -1,4 +1,4 @@
-import ProductsModel from "../models/products.model.js";
+import { ProductsModel } from "../models/products.model.js";
 
 export default class ProductService {
   constructor() {
@@ -10,7 +10,7 @@ export default class ProductService {
     return products.map((eL) => eL.toObject());
   };
 
-  getProductById = async (id) => {
+  getProductbyId = async (id) => {
     return await ProductsModel.findById(id);
   };
 
@@ -18,9 +18,11 @@ export default class ProductService {
     let result = await ProductsModel.create(product);
     return result;
   };
-  deleteOne = async (id) => {
-    let result = await ProductsModel.deleteOne(id);
+  borrarProducto = async ({ id }) => {
+    let productoBorrado = await ProductsModel.deleteOne({ id });
+    return productoBorrado;
   };
+
   updateProduct = async (id, productUpdated) => {
     let result = await ProductsModel.updateOne({ _id: id }, productUpdated);
   };

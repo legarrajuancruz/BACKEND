@@ -11,22 +11,21 @@ const productSchema = new mongoose.Schema({
     required: true,
   },
   price: {
-    type: String,
+    type: Number,
     required: true,
   },
   stock: {
-    type: String,
-    required: false,
+    type: Number,
+    required: true,
   },
   category: {
     type: String,
-    required: false,
+    required: true,
   },
   img: {
     type: String,
-    required: false,
+    //required: true,
   },
 });
 
-const productsModel = mongoose.model(productCollection, productSchema);
-export default productsModel;
+export const ProductsModel = mongoose.model(productCollection, productSchema);

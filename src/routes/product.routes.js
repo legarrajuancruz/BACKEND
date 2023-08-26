@@ -1,9 +1,8 @@
 import { Router } from "express";
 import ProductService from "../dao/mongoManager/productManagerMongo.js";
-import { __dirname } from "../utils.js";
-
+//import __dirname from "../utils.js";
+import { uploader } from "../utils.js";
 //import ProductManager from "../dao/fileManager/controllers/ProductManager.js";
-//import { uploader } from "../utils.js";
 
 const productRouter = Router();
 //const product = new ProductManager()
@@ -94,10 +93,12 @@ productRouter.get("/:id", async (req, res) => {
 });
 
 //CREAR
-productRouter.post("/", async (req, res) => {
+productRouter.post("/", uploader.single("file"), async (req, res) => {
   try {
-    let producto = await productService.save(req.body);
+    let producto = req.body;
     producto.img = req.file.path;
+    await productService.save(producto);
+
     res.status(201).send(producto);
   } catch (error) {
     console.error(error);
@@ -110,11 +111,10 @@ productRouter.post("/", async (req, res) => {
 //ELIMINAR
 productRouter.delete("/:id", async (req, res) => {
   try {
-    let _id = req.params.id;
-    console.log(_id);
+    console.log(req.params.id);
 
-    let eliminado = await productService.getProductbyId({ _id });
-    await productService.deleteOne({ _id });
+    let eliminado = await productService.getProductbyId(req.params.id);
+    await productService.borrarProducto(req.params.id);
 
     res.status(202).send({
       result: "Producto eliminado con exito",
