@@ -10,7 +10,7 @@ const CartRouter = Router();
 const cart = new CartService();
 
 //const productAll = new ProductManager();
-const productAll = new ProductService();
+const productos = new ProductService();
 
 //LEER
 CartRouter.get("/", async (req, res) => {
@@ -19,7 +19,7 @@ CartRouter.get("/", async (req, res) => {
 
     res.status(202).send({
       result: "Carrito obtenido con exito",
-      products: productos,
+      Carritos: productos,
     });
   } catch (error) {
     console.error("No se pudo obtener carrito con mongoose:" + error);
@@ -97,38 +97,23 @@ CartRouter.delete("/:id", async (req, res) => {
 
 //AGREGAR AL CARRITO
 CartRouter.post("/:cid/products/:pid", async (req, res) => {
-  const cid = req.params.cid;
-  console.log("cart ID" + cid);
-
-  const pid = req.params.pid;
-  console.log("product ID" + pid);
-
-  const { quantity } = 1;
-
   try {
-    const checkIdProduct = await productAll.getProductById(pid);
-    console.log(checkIdProduct);
-    if (!checkIdProduct) {
-      return res
-        .status(404)
-        .send({ message: `Producto con ID: ${pid} no fue encontrado` });
-    }
+    let cid = req.params.cid;
+    const { quantity } = req.body;
+    console.log(quantity);
 
-    const checkIdCart = await cart.getCartsById(cid);
-    console.log(checkIdCart);
-    if (!checkIdCart) {
-      return res
-        .status(404)
-        .send({ message: `Carrito con ID: ${cid} no fue encontrado` });
-    }
+    const pid = req.params.pid;
 
-    const result = await cart.addProductToCart(cid, {
+    let producto = await productos.getProductbyId(pid);
+
+    let modificado = await cart.addProductToCart(cid, {
       _id: pid,
       quantity: quantity,
     });
-    return res.status(200).send({
-      message: `Producto con ID: ${pid} fue agregado al carito con ID: ${cid}`,
-      cart: result,
+
+    res.status(202).send({
+      result: "Carrito modificado con exito",
+      Carritos: modificado,
     });
   } catch (error) {
     console.error("No se pudo actualizar carrito con mongoose:" + error);

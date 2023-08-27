@@ -1,7 +1,4 @@
-import CartsModel from "../models/carts.model.js";
-import ProductService from "./productManagerMongo.js";
-
-const productAll = new ProductService();
+import { CartsModel } from "../models/carts.model.js";
 
 class CartService {
   constructor() {
@@ -43,34 +40,32 @@ class CartService {
   -   ADD Products to Cart   -
   ==========================*/
 
-  //   addProductToCart = async (cid, pid) => {
-  //     try {
-  //       const filter = { _id: cid, "products._id": pid };
-  //       const cart = await CartsModel.getCartsById(cid);
-  //       console.log("carrito en managerMongo" + cart);
+  addProductToCart = async (cid, obj) => {
+    try {
+      const { _id, quantity } = obj;
 
-  //       const findProduct = cart.products.some(
-  //         (product) => product._id.toString() === pid
-  //       );
+      const filter = { _id: cid, "products._id": _id };
 
-  //       if (findProduct) {
-  //         const update = { $inc: { "products.$.quantity": obj.quantity } };
-  //       } else {
-  //         const update = {
-  //           $push: { products: { _id: obj._id, quantity: obj.quantity } },
-  //         };
-  //         await CartsModel.updateOne({ _id: cid }, update);
-  //       }
+      const cart = await CartsModel.findById(cid);
+      const findProduct = cart.products.some(
+        (product) => product._id.toString() === obj._id
+      );
 
-  //       return await CartsModel.getCartsById(cid);
-  //     } catch (err) {
-  //       console.error("Error al agregar el producto al carrito:", err.message);
-  //       return err;
-  //     }
-  //   };
-  addProductToCart = async (cid, pid) => {
-    let cartsById = await this.existe(cartId);
-    if (!cartsById) return "Carrito no encontrado";
+      if (findProduct) {
+        const update = { $inc: { "products.$.quantity": quantity } };
+        await CartsModel.updateOne(filter, update);
+      } else {
+        const update = {
+          $push: { products: { _id: obj._id, quantity: quantity } },
+        };
+        await CartsModel.updateOne({ _id: cid }, update);
+      }
+
+      return await cartModel.findById(cid);
+    } catch (error) {
+      console.error(`Error al agregar  el producto al carrito`, error.nessage);
+    }
   };
 }
+
 export default CartService;

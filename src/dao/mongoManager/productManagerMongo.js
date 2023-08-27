@@ -5,16 +5,16 @@ export default class ProductService {
     console.log("Products with Database persistence in mongodb");
   }
 
-  getAll = async () => {
+  leerProductos = async () => {
     let products = await ProductsModel.find();
-    return products.map((eL) => eL.toObject());
+    return products;
   };
 
   getProductbyId = async (id) => {
     return await ProductsModel.findById(id);
   };
 
-  save = async (product) => {
+  crearProducto = async (product) => {
     let result = await ProductsModel.create(product);
     return result;
   };
@@ -24,7 +24,7 @@ export default class ProductService {
     return productoBorrado;
   };
 
-  updateProduct = async (id, productUpdated) => {
+  actualizarProducto = async (id, productUpdated) => {
     let productoActualizado = await ProductsModel.updateOne(
       { _id: id },
       productUpdated

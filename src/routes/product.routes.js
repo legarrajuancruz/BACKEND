@@ -61,8 +61,11 @@ const productService = new ProductService();
 //LEER
 productRouter.get("/", async (req, res) => {
   try {
-    let products = await productService.getAll();
-    res.send(products);
+    let products = await productService.leerProductos();
+    res.send({
+      result: "Productos obtenido con exito",
+      Productos: products,
+    });
   } catch (error) {
     console.error(error);
     res
@@ -97,7 +100,7 @@ productRouter.post("/", uploader.single("file"), async (req, res) => {
   try {
     let producto = req.body;
     producto.img = req.file.path;
-    await productService.save(producto);
+    await productService.crearProducto(producto);
 
     res.status(201).send(producto);
   } catch (error) {
@@ -135,7 +138,7 @@ productRouter.put("/:id", uploader.single("file"), async (req, res) => {
     let productUpdated = req.body;
     productUpdated.img = req.file.path;
 
-    let productoActualizado = await productService.updateProduct(
+    let productoActualizado = await productService.actualizarProducto(
       req.params.id,
       productUpdated
     );
