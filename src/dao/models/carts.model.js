@@ -6,12 +6,18 @@ const cartsSchema = new mongoose.Schema({
   title: {
     type: String,
   },
-  products: [
-    {
-      product: {},
-      quantity: { Number },
-    },
-  ],
+  products: {
+    type: [
+      {
+        product: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "products",
+        },
+        quantity: { Number },
+      },
+    ],
+    default: [],
+  },
 });
 
 export const CartsModel = mongoose.model(collectionName, cartsSchema);
