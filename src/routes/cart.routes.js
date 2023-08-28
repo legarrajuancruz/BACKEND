@@ -106,13 +106,37 @@ CartRouter.post("/:cid/products/:pid", async (req, res) => {
 
     let producto = await productos.getProductbyId(pid);
 
-    let modificado = await cart.addProductToCart(cid, {
+    let modificado = await cart.addProductToCart(cid.toString(), {
       _id: pid,
       quantity: quantity,
     });
 
     res.status(202).send({
       result: "Carrito modificado con exito",
+      Carritos: modificado,
+    });
+  } catch (error) {
+    console.error("No se pudo actualizar carrito con mongoose:" + error);
+    res.status(500).send({
+      error: "No se pudo actualizar el carrito con mongoose",
+      message: error,
+    });
+  }
+});
+
+//BORRAR DEL CARRITO
+CartRouter.delete("/:cid/products/:pid", async (req, res) => {
+  try {
+    let cid = req.params.cid;
+
+    const pid = req.params.pid;
+
+    let producto = await productos.getProductbyId(pid);
+
+    let modificado = await cart.deleteProductToCart(cid, pid);
+
+    res.status(202).send({
+      result: "Producto eliminado del carrito",
       Carritos: modificado,
     });
   } catch (error) {

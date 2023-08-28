@@ -48,7 +48,7 @@ class CartService {
 
       const cart = await CartsModel.findById(cid);
       const findProduct = cart.products.some(
-        (product) => product._id.toString() === obj._id
+        (product) => product._id.toString() === _id
       );
 
       if (findProduct) {
@@ -61,9 +61,25 @@ class CartService {
         await CartsModel.updateOne({ _id: cid }, update);
       }
 
-      return await cartModel.findById(cid);
+      return await CartsModel.findById(cid);
     } catch (error) {
       console.error(`Error al agregar  el producto al carrito`, error.nessage);
+    }
+  };
+
+  /*==========================
+  -   DELETE Products to Cart   -
+  ==========================*/
+
+  deleteProductToCart = async (cid, pid) => {
+    try {
+      const cart = await CartsModel.findByIdAndUpdate(cid, {
+        $pull: { products: { _id: pid } },
+      });
+
+      return await CartsModel.findById(cart);
+    } catch (error) {
+      console.error(`Error al borrar  el producto del carrito`, error.nessage);
     }
   };
 }
