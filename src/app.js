@@ -1,5 +1,8 @@
 import express from "express";
-import handlebars from "express-handlebars";
+import expressHandlebars from "express-handlebars";
+import Handlebars from "handlebars";
+import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access";
+
 import __dirname from "./utils.js";
 import { Server } from "socket.io";
 import mongoose from "mongoose";
@@ -7,7 +10,6 @@ import ProductRouter from "./routes/product.routes.js";
 import CartRouter from "./routes/cart.routes.js";
 import viewRouter from "./routes/view.router.js";
 import ProductManager from "./dao/fileManager/controllers/ProductManager.js";
-import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access";
 
 import MessagesManager from "./dao/mongoManager/messageManagerMongo.js";
 
@@ -23,10 +25,14 @@ app.use(express.static(__dirname + "/public"));
 app.use(express.static(__dirname + `/public/img`));
 
 //HANDLEBARS
-app.engine("handlebars", handlebars.engine());
 app.set("views", __dirname + "/views");
+app.engine(
+  "handlebars",
+  expressHandlebars.engine({
+    handlebars: allowInsecurePrototypeAccess(Handlebars),
+  })
+);
 app.set("view engine", "handlebars");
-
 //RUTAS
 app.use(`/api/products`, ProductRouter);
 app.use(`/api/carts`, CartRouter);
