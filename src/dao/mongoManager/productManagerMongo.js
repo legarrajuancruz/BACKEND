@@ -5,6 +5,11 @@ export default class ProductService {
     console.log("Products with Database persistence in mongodb");
   }
 
+  crearProducto = async (productoNuevo) => {
+    let result = await ProductsModel.create(productoNuevo);
+    return result;
+  };
+
   leerProductos = async (params) => {
     let { limit, page, query, sort } = params;
     limit = limit ? limit : 10;
@@ -29,11 +34,6 @@ export default class ProductService {
 
   getProductbyId = async (id) => {
     return await ProductsModel.findById(id);
-  };
-
-  crearProducto = async (product) => {
-    let result = await ProductsModel.create(product);
-    return result;
   };
 
   borrarProducto = async ({ id }) => {

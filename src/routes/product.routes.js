@@ -10,6 +10,26 @@ const productService = new ProductService();
 | MongoManager |
 ==============*/
 
+//CREAR
+productRouter.post("/", uploader.single("file"), async (req, res) => {
+  try {
+    let producto = req.body;
+    producto.img = req.file.path;
+
+    let proudctoCreado = await productService.crearProducto(producto);
+
+    res.status(201).send({
+      result: "Producto creado con exito",
+      producto: proudctoCreado,
+    });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .send({ error: error, message: "No se pudo guardar el producto." });
+  }
+});
+
 //LEER
 productRouter.get("/", async (req, res) => {
   try {
@@ -44,22 +64,6 @@ productRouter.get("/:id", async (req, res) => {
       error: "No se pudo obtener el producto con mongoose",
       message: error,
     });
-  }
-});
-
-//CREAR
-productRouter.post("/", uploader.single("file"), async (req, res) => {
-  try {
-    let producto = req.body;
-    producto.img = req.file.path;
-    await productService.crearProducto(producto);
-
-    res.status(201).send(producto);
-  } catch (error) {
-    console.error(error);
-    res
-      .status(500)
-      .send({ error: error, message: "No se pudo guardar el producto." });
   }
 });
 
