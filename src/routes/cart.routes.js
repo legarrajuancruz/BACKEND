@@ -1,15 +1,12 @@
 import { Router } from "express";
-//import CartManager from "../dao/fileManager/controllers/CartManager.js";
-//import ProductManager from "../dao/fileManager/controllers/ProductManager.js";
 import CartService from "../dao/mongoManager/cartManagerMongo.js";
 import ProductService from "../dao/mongoManager/productManagerMongo.js";
+import { uploader } from "../utils.js";
 
 const CartRouter = Router();
 
-//const cart = new CartManager();
 const cart = new CartService();
 
-//const productAll = new ProductManager();
 const productos = new ProductService();
 
 //LEER
@@ -36,7 +33,7 @@ CartRouter.get("/:id", async (req, res) => {
     let _id = req.params.id;
     console.log(_id);
 
-    let carritoId = await cart.getCartsById({ _id });
+    let carritoId = await cart.getCartsById(_id);
 
     res.status(202).send({
       result: "Carrito obtenido con exito",
@@ -86,15 +83,6 @@ CartRouter.delete("/:id", async (req, res) => {
   }
 });
 
-// /*==============
-//   -    POST FS   -
-//   ============*/
-//   CartRouter.post("/:cartId/products/:productId", async (req, res) => {
-//     let cartId = req.params.cartId;
-//     let productId = parseInt(req.params.productId);
-//     res.send(await cart.addProductToCart(cartId, productId));
-//   });
-
 //AGREGAR AL CARRITO
 CartRouter.post("/:cid/products/:pid", async (req, res) => {
   try {
@@ -123,6 +111,40 @@ CartRouter.post("/:cid/products/:pid", async (req, res) => {
     });
   }
 });
+
+//MODIFICAR PRODUCTO EN CARRITO
+CartRouter.put(
+  "/:cid/products/:pid",
+  uploader.single("file"),
+  async (req, res) => {
+    try {
+      let cid = req.params.cid;
+      const pid = req.params.pid;
+
+      let product = req.body;
+      product.img = req.file.path;
+      // console.log(product);
+
+      let producto = await productos.getProductbyId(pid);
+
+      let modificado = await cart.modificarProductInCart(cid.toString(), {
+        product,
+      });
+
+      res.status(202).send({
+        result: "Producto en carrito modificado con exito",
+        // ProductoModificado: modificado.products._id,
+        modificado,
+      });
+    } catch (error) {
+      console.error("No se pudo actualizar el producto en carrito:" + error);
+      res.status(500).send({
+        error: "No se pudo actualizar el carrito con mongoose",
+        message: error,
+      });
+    }
+  }
+);
 
 //BORRAR DEL CARRITO
 CartRouter.delete("/:cid/products/:pid", async (req, res) => {

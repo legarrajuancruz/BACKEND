@@ -24,7 +24,7 @@ class CartService {
   -   GET Carts ID  -
   ==================*/
   getCartsById = async (id) => {
-    const cart = await CartsModel.findById(id);
+    const cart = await CartsModel.findById(id).populate("products.product");
     return cart;
   };
 
@@ -62,6 +62,36 @@ class CartService {
       }
 
       return await CartsModel.findById(cid);
+    } catch (error) {
+      console.error(`Error al agregar  el producto al carrito`, error.nessage);
+    }
+  };
+
+  /*===============================
+  -   MODIFICAR Products en Cart  -
+  ================================*/
+
+  modificarProductInCart = async (cid, obj) => {
+    try {
+      const { _id } = obj;
+
+      const filter = { _id: cid, "products._id": _id };
+
+      const cart = await CartsModel.findById(cid);
+      const findProduct = cart.products.some(
+        (product) => product._id.toString() === _id
+      );
+
+      if (findProduct) {
+        const update = { $set: { products: { _id: cid, product } } };
+        await CartsModel.updateOne(filter, update);
+      }
+
+      let result = await CartsModel.findById(cid);
+
+      console.log(result);
+
+      return update;
     } catch (error) {
       console.error(`Error al agregar  el producto al carrito`, error.nessage);
     }

@@ -5,8 +5,25 @@ export default class ProductService {
     console.log("Products with Database persistence in mongodb");
   }
 
-  leerProductos = async () => {
-    let products = await ProductsModel.find();
+  leerProductos = async (params) => {
+    let { limit, page, query, sort } = params;
+    limit = limit ? limit : 10;
+    page = page ? page : 1;
+    page = query ? query : "";
+    page = sort ? (sort == "asc" ? 1 : -1) : 0;
+
+    console.log("NUMERO PAGE");
+    console.log(page);
+
+    let products = await ProductsModel.paginate(query, {
+      limit: limit,
+      page: page,
+      sort: { price: sort },
+    });
+    console.log("ACA");
+    console.log(products);
+
+    //let products = await ProductsModel.find();
     return products;
   };
 

@@ -1,58 +1,10 @@
 import { Router } from "express";
 import ProductService from "../dao/mongoManager/productManagerMongo.js";
-//import __dirname from "../utils.js";
 import { uploader } from "../utils.js";
-//import ProductManager from "../dao/fileManager/controllers/ProductManager.js";
 
 const productRouter = Router();
-//const product = new ProductManager()
+
 const productService = new ProductService();
-
-/*===========
-| FileSystem |
-============*/
-//const product = new ProductManager();
-
-/*============
--     GET    -
-============*/
-// ProductRouter.get(`/`, async (req, res) => {
-//   res.send(await product.getProducts());
-// });
-
-/*============
-  -   GET ID   -
-  ============*/
-// ProductRouter.get(`/:id`, async (req, res) => {
-//   let id = parseInt(req.params.id);
-//   res.send(await product.getProductsById(id));
-// });
-
-/*============
-  -    POST    -
-  ============*/
-// ProductRouter.post("/", uploader.single("file"), async (req, res) => {
-//   let newProduct = req.body;
-//   newProduct.img = req.file.path;
-//   res.send(await product.addProducts(newProduct));
-// });
-
-/*============
-  - DELETE ID  -
-  ============*/
-// ProductRouter.delete("/:id", async (req, res) => {
-//   let id = parseInt(req.params.id);
-//   res.send(await product.deleteById(id));
-// });
-
-/*============
-  -   PUT ID   -
-  ============*/
-// ProductRouter.put("/:id", async (req, res) => {
-//   let id = parseInt(req.params.id);
-//   let nuevo = req.body;
-//   res.send(await product.updateProduct(id, nuevo));
-// });
 
 /*==============
 | MongoManager |
@@ -61,7 +13,7 @@ const productService = new ProductService();
 //LEER
 productRouter.get("/", async (req, res) => {
   try {
-    let products = await productService.leerProductos();
+    let products = await productService.leerProductos(req.query);
     res.send({
       result: "Productos obtenido con exito",
       Productos: products,
