@@ -10,25 +10,23 @@ export default class ProductService {
     return result;
   };
 
-  leerProductos = async (params) => {
-    let { limit, page, query, sort } = params;
-    limit = limit ? limit : 10;
-    page = page ? page : 1;
-    page = query ? query : "";
-    page = sort ? (sort == "asc" ? 1 : -1) : 0;
+  leerProductos = async () => {
+    // let { limit, page, query, sort } = params;
+    // limit = limit ? limit : 10;
+    // page = page ? page : 1;
+    // page = query ? query : "";
+    // page = sort ? (sort == "asc" ? 1 : -1) : 0;
 
-    console.log("NUMERO PAGE");
-    console.log(page);
+    // console.log("NUMERO PAGE");
+    // console.log(page);
 
-    let products = await ProductsModel.paginate(query, {
-      limit: limit,
-      page: page,
-      sort: { price: sort },
-    });
-    console.log("ACA");
-    console.log(products);
+    // let products = await ProductsModel.paginate(query, {
+    //   limit: limit,
+    //   page: page,
+    //   sort: { price: sort },
+    // });
 
-    //let products = await ProductsModel.find();
+    let products = await ProductsModel.find();
     return products;
   };
 

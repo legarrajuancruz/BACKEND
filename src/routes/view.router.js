@@ -1,22 +1,31 @@
 import express from "express";
-const router = express.Router();
-import ProductManager from "../dao/fileManager/controllers/ProductManager.js";
+import ProductManager from "../dao/mongoManager/productManagerMongo.js";
 
+const router = express.Router();
 const products = new ProductManager();
 
 router.get("/", async (req, res) => {
-  let allProducts = await products.getProducts();
-  res.render("home", {
+  let allProducts = await products.leerProductos();
+  console.log({ allProducts });
+
+  res.render("home", { allProducts });
+});
+
+router.get("/realtimeproducts", async (req, res) => {
+  let allProducts = await products.leerProductos();
+  let { title, description, price, stock } = allProducts;
+
+  res.render("realtimeproducts", {
     title: "Listado de productos - handlebars",
     products: allProducts,
   });
 });
 
-router.get("/realtimeproducts", async (req, res) => {
-  let allProducts = await products.getProducts();
-  res.render("realtimeproducts", {
+router.get("/products", async (req, res) => {
+  let allProducts = await products.leerProductos();
+  res.render("products", {
     title: "Listado de productos - handlebars",
-    products: allProducts,
+    products: { allProducts },
   });
 });
 

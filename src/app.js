@@ -3,11 +3,11 @@ import handlebars from "express-handlebars";
 import __dirname from "./utils.js";
 import { Server } from "socket.io";
 import mongoose from "mongoose";
-//IMPORTACION RUTAS
 import ProductRouter from "./routes/product.routes.js";
 import CartRouter from "./routes/cart.routes.js";
 import viewRouter from "./routes/view.router.js";
 import ProductManager from "./dao/fileManager/controllers/ProductManager.js";
+import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access";
 
 import MessagesManager from "./dao/mongoManager/messageManagerMongo.js";
 
