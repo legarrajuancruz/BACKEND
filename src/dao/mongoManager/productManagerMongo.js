@@ -34,8 +34,8 @@ export default class ProductService {
     return await ProductsModel.findById(id);
   };
 
-  borrarProducto = async ({ id }) => {
-    let productoBorrado = await ProductsModel.deleteOne({ id });
+  borrarProducto = async (id) => {
+    let productoBorrado = await ProductsModel.deleteOne({ _id: id });
     return productoBorrado;
   };
 

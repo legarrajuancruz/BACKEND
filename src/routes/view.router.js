@@ -6,7 +6,6 @@ const products = new ProductManager();
 
 router.get("/", async (req, res) => {
   let allProducts = await products.leerProductos();
-  console.log({ allProducts });
 
   res.render("home", { allProducts });
 });

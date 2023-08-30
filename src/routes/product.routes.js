@@ -51,7 +51,6 @@ productRouter.get("/", async (req, res) => {
 productRouter.get("/:id", async (req, res) => {
   try {
     let _id = req.params.id;
-    console.log(_id);
 
     let producto = await productService.getProductbyId({ _id });
 
@@ -71,14 +70,14 @@ productRouter.get("/:id", async (req, res) => {
 //ELIMINAR
 productRouter.delete("/:id", async (req, res) => {
   try {
-    console.log(req.params.id);
+    let _id = req.params.id;
 
-    let eliminado = await productService.getProductbyId(req.params.id);
+    let eliminado = await productService.getProductbyId(_id);
     await productService.borrarProducto(req.params.id);
 
     res.status(202).send({
       result: "Producto eliminado con exito",
-      producto: eliminado,
+      payload: eliminado,
     });
   } catch (error) {
     console.error("No se pudo obtener producto con mongoose:" + error);
