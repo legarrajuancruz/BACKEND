@@ -1,20 +1,22 @@
-<div>
-  <h2>TODOS LOS PRODUCTOS</h2>
-  <div>
-    {{#each products}}
-      <div id="listadoProductos">
-        <h3>{{this.Title}}
-          {{this.Description}}</h3>
-        <p>Precio: {{this.Price}}</p>
-        <p>ID: {{this.id}}</p>
-        <button onclick="enviarId({{this.id}})">Eliminar</button>
-      </div>
+<div class="container">
+  <div class="row">
 
-    {{/each}}
-    <br />
+    <h2>TODOS LOS PRODUCTOS</h2>
+    <div>
+      {{#each allProducts}}
+        <div id="listadoProductos">
+          <h3>{{this.title}}
+            {{this.description}}</h3>
+          <p>Precio: {{this.price}}</p>
+          <p>ID: {{this._id}}</p>
+          <button onclick="enviarId({{this._id}})">Eliminar</button>
+        </div>
+      {{/each}}
+      <br />
+    </div>
   </div>
-  <div id="acciones">
 
+  <div id="acciones">
     <div id="nuevo">
       <h3>NUEVO PRODUCTO</h3>
       <form id="miFormulario" onsubmit>
@@ -36,13 +38,12 @@
       <h3>ELIMINAR PRODUCTO POR ID</h3>
       <form id="miFormularioDos" onsubmit>
         <label for="id">id:</label>
-        <input type="text" id="id" name="id" required />
+        <input type="text" _id="id" name="id" required />
         <br />
 
         <button type="submit">Enviar</button>
       </form>
     </div>
-
   </div>
 
 </div>

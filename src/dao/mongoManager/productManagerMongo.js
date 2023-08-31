@@ -10,22 +10,7 @@ export default class ProductService {
     return result;
   };
 
-  leerProductos = async () => {
-    // let { limit, page, query, sort } = params;
-    // limit = limit ? limit : 10;
-    // page = page ? page : 1;
-    // page = query ? query : "";
-    // page = sort ? (sort == "asc" ? 1 : -1) : 0;
-
-    // console.log("NUMERO PAGE");
-    // console.log(page);
-
-    // let products = await ProductsModel.paginate(query, {
-    //   limit: limit,
-    //   page: page,
-    //   sort: { price: sort },
-    // });
-
+  leerProductos = async (params) => {
     let products = await ProductsModel.find();
     return products;
   };

@@ -1,27 +1,19 @@
 <div class="container">
   <div class="row">
-    {{#each allProducts}}
-      <div class="col-md-4">
-        <div class="card border-0 mb-3">
-          <a href="/products/{{this._id}}" class="text-decoration-none">
-            <img
-              src="{{this.thumbnails}}"
-              class="img-fluid"
-              alt="{{this.title}}"
-            />
-          </a>
-          <div class="card-body text-center">
-            <p class="card-text text-dark">{{this.title}}<br /><span
-                class="text-danger"
-              >${{this.price}}</span></p>
-            <p><button
-                class="btn btn-dark"
-                onclick="agregarProductoAlCarrito('{{product._id}}')"
-              >Agregar (+)</button></p>
-          </div>
+    <h2>TODOS LOS PRODUCTOS</h2>
+    <div>
+      {{#each Products}}
+        <div id="listadoProductos">
+          <h3>{{this.title}} {{this.description}}</h3>
+          <p>Precio: {{this.price}}</p>
+          <p>ID: {{this.id}}</p>
+
         </div>
-      </div>
-    {{/each}}
+
+      {{/each}}
+
+    </div>
+
   </div>
   <div class="row my-5">
     <div class="col">
