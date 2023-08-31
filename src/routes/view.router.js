@@ -6,21 +6,21 @@ const products = new ProductManager();
 
 // HOME
 router.get("/", async (req, res) => {
-  let allProducts = await products.leerProductos();
+  const allProducts = await products.leerProductos();
 
   res.render("home", allProducts);
 });
 
 //REALTIME PRODUCTS
 router.get("/realtimeproducts", async (req, res) => {
-  let allProducts = await products.leerProductos();
+  const allProducts = await products.leerProductos();
 
   res.render("realtimeproducts", { allProducts });
 });
 
 //PRODUCTS
 router.get("/products", async (req, res) => {
-  let Products = await products.leerProductos();
+  const Products = await products.leerProductos();
 
   res.render("products", { Products });
 });
@@ -28,6 +28,7 @@ router.get("/products", async (req, res) => {
 //CARTS
 router.get("/carts", async (req, res) => {
   let allProducts = await products.leerProductos();
+  console.log(allProducts);
   res.render("carts", {
     title: "Listado de productos - handlebars",
     products: { allProducts },

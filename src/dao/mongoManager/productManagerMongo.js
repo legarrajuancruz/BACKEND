@@ -13,27 +13,26 @@ export default class ProductService {
 
   leerProductos = async (params) => {
     let { limit, page, query, sort } = params;
+
     limit = limit ? limit : 10;
     page = page ? page : 1;
     query = query || {};
     sort = sort ? (sort == "asc" ? 1 : -1) : 0;
-
-    let products = await ProductsModel.paginate(query, {
+    let products = await productModel.paginate(query, {
       limit: limit,
       page: page,
       sort: { price: sort },
     });
-
     let status = products ? "success" : "error";
 
     let prevLink = products.hasPrevPage
-      ? "http://localhost:8080/api/products?limit=" +
+      ? "http://localhost:8080/products?limit=" +
         limit +
         "&page=" +
         products.prevPage
       : null;
     let nextLink = products.hasNextPage
-      ? "http://localhost:8080/api/products?limit=" +
+      ? "http://localhost:8080/products?limit=" +
         limit +
         "&page=" +
         products.nextPage
@@ -42,6 +41,7 @@ export default class ProductService {
     products = {
       status: status,
       payload: products.docs,
+      totalPages: products.totalPages,
       prevPage: products.prevPage,
       nextPage: products.nextPage,
       page: products.page,
