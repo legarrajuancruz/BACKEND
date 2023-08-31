@@ -11,8 +11,8 @@ export default class ProductService {
     return result;
   };
 
-  leerProductos = async (limit, page, query, sort) => {
-    //let { limit, page, query, sort } = params;
+  leerProductos = async (obj) => {
+    let { limit, page, query, sort } = obj;
 
     limit = limit ? limit : 10;
     page = page ? page : 1;
