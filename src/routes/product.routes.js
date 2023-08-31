@@ -33,7 +33,9 @@ productRouter.post("/", uploader.single("file"), async (req, res) => {
 //LEER
 productRouter.get("/", async (req, res) => {
   try {
-    let products = await productService.leerProductos(req.query);
+    let limit = req.query;
+
+    let products = await productService.leerProductos(limit);
 
     res.send({
       result: "Productos obtenido con exito",

@@ -11,18 +11,19 @@ export default class ProductService {
     return result;
   };
 
-  leerProductos = async (params) => {
-    let { limit, page, query, sort } = params;
+  leerProductos = async (limit, page, query, sort) => {
+    //let { limit, page, query, sort } = params;
 
     limit = limit ? limit : 10;
     page = page ? page : 1;
     query = query || {};
     sort = sort ? (sort == "asc" ? 1 : -1) : 0;
-    let products = await productModel.paginate(query, {
+    let products = await ProductsModel.paginate(query, {
       limit: limit,
       page: page,
       sort: { price: sort },
     });
+
     let status = products ? "success" : "error";
 
     let prevLink = products.hasPrevPage

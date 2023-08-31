@@ -30,6 +30,7 @@ app.engine(
     handlebars: allowInsecurePrototypeAccess(Handlebars),
   })
 );
+
 app.set("view engine", "handlebars");
 
 //RUTAS
