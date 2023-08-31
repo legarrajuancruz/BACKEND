@@ -8,7 +8,7 @@ const products = new ProductManager();
 router.get("/", async (req, res) => {
   let allProducts = await products.leerProductos();
 
-  res.render("home", { allProducts });
+  res.render("home", allProducts);
 });
 
 //REALTIME PRODUCTS
