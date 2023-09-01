@@ -112,62 +112,36 @@ CartRouter.post("/:cid/products/:pid", async (req, res) => {
   }
 });
 
-//MODIFICAR PRODUCTO EN CARRITO
-CartRouter.put(
-  "/:cid/products/:pid",
-  uploader.single("file"),
-  async (req, res) => {
-    try {
-      let cid = req.params.cid;
-      const pid = req.params.pid;
-
-      let product = req.body;
-      product.img = req.file.path;
-      // console.log(product);
-
-      let producto = await productos.getProductbyId(pid);
-
-      let modificado = await cart.modificarProductInCart(cid.toString(), {
-        product,
-      });
-
-      res.status(202).send({
-        result: "Producto en carrito modificado con exito",
-        // ProductoModificado: modificado.products._id,
-        modificado,
-      });
-    } catch (error) {
-      console.error("No se pudo actualizar el producto en carrito:" + error);
-      res.status(500).send({
-        error: "No se pudo actualizar el carrito con mongoose",
-        message: error,
-      });
-    }
-  }
-);
-
-//BORRAR DEL CARRITO
-CartRouter.delete("/:cid/products/:pid", async (req, res) => {
+//MODIFICAR ITEM CON ARRAY  DE PRODUCTOS
+CartRouter.put("/:cid", async (req, res) => {
+  const { body } = req.body;
+  //console.log(body);
+  const { cid } = req.params;
   try {
-    let cid = req.params.cid;
+    const existCart = await cart.getCartsById(cid);
+    console.log(existCart);
 
-    const pid = req.params.pid;
+    if (!existCart) {
+      return res
+        .status(404)
+        .send({ Status: "error", message: "Cart not found" });
+    }
 
-    let producto = await productos.getProductbyId(pid);
+    body.forEach(async (item) => {
+      const existProd = await ProductService.getProductById(item._id);
+      console.log(existProd);
 
-    let modificado = await cart.deleteProductToCart(cid, pid);
-
-    res.status(202).send({
-      result: "Producto eliminado del carrito",
-      Carritos: modificado,
+      if (!existProd) {
+        return res
+          .status(404)
+          .send({ Status: "error", message: `Prod ${item._id} not found` });
+      }
     });
-  } catch (error) {
-    console.error("No se pudo actualizar carrito con mongoose:" + error);
-    res.status(500).send({
-      error: "No se pudo actualizar el carrito con mongoose",
-      message: error,
-    });
+
+    const newCart = await cart.modificarProductInCart(cid, body);
+    res.status(200).send({ status: "success", newCart: newCart });
+  } catch (err) {
+    res.status(400).send({ error: err.message });
   }
 });
-
 export default CartRouter;

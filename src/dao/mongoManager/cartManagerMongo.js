@@ -1,5 +1,7 @@
 import { CartsModel } from "../models/carts.model.js";
 
+import ProductService from "./productManagerMongo.js";
+
 class CartService {
   constructor() {
     console.log("Carts with Database persistence in mongodb");
@@ -71,29 +73,31 @@ class CartService {
   -   MODIFICAR Products en Cart  -
   ================================*/
 
-  modificarProductInCart = async (cid, obj) => {
+  modificarProductInCart = async (cid, body) => {
     try {
-      const { _id } = obj;
-
-      const filter = { _id: cid, "products._id": _id };
-
-      const cart = await CartsModel.findById(cid);
-      const findProduct = cart.products.some(
-        (product) => product._id.toString() === _id
-      );
-
-      if (findProduct) {
-        const update = { $set: { products: { _id: cid, product } } };
-        await CartsModel.updateOne(filter, update);
+      //A partir de los datos, buscar por idx los productos para obtener su _id para generar el populate
+      const arr = [];
+      for (const item of body) {
+        const object = await ProductService.getProductById(item._id);
+        arr.push({
+          _id: item._id,
+          quantity: item.quantity,
+          product: object._id,
+        });
       }
+      console.log(arr);
 
-      let result = await CartsModel.findById(cid);
+      // Filtrar por el índice del carrito
+      const filter = { _id: cid };
+      // Actualizar con los nuevos datos
+      const update = { $set: { products: arr } };
 
-      console.log(result);
-
-      return update;
-    } catch (error) {
-      console.error(`Error al agregar  el producto al carrito`, error.nessage);
+      const updateCart = await CartsModel.findOneAndUpdate(filter, update, {
+        new: true,
+      });
+      return updateCart;
+    } catch (err) {
+      console.log(err.message);
     }
   };
 
