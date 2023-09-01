@@ -24,7 +24,7 @@ class CartService {
   -   GET Carts ID  -
   ==================*/
   getCartsById = async (id) => {
-    const cart = await CartsModel.findById(id).lean();
+    const cart = await CartsModel.findById(id);
     return cart;
   };
 
@@ -32,7 +32,7 @@ class CartService {
   -  DELETE CART ID  -
   ==================*/
   deleteCart = async (id) => {
-    let result = await CartsModel.deleteOne(id);
+    const result = await CartsModel.deleteOne(id);
     return result;
   };
 

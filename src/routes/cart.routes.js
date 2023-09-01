@@ -33,7 +33,7 @@ CartRouter.get("/:id", async (req, res) => {
     let _id = req.params.id;
     console.log(_id);
 
-    let carritoId = await cart.getCartsById(_id);
+    let carritoId = await cart.getCartsById({ _id });
 
     res.status(202).send({
       result: "Carrito obtenido con exito",

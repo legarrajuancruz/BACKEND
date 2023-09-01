@@ -32,6 +32,7 @@ export default class ProductService {
         "&page=" +
         products.prevPage
       : null;
+
     let nextLink = products.hasNextPage
       ? "http://localhost:8080/products?limit=" +
         limit +
