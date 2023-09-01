@@ -1,29 +1,57 @@
-
 <div>
   {{#each Products.payload}}
-     <div id="listadoProductos">
-          <h3>{{this.title}} {{this.description}}</h3>
-          <p>Precio: {{this.price}}</p>
-          <p>ID: {{this.id}}</p>
+    <div id="listadoProductos">
+      <h3>{{this.title}} {{this.description}}</h3>
+      <p>Precio: {{this.price}}</p>
+      <p>ID: {{this.id}}</p>
 
-      </div>
+    </div>
   {{/each}}
 </div>
-<br/>
+<br />
+<div class="row my-5">
+  <div class="col">
+    <nav>
+      <ul class="pagination justify-content-center">
+        {{#if Products.hasPrevPage}}
+          <li class="page-item">
+            <a class="page-link" href="{{Products.prevLink}}">
+              Anterior
+            </a>
+          </li>
+        {{/if}}
 
-<div> 
-    {{#if hasPrevPage}}
-      <a href={{this.prevLink}}> <- anterior </a>
-    {{/if}}
-    &nbsp;
+        {{#if Products.hasPrevPage}}
+          <li class="page-item">
+            <a
+              class="page-link"
+              href="{{Products.prevLink}}"
+            >{{Products.prevPage}}</a>
+          </li>
+        {{/if}}
 
-    {{#if hasNextPage}}
-    <a href={{this.nextLink}}> siguiente -></a>
+        <li class="page-item">
+          <a class="page-link">{{Products.page}}</a>
+        </li>
 
+        {{#if Products.hasNextPage}}
+          <li class="page-item">
+            <a
+              class="page-link"
+              href="{{Products.nextLink}}"
+            >{{Products.nextPage}}</a>
+          </li>
+        {{/if}}
+
+        {{#if Products.hasNextPage}}
+          <li class="page-item">
+            <a class="page-link" href="{{Products.nextLink}}">Siguiente</a>
+          </li>
+        {{/if}}
+
+      </ul>
+    </nav>
+  </div>
 </div>
-
-{{else}}
-<h1>No hay productos para mostrar</h1>
-{{/if}}
 
 <script src="js/products.js"></script>

@@ -29,7 +29,7 @@ router.get("/products", async (req, res) => {
 
 //CARTS
 router.get("/carts", async (req, res) => {
-  let allProducts = await products.leerProductos(request.query);
+  let allProducts = await products.leerProductos(req.query);
   console.log(allProducts);
   res.render("carts", {
     title: "Listado de productos - handlebars",
