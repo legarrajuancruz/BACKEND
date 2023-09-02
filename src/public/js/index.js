@@ -1,4 +1,5 @@
 //DESDE CLIENTE AL SERVER
+
 const socket = io();
 
 // CREAR DESDE HTML Y ENVIAR A SERVER
@@ -11,7 +12,7 @@ document.getElementById("miFormulario").addEventListener("submit", (event) => {
     price: document.getElementById("price").value,
     stock: document.getElementById("stock").value,
     category: document.getElementById("category").value,
-    img: "Sin imagen",
+    img: document.getElementById("img").value,
   };
   socket.emit("mensajeKey", formData);
 });

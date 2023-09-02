@@ -1,6 +1,5 @@
 import { Router } from "express";
 import ProductService from "../dao/mongoManager/productManagerMongo.js";
-import { uploader } from "../utils.js";
 
 const productRouter = Router();
 
@@ -11,10 +10,10 @@ const productService = new ProductService();
 ==============*/
 
 //CREAR
-productRouter.post("/", uploader.single("file"), async (req, res) => {
+productRouter.post("/", async (req, res) => {
   try {
     let producto = req.body;
-    producto.img = req.file.path;
+    console.log(producto);
 
     let proudctoCreado = await productService.crearProducto(producto);
 
@@ -89,10 +88,9 @@ productRouter.delete("/:id", async (req, res) => {
 });
 
 //MODIFICAR
-productRouter.put("/:id", uploader.single("file"), async (req, res) => {
+productRouter.put("/:id", async (req, res) => {
   try {
     let productUpdated = req.body;
-    productUpdated.img = req.file.path;
 
     let productoActualizado = await productService.actualizarProducto(
       req.params.id,

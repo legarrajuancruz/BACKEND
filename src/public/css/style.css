@@ -15,17 +15,27 @@ body {
   margin-right: 1%;
 }
 
+#productos {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+  height: auto;
+}
+
 #listadoProductos {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  width: 650px;
+  width: 350px;
   height: 450px;
   margin-top: 2%;
   margin-bottom: 2%;
+  margin-left: 2%;
+
   border: 2px dotted grey;
-  object-fit: ;
+  object-fit: cover;
 }
 
 #nuevoDos {

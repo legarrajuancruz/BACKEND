@@ -1,16 +1,12 @@
 <div class="container">
-  <div class="row">
+  <div class="productos">
 
     <h2>TODOS LOS PRODUCTOS</h2>
-    <div>
+    <div class="row">
       {{#each allProducts.payload}}
         <div id="listadoProductos">
           <div>
-            <img
-              src="file:///{{this.img}}"
-              style="width:150px; heigth:auto"
-              alt=""
-            />
+            <img src={{this.img}} style="width:150px; heigth:auto" alt="" />
           </div>
           <h3>{{this.title}}
             {{this.description}}</h3>
@@ -42,6 +38,9 @@
         <br />
         <label for="price">Category:</label>
         <input type="text" id="category" name="category" required />
+        <br />
+        <label for="price">Imagen:</label>
+        <input type="img" id="img" name="img" required />
         <br />
 
         <button type="submit">Enviar</button>
