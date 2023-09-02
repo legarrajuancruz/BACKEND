@@ -1,15 +1,18 @@
 import express from "express";
-import __dirname from "./utils.js";
 import expressHandlebars from "express-handlebars";
 import Handlebars from "handlebars";
 import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access";
+
+import __dirname from "./utils.js";
 import { Server } from "socket.io";
 import mongoose from "mongoose";
-import ProductManager from "./dao/mongoManager/productManagerMongo.js";
+
 import ProductRouter from "./routes/product.routes.js";
 import CartRouter from "./routes/cart.routes.js";
 import viewRouter from "./routes/view.router.js";
+
 import MessagesManager from "./dao/mongoManager/messageManagerMongo.js";
+import ProductManager from "./dao/mongoManager/productManagerMongo.js";
 
 const app = express();
 
@@ -48,6 +51,10 @@ const socketServer = new Server(httpserver);
 
 //SE ABRE CANAL
 socketServer.on("connection", (socket) => {
+  /*================================
+  |        REAL TIME PRODUCTS       |
+  =================================*/
+
   //CREAR PRODUCTO
   socket.on("mensajeKey", (data) => {
     const productos = new ProductManager();
@@ -65,8 +72,17 @@ socketServer.on("connection", (socket) => {
     const productos = new ProductManager();
     console.log("Se envio ID");
     console.log(data);
-    let _id = data;
-    productos.borrarProducto(_id);
+    let id = data;
+    productos.borrarProducto(id);
+    socket.emit("msgServer", "Producto eliminado de servidor");
+  });
+
+  socket.on("elimarProductoBoton", (data) => {
+    const productos = new ProductManager();
+    console.log("Se envio ID");
+    console.log(data);
+    let id = data;
+    productos.borrarProducto(id);
     socket.emit("msgServer", "Producto eliminado de servidor");
   });
 

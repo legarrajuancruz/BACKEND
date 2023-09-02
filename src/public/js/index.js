@@ -29,9 +29,11 @@ document
   });
 
 //ELIMINAR DESDE BOTON DESDE CLIENTE HTML Y ENVIAR A SERVER
-function enviarId(_id) {
-  console.log("Producto a eliminar", _id);
-  socket.emit("mensajeID", _id);
+function enviarId(id) {
+  alert("Producto ELiminado");
+
+  console.log("Producto a eliminar", id);
+  socket.emit("elimarProductoBoton", id);
 }
 
 //RECIBE NOTIFICACIONES DESDE SERVER
