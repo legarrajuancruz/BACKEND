@@ -5,7 +5,7 @@ import Handlebars from "handlebars";
 import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access";
 import { Server } from "socket.io";
 import mongoose from "mongoose";
-import ProductManager from "./dao/fileManager/controllers/ProductManager.js";
+import ProductManager from "./dao/mongoManager/productManagerMongo.js";
 import ProductRouter from "./routes/product.routes.js";
 import CartRouter from "./routes/cart.routes.js";
 import viewRouter from "./routes/view.router.js";
@@ -55,7 +55,7 @@ socketServer.on("connection", (socket) => {
     console.log("Se agrego producto");
     console.log(data);
 
-    productos.addProducts(data);
+    productos.crearProducto(data);
     socket.emit("msgServer", "Nuevo Producto agregado");
     socket.emit("msgServer", data);
   });
@@ -65,9 +65,8 @@ socketServer.on("connection", (socket) => {
     const productos = new ProductManager();
     console.log("Se envio ID");
     console.log(data);
-    let ID = parseInt(data);
-
-    productos.deleteById(ID);
+    let _id = data;
+    productos.borrarProducto(_id);
     socket.emit("msgServer", "Producto eliminado de servidor");
   });
 

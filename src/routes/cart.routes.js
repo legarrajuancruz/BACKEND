@@ -88,7 +88,6 @@ CartRouter.post("/:cid/products/:pid", async (req, res) => {
   try {
     let cid = req.params.cid;
     const { quantity } = req.body;
-    console.log(quantity);
 
     const pid = req.params.pid;
 
@@ -114,8 +113,10 @@ CartRouter.post("/:cid/products/:pid", async (req, res) => {
 
 //MODIFICAR ITEM CON ARRAY  DE PRODUCTOS
 CartRouter.put("/:cid", async (req, res) => {
-  const { body } = req.body;
-  //console.log(body);
+  console.log("BODY");
+  const { body } = req;
+
+  console.log({ body });
   const { cid } = req.params;
   try {
     const existCart = await cart.getCartsById(cid);
@@ -128,8 +129,9 @@ CartRouter.put("/:cid", async (req, res) => {
     }
 
     body.forEach(async (item) => {
-      const existProd = await ProductService.getProductById(item._id);
-      console.log(existProd);
+      console.log(`ITEAM ${item._id}`);
+
+      const existProd = await productos.getProductById(item._id);
 
       if (!existProd) {
         return res

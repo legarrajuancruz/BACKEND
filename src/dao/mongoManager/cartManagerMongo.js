@@ -75,6 +75,7 @@ class CartService {
 
   modificarProductInCart = async (cid, body) => {
     try {
+      console.log(body);
       //A partir de los datos, buscar por idx los productos para obtener su _id para generar el populate
       const arr = [];
       for (const item of body) {

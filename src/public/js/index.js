@@ -6,9 +6,11 @@ document.getElementById("miFormulario").addEventListener("submit", (event) => {
   event.preventDefault();
 
   const formData = {
-    Title: document.getElementById("title").value,
-    Description: document.getElementById("description").value,
-    Price: document.getElementById("price").value,
+    title: document.getElementById("title").value,
+    description: document.getElementById("description").value,
+    price: document.getElementById("price").value,
+    stock: document.getElementById("stock").value,
+    category: document.getElementById("category").value,
     img: "Sin imagen",
   };
   socket.emit("mensajeKey", formData);
@@ -20,16 +22,16 @@ document
   .addEventListener("submit", (event) => {
     event.preventDefault();
 
-    const id = document.getElementById("id").value;
+    const _id = document.getElementById("id").value;
 
     console.log(id);
-    socket.emit("mensajeID", id);
+    socket.emit("mensajeID", _id);
   });
 
 //ELIMINAR DESDE BOTON DESDE CLIENTE HTML Y ENVIAR A SERVER
-function enviarId(id) {
-  console.log("Producto a eliminar", id);
-  socket.emit("mensajeID", id);
+function enviarId(_id) {
+  console.log("Producto a eliminar", _id);
+  socket.emit("mensajeID", _id);
 }
 
 //RECIBE NOTIFICACIONES DESDE SERVER

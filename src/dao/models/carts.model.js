@@ -6,18 +6,15 @@ const cartsSchema = new mongoose.Schema({
   title: {
     type: String,
   },
-  products: {
-    type: [
-      {
-        product: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "product",
-        },
-        quantity: { type: Number, default: 1 },
+  products: [
+    {
+      product: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "product",
       },
-    ],
-    default: [],
-  },
+      quantity: { type: Number, default: 1 },
+    },
+  ],
 });
 
 cartsSchema.pre("findOne", function () {
