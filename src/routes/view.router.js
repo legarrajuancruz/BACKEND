@@ -1,8 +1,10 @@
 import express from "express";
 import ProductManager from "../dao/mongoManager/productManagerMongo.js";
+import CartService from "../dao/mongoManager/cartManagerMongo.js";
 
 const router = express.Router();
 const products = new ProductManager();
+const carts = new CartService();
 
 router.get("/", async (request, response) => {
   try {
@@ -29,12 +31,9 @@ router.get("/products", async (req, res) => {
 
 //CARTS
 router.get("/carts", async (req, res) => {
-  let allProducts = await products.leerProductos(req.query);
-  console.log(allProducts);
-  res.render("carts", {
-    title: "Listado de productos - handlebars",
-    products: { allProducts },
-  });
+  let allCarts = await carts.getCarts(req.query);
+  console.log(allCarts);
+  res.render("carts", { allCarts });
 });
 
 router.get("/chat", (req, res) => {

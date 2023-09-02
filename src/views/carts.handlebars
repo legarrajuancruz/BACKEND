@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="productos">
+
+    <h2>TODOS LOS CARRITOS</h2>
+    <div class="column">
+      {{#each allCarts}}
+        <div id="listadoCarritos">          
+          <h3>{{this.title}}
+          <p>ID: {{this._id}}</p>  
+          </br>
+            <div>
+                {{#each this.products}}
+                <h3>Producto: {{this._id}}
+                {{/each}}
+            </div>        
+                  
+        </div>
+      {{/each}}
+      <br />
+    </div>
+  </div>
