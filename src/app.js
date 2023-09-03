@@ -14,6 +14,9 @@ import viewRouter from "./routes/view.router.js";
 import MessagesManager from "./dao/mongoManager/messageManagerMongo.js";
 import ProductManager from "./dao/mongoManager/productManagerMongo.js";
 
+import session from "express-session";
+import FileStore from "session-file-store";
+
 const app = express();
 
 const PORT = process.env.PORT || 8080;
@@ -23,7 +26,7 @@ app.use(express.urlencoded({ extended: true }));
 
 //STATIC
 app.use(express.static(__dirname + "/public"));
-app.use(express.static(__dirname + `/public/img`));
+//app.use(express.static(__dirname + `/public/img`));
 
 //HANDLEBARS
 app.set("views", __dirname + "/views");
