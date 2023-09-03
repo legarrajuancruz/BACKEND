@@ -36,7 +36,6 @@ app.engine(
     handlebars: allowInsecurePrototypeAccess(Handlebars),
   })
 );
-
 app.set("view engine", "handlebars");
 
 //RUTAS
@@ -122,6 +121,17 @@ socketServer.on("connection", (socket) => {
     }
   });
 });
+
+/*===============
+|    SESSIONS   |
+===============*/
+const FileStoreage = FileStore(session);
+
+app.use(
+  seession({
+    store: new FileStoreage({ path: "./sessions", ttl: 15, retries: 0 }),
+  })
+);
 
 const DB =
   "mongodb+srv://legarrajuan:21dBt5XzVUd2DOlQ@cluster0.ftgsun9.mongodb.net/ecommerse?retryWrites=true&w=majority";

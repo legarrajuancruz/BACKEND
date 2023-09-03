@@ -105,5 +105,4 @@ router.get("/logout", (req, res) => {
     res.send("Sesion cerrada coreectamente");
   });
 });
-
 export default router;
