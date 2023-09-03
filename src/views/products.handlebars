@@ -1,14 +1,28 @@
-<div>
-  {{#each Products.payload}}
-    <div id="listadoProductos">
-      <h3>{{this.title}} {{this.description}}</h3>
-      <p>Precio: {{this.price}}</p>
-      <p>ID: {{this.id}}</p>
+<div class="container">
+  <div class="productos">
+    <div>
+      <h2>TODOS LOS PRODUCTOS</h2>
+      <div class="row">
+        {{#each Products.payload}}
+          <div id="listadoProductos">
+            <div>
+              <img src="{{this.img}}" alt="" style="width:150px; heigth:auto" />
+            </div>
+            <div>
+              <h3>{{this.title}} {{this.description}}</h3>
+              <p>Precio: {{this.price}}</p>
+              <p>ID: {{this.id}}</p>
+            </div>
+            <button onclick="agregar(`{{this._id}}`)">Agregar</button>
+          </div>
+
+        {{/each}}
+
+      </div>
 
     </div>
-  {{/each}}
+  </div>
 </div>
-<br />
 <div class="row my-5">
   <div class="col">
     <nav>
