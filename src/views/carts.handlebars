@@ -8,9 +8,11 @@
           <h3>{{this.title}}
           <p>ID: {{this._id}}</p>  
           </br>
-            <div>
+            <div >
                 {{#each this.products}}
-                <h3>Producto: {{this._id}}
+                <h4>Producto: {{this._id}}<h4/>
+                <h5>Quantity: {{this.quantity}}<h5/>
+                </br>
                 {{/each}}
             </div>        
                   

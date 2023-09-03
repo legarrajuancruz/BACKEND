@@ -1,16 +1,27 @@
-<div>
-  <h2>TODOS LOS PRODUCTOS</h2>
-  {{#each getProducts.payload}}
-    <div id="listadoProductos">
+<div class="container">
+  <div class="productos">
+    <div>
+      <h2>TODOS LOS PRODUCTOS</h2>
+      <div class="row">
+        {{#each getProducts.payload}}
+          <div id="listadoProductos">
+            <div>
+              <img src="{{this.img}}" alt="" style="width:150px; heigth:auto" />
+            </div>
+            <div>
+              <h3>{{this.title}} {{this.description}}</h3>
+              <p>Precio: {{this.price}}</p>
+              <p>ID: {{this.id}}</p>
+            </div>
 
-      <h3>{{this.title}} {{this.description}}</h3>
-      <p>Precio: {{this.price}}</p>
-      <p>ID: {{this.id}}</p>
+          </div>
+
+        {{/each}}
+
+      </div>
 
     </div>
-
-  {{/each}}
-
+  </div>
 </div>
 
 <script src="/socket.io/socket.io.js"></script>

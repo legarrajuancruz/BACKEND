@@ -19,11 +19,10 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  width: 100%;
-  height: auto;
 }
 
 #listadoProductos {
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -38,6 +37,7 @@ body {
 }
 
 #listadoCarritos {
+  font-size: 12px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -47,6 +47,10 @@ body {
   margin-top: 2%;
   margin-bottom: 2%;
   margin-left: 2%;
+  border: 2px dotted grey;
+}
+
+#productoEnCarro {
   border: 2px dotted grey;
 }
 
