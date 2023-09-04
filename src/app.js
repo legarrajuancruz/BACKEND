@@ -10,12 +10,16 @@ import mongoose from "mongoose";
 import ProductRouter from "./routes/product.routes.js";
 import CartRouter from "./routes/cart.routes.js";
 import viewRouter from "./routes/view.router.js";
+// import usersViewRouter from "./routes/usersViewRouter.js";
+// import sessionsRouter from "./routes/sessionsRouter.js";
 
 import MessagesManager from "./dao/mongoManager/messageManagerMongo.js";
 import ProductManager from "./dao/mongoManager/productManagerMongo.js";
 
 import session from "express-session";
 import FileStore from "session-file-store";
+
+const fileStorage = FileStore(session);
 
 const app = express();
 
@@ -25,10 +29,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //STATIC
-app.use(express.static(__dirname + "/public"));
+//app.use(express.static(__dirname + "/public"));
 //app.use(express.static(__dirname + `/public/img`));
+app.use(express.static(__dirname + "/src"));
 
-//HANDLEBARS
+/*=================
+|    HANDLEBARS   |
+=================*/
 app.set("views", __dirname + "/views");
 app.engine(
   "handlebars",
@@ -38,10 +45,37 @@ app.engine(
 );
 app.set("view engine", "handlebars");
 
+/*===============
+|    SESSIONS   |
+===============*/
+
+app.use(
+  session({
+    store: new fileStorage({ path: "./sessions", ttl: 100, retries: 0 }),
+    secret: "s3cr3t",
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+
+app.get("/session", (req, res) => {
+  if (req.session.contador) {
+    req.session.contador++;
+
+    res.send("VIsitaste eñl sitio web:" + req.session.contador + "veces!");
+  } else {
+    req.session.contador = 1;
+    res.send("Bienvenido");
+  }
+});
+
 //RUTAS
 app.use(`/api/products`, ProductRouter);
 app.use(`/api/carts`, CartRouter);
 app.use("/", viewRouter);
+
+// app.use("/users", usersViewRouter);
+// app.use("/api/sessions", sessionsRouter);
 
 //SERVER
 const httpserver = app.listen(PORT, () => {
@@ -121,17 +155,6 @@ socketServer.on("connection", (socket) => {
     }
   });
 });
-
-/*===============
-|    SESSIONS   |
-===============*/
-const FileStoreage = FileStore(session);
-
-app.use(
-  seession({
-    store: new FileStoreage({ path: "./sessions", ttl: 15, retries: 0 }),
-  })
-);
 
 const DB =
   "mongodb+srv://legarrajuan:21dBt5XzVUd2DOlQ@cluster0.ftgsun9.mongodb.net/ecommerse?retryWrites=true&w=majority";

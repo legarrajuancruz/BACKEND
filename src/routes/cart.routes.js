@@ -1,7 +1,6 @@
 import { Router } from "express";
 import CartService from "../dao/mongoManager/cartManagerMongo.js";
 import ProductService from "../dao/mongoManager/productManagerMongo.js";
-import { uploader } from "../utils.js";
 
 const CartRouter = Router();
 

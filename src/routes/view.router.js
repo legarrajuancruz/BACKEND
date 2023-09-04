@@ -78,31 +78,31 @@ router.get("/deleteCookie", (req, res) => {
 |    SESSIONS   |
 ===============*/
 
-router.get("/login", (req, res) => {
-  const { username, password } = req.query;
-  if (username !== "Juan" || password !== "s3cre3t") {
-    return res.status(401).send("Login fail, check user and password");
-  } else {
-    req.session.user = username;
-    ReadableStreamBYOBRequest.session.admin = true;
-    res.send("Login Success!");
-  }
-});
+// router.get("/login", (req, res) => {
+//   const { username, password } = req.query;
+//   if (username !== "Juan" || password !== "s3cre3t") {
+//     return res.status(401).send("Login fail, check user and password");
+//   } else {
+//     req.session.user = username;
+//     ReadableStreamBYOBRequest.session.admin = true;
+//     res.send("Login Success!");
+//   }
+// });
 
-function auth(req, res, next) {
-  if ((req, session.user === "Juan" && req.session.admin)) {
-    return next;
-  } else {
-    return res.status(403).send("Usuario no autorizado a este recurso");
-  }
-}
+// function auth(req, res, next) {
+//   if ((req, session.user === "Juan" && req.session.admin)) {
+//     return next;
+//   } else {
+//     return res.status(403).send("Usuario no autorizado a este recurso");
+//   }
+// }
 
-router.get("/logout", (req, res) => {
-  req.session.destroy((error) => {
-    if (error) {
-      res.json({ error: "logout error", message: "Error al cerrar la sesion" });
-    }
-    res.send("Sesion cerrada coreectamente");
-  });
-});
+// router.get("/logout", (req, res) => {
+//   req.session.destroy((error) => {
+//     if (error) {
+//       res.json({ error: "logout error", message: "Error al cerrar la sesion" });
+//     }
+//     res.send("Sesion cerrada coreectamente");
+//   });
+// });
 export default router;
