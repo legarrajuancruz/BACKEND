@@ -3,15 +3,18 @@ import expressHandlebars from "express-handlebars";
 import Handlebars from "handlebars";
 import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access";
 
+import MongoStore from "connect-mongo";
+
 import __dirname from "./utils.js";
 import { Server } from "socket.io";
 import mongoose from "mongoose";
 
+import cookieParser from "cookie-parser";
+
 import ProductRouter from "./routes/product.routes.js";
 import CartRouter from "./routes/cart.routes.js";
 import viewRouter from "./routes/view.router.js";
-// import usersViewRouter from "./routes/usersViewRouter.js";
-// import sessionsRouter from "./routes/sessionsRouter.js";
+import SessionsRouter from "./routes/sessionsRouter.js";
 
 import MessagesManager from "./dao/mongoManager/messageManagerMongo.js";
 import ProductManager from "./dao/mongoManager/productManagerMongo.js";
@@ -23,15 +26,14 @@ const fileStorage = FileStore(session);
 
 const app = express();
 
+//STATIC
+app.use(express.static(__dirname + "/public"));
+//app.use(express.static(__dirname + `/public/img`));
+
 const PORT = process.env.PORT || 8080;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-//STATIC
-//app.use(express.static(__dirname + "/public"));
-//app.use(express.static(__dirname + `/public/img`));
-app.use(express.static(__dirname + "/src"));
 
 /*=================
 |    HANDLEBARS   |
@@ -51,31 +53,36 @@ app.set("view engine", "handlebars");
 
 app.use(
   session({
-    store: new fileStorage({ path: "./sessions", ttl: 100, retries: 0 }),
+    store: MongoStore.create({
+      mongoUrl:
+        "mongodb+srv://legarrajuan:21dBt5XzVUd2DOlQ@cluster0.ftgsun9.mongodb.net/ecommerse?retryWrites=true&w=majority",
+      mongoOption: { useNewUrlParser: true, useUnifiedTopology: true },
+      ttl: 20,
+    }),
     secret: "s3cr3t",
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
   })
 );
 
-app.get("/session", (req, res) => {
-  if (req.session.contador) {
-    req.session.contador++;
+// app.get("/session", (req, res) => {
+//   if (req.session.contador) {
+//     req.session.contador++;
 
-    res.send("VIsitaste eñl sitio web:" + req.session.contador + "veces!");
-  } else {
-    req.session.contador = 1;
-    res.send("Bienvenido");
-  }
-});
+//     res.send("VIsitaste el sitio web:" + req.session.contador + "veces!");
+//   } else {
+//     req.session.contador = 1;
+//     res.send("Bienvenido");
+//   }
+// });
 
 //RUTAS
 app.use(`/api/products`, ProductRouter);
 app.use(`/api/carts`, CartRouter);
+app.use(`/api/sessions`, SessionsRouter);
 app.use("/", viewRouter);
 
 // app.use("/users", usersViewRouter);
-// app.use("/api/sessions", sessionsRouter);
 
 //SERVER
 const httpserver = app.listen(PORT, () => {
