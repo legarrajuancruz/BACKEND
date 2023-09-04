@@ -11,7 +11,7 @@ SessionsRouter.get("/login", async (req, res) => {
   const userLogged = await UM.login(user, pass);
 
   if (userLogged) {
-    res.send({ status: "Success", message: userLogged });
+    res.send({ status: "User login success", message: userLogged });
   } else {
     res
       .status(401)
@@ -20,7 +20,7 @@ SessionsRouter.get("/login", async (req, res) => {
 });
 
 SessionsRouter.post("/register", async (req, res) => {
-  const userRegistered = await UM.crearUsuario(req.query);
+  const userRegistered = await UM.crearUsuario(req.body);
 
   if (userRegistered) {
     res.send({ status: "Success", message: userRegistered });
