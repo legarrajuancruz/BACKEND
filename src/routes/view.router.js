@@ -30,14 +30,12 @@ router.get("/products", async (req, res) => {
 //REALTIME PRODUCTS
 router.get("/realtimeproducts", async (req, res) => {
   const allProducts = await products.leerProductos(req.query);
-
   res.render("realtimeproducts", { allProducts });
 });
 
 //CARTS
 router.get("/carts", async (req, res) => {
   let allCarts = await carts.getCarts(req.query);
-  console.log(allCarts);
   res.render("carts", { allCarts });
 });
 
@@ -53,7 +51,7 @@ router.get("/login", (req, res) => {
 
 //REGISTER
 router.get("/register", (req, res) => {
-  res.render("register");
+  res.render("register", {});
 });
 
 //PROFILE
