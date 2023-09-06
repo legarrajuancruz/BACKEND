@@ -7,37 +7,21 @@ export default class UserService {
 
   crearUsuario = async (usuarioNuevo) => {
     let result = await userModel.create(usuarioNuevo);
-    console.log("UNuevo Usuario Registrado");
-    console.log(result);
+    console.log(usuarioNuevo);
+
     return result;
   };
 
-  login = async (user, pass) => {
-    try {
-      const userLogged =
-        (await userModel.findOne({
-          $and: [{ email: user }, { password: pass }],
-        })) || null;
-      console.log(userLogged);
+  login = async (email, pass) => {
+    const user = await userModel.findOne(email, pass);
+    console.log(user);
 
-      if (userLogged) {
-        console.log("User logged");
-        return user;
-      }
-      return false;
-    } catch (error) {
-      return false;
-    }
+    return { user };
   };
 
-  leerUsuarios = async (params) => {
-    let { limit, page, query, sort } = params;
-
-    limit = limit ? limit : 10;
-    page = page ? page : 1;
-    query = query || {};
-    sort = sort ? (sort == "asc" ? 1 : -1) : 0;
-    let users = await userModel.find().lean();
+  leerUsuarios = async ({ email }) => {
+    console.log({ email });
+    let users = await userModel.findOne({ email });
 
     return users;
   };

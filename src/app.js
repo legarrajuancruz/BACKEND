@@ -14,6 +14,7 @@ import cookieParser from "cookie-parser";
 import ProductRouter from "./routes/product.routes.js";
 import CartRouter from "./routes/cart.routes.js";
 import SessionsRouter from "./routes/sessionsRouter.js";
+import usersViewRouter from "./routes/users.views.router.js";
 import viewRouter from "./routes/view.router.js";
 
 import MessagesManager from "./dao/mongoManager/messageManagerMongo.js";
@@ -36,9 +37,6 @@ const httpserver = app.listen(PORT, () => {
   console.log(`Server on port: ${PORT}`);
 });
 
-//STATIC
-app.use(express.static(__dirname + "/public"));
-
 /*=================
 |    HANDLEBARS   |
 =================*/
@@ -51,11 +49,14 @@ app.engine(
 );
 app.set("view engine", "handlebars");
 
+//STATIC
+app.use(express.static(__dirname + "/public"));
+
 //RUTAS
 app.use(`/api/products`, ProductRouter);
 app.use(`/api/carts`, CartRouter);
 app.use(`/api/sessions`, SessionsRouter);
-//app.use("/users", usersViewRouter);
+app.use("/users", usersViewRouter);
 app.use("/", viewRouter);
 
 /*===============

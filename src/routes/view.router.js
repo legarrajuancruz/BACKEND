@@ -44,19 +44,4 @@ router.get("/chat", (req, res) => {
   res.render("messages", {});
 });
 
-//LOGIN
-router.get("/login", (req, res) => {
-  res.render("login", {});
-});
-
-//REGISTER
-router.get("/register", (req, res) => {
-  res.render("register", {});
-});
-
-//PROFILE
-router.get("/profile", (req, res) => {
-  res.render("profile", {});
-});
-
 export default router;
