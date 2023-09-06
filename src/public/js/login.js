@@ -15,7 +15,7 @@ const loginUser = async () => {
   );
   const data = await response.json();
   if (data) {
-    locacation.href = "/products";
+    location.href = "/products";
   }
 };
 
