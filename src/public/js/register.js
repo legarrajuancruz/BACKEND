@@ -15,7 +15,7 @@ const registerUser = async () => {
 
   const response = await fetch("/api/sessions/register", {
     method: "POST",
-    headers: { "Content-type": "aplication/json; charset=UTF-8" },
+    headers: { "Content-type": "application/json; charset=UTF-8" },
     body: JSON.stringify(user),
   });
   const data = await response.json();

@@ -55,7 +55,7 @@ app.set("view engine", "handlebars");
 app.use(`/api/products`, ProductRouter);
 app.use(`/api/carts`, CartRouter);
 app.use(`/api/sessions`, SessionsRouter);
-// app.use("/users", usersViewRouter);
+//app.use("/users", usersViewRouter);
 app.use("/", viewRouter);
 
 /*===============
