@@ -19,6 +19,9 @@ const registerUser = async () => {
     body: JSON.stringify(user),
   });
   const data = await response.json();
+  if (data) {
+    location.href = "users/login";
+  }
 };
 
 document.getElementById("btnRegister").onclick = registerUser;
