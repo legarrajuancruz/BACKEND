@@ -12,8 +12,8 @@ export default class UserService {
     return result;
   };
 
-  login = async (email, pass) => {
-    const user = await userModel.findOne(email, pass);
+  login = async ({ email, pass }) => {
+    const user = await userModel.findOne({ email }, { pass });
     console.log(user);
 
     return { user };

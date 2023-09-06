@@ -30,9 +30,9 @@ SessionsRouter.post("/register", async (req, res) => {
 });
 
 SessionsRouter.post("/login", async (req, res) => {
-  let { email, pass } = req.body;
-  const userLogged = await UM.login(email, pass);
+  const userLogged = await UM.login(req.body);
 
+  console.log(userLogged);
   if (userLogged) {
     res.send({ status: "User login success", message: userLogged });
     console.log(userLogged);
@@ -48,11 +48,11 @@ SessionsRouter.post("/login", async (req, res) => {
       .send({ status: "Error", message: "No se pude loguear el usuario" });
   }
 
-  // res.send({
-  //   status: "success",
-  //   payload: req.session.user,
-  //   message: "Primer logueo realizado",
-  // });
+  res.send({
+    status: "success",
+    payload: req.session.user,
+    message: "Primer logueo realizado",
+  });
 });
 
 export default SessionsRouter;
