@@ -26,14 +26,18 @@ const fileStorage = FileStore(session);
 
 const app = express();
 
-//STATIC
-app.use(express.static(__dirname + "/public"));
-//app.use(express.static(__dirname + `/public/img`));
-
 const PORT = process.env.PORT || 8080;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+//SERVER
+const httpserver = app.listen(PORT, () => {
+  console.log(`Server on port: ${PORT}`);
+});
+
+//STATIC
+app.use(express.static(__dirname + "/public"));
 
 /*=================
 |    HANDLEBARS   |
@@ -47,47 +51,30 @@ app.engine(
 );
 app.set("view engine", "handlebars");
 
-/*===============
-|    SESSIONS   |
-===============*/
-
-app.use(
-  session({
-    store: MongoStore.create({
-      mongoUrl:
-        "mongodb+srv://legarrajuan:21dBt5XzVUd2DOlQ@cluster0.ftgsun9.mongodb.net/ecommerse?retryWrites=true&w=majority",
-      mongoOption: { useNewUrlParser: true, useUnifiedTopology: true },
-      ttl: 20,
-    }),
-    secret: "s3cr3t",
-    resave: false,
-    saveUninitialized: false,
-  })
-);
-
-// app.get("/session", (req, res) => {
-//   if (req.session.contador) {
-//     req.session.contador++;
-
-//     res.send("VIsitaste el sitio web:" + req.session.contador + "veces!");
-//   } else {
-//     req.session.contador = 1;
-//     res.send("Bienvenido");
-//   }
-// });
-
 //RUTAS
 app.use(`/api/products`, ProductRouter);
 app.use(`/api/carts`, CartRouter);
 app.use(`/api/sessions`, SessionsRouter);
+// app.use("/users", usersViewRouter);
 app.use("/", viewRouter);
 
-// app.use("/users", usersViewRouter);
+/*===============
+|    SESSIONS   |
+===============*/
 
-//SERVER
-const httpserver = app.listen(PORT, () => {
-  console.log(`Server on port: ${PORT}`);
-});
+// app.use(
+//   session({
+//     store: MongoStore.create({
+//       mongoUrl:
+//         "mongodb+srv://legarrajuan:21dBt5XzVUd2DOlQ@cluster0.ftgsun9.mongodb.net/ecommerse?retryWrites=true&w=majority",
+//       mongoOption: { useNewUrlParser: true, useUnifiedTopology: true },
+//       ttl: 20,
+//     }),
+//     secret: "s3cr3t",
+//     resave: false,
+//     saveUninitialized: false,
+//   })
+// );
 
 //SOCKET SERVER CONECCTION
 const socketServer = new Server(httpserver);
