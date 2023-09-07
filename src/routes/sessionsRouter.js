@@ -31,6 +31,7 @@ SessionsRouter.post("/register", async (req, res) => {
 
 SessionsRouter.get("/login", async (req, res) => {
   let { user, pass } = req.query;
+
   const userLogged = await UM.login(user, pass);
   res.send({ status: "ok", message: userLogged });
 });

@@ -14,10 +14,9 @@ export default class UserService {
 
   login = async (user, pass) => {
     try {
-      const userLogged =
-        (await userModel.findOne({
-          $and: [{ email: user }, { password: pass }],
-        })) || null;
+      const userLogged = await userModel.findOne({
+        $and: [{ email: user }, { password: pass }],
+      });
 
       if (userLogged) {
         console.log("User Logged");
@@ -34,9 +33,5 @@ export default class UserService {
     let users = await userModel.findOne({ email });
 
     return users;
-  };
-
-  getUsersId = async (id) => {
-    return await userModel.findById(id);
   };
 }

@@ -4,12 +4,11 @@ import Handlebars from "handlebars";
 import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access";
 
 import MongoStore from "connect-mongo";
+import cookieParser from "cookie-parser";
 
 import __dirname from "./utils.js";
 import { Server } from "socket.io";
 import mongoose from "mongoose";
-
-import cookieParser from "cookie-parser";
 
 import ProductRouter from "./routes/product.routes.js";
 import CartRouter from "./routes/cart.routes.js";

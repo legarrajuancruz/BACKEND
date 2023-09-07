@@ -20,7 +20,7 @@ const registerUser = async () => {
   });
   const data = await response.json();
   if (data) {
-    location.href = "users/login";
+    location.href = "/login";
   }
 };
 
