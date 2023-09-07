@@ -20,7 +20,7 @@ export default class UserService {
 
       if (userLogged) {
         console.log("User Logged");
-        return user;
+        return userLogged;
       }
       return false;
     } catch (error) {
