@@ -5,6 +5,20 @@ const SessionsRouter = Router();
 
 const UM = new UserManager();
 
+SessionsRouter.get("/login", async (req, res) => {
+  let { user, pass } = req.query;
+
+  const userLogged = await UM.login(user, pass);
+
+  if (userLogged) {
+    res.send({ status: "OK", message: userLogged });
+  } else {
+    res
+      .status(401)
+      .send({ status: "Error", message: "No se pudo loguaer el usuario" });
+  }
+});
+
 SessionsRouter.post("/register", async (req, res) => {
   const { first_name, last_name, email, age, password } = req.body;
 
@@ -27,13 +41,6 @@ SessionsRouter.post("/register", async (req, res) => {
   const result = await UM.crearUsuario(user);
   console.log(result);
   res.send({ status: "success", messgae: "Usuario creado con exito!" });
-});
-
-SessionsRouter.get("/login", async (req, res) => {
-  let { user, pass } = req.query;
-
-  const userLogged = await UM.login(user, pass);
-  res.send({ status: "ok", message: userLogged });
 });
 
 export default SessionsRouter;

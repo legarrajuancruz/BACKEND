@@ -1,5 +1,3 @@
-import UserManager from "../dao/mongoManager/userManagerMongo.js";
-
 /*==========================
 -           LOGIN           -
 ===========================*/
@@ -10,13 +8,12 @@ const loginUser = async () => {
 
   const user = { email, password };
 
-  console.log(user);
-  let busqueda = UserManager.login(email, password);
-
-  if (busqueda) {
+  const response = await fetch(
+    `/api/sessions/login?user=${email}&pass=${password}`
+  );
+  const data = await response.json();
+  if (data.status === "OK") {
     location.href = "/products";
-  } else {
-    location.href = "/users/login";
   }
 };
 
