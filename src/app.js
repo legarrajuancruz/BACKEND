@@ -5,6 +5,8 @@ import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access
 
 import MongoStore from "connect-mongo";
 import cookieParser from "cookie-parser";
+import session from "express-session";
+import FileStore from "session-file-store";
 
 import __dirname from "./utils.js";
 import { Server } from "socket.io";
@@ -18,9 +20,6 @@ import viewRouter from "./routes/view.router.js";
 
 import MessagesManager from "./dao/mongoManager/messageManagerMongo.js";
 import ProductManager from "./dao/mongoManager/productManagerMongo.js";
-
-import session from "express-session";
-import FileStore from "session-file-store";
 
 const fileStorage = FileStore(session);
 
@@ -62,19 +61,19 @@ app.use("/", viewRouter);
 |    SESSIONS   |
 ===============*/
 
-// app.use(
-//   session({
-//     store: MongoStore.create({
-//       mongoUrl:
-//         "mongodb+srv://legarrajuan:21dBt5XzVUd2DOlQ@cluster0.ftgsun9.mongodb.net/ecommerse?retryWrites=true&w=majority",
-//       mongoOption: { useNewUrlParser: true, useUnifiedTopology: true },
-//       ttl: 20,
-//     }),
-//     secret: "s3cr3t",
-//     resave: false,
-//     saveUninitialized: false,
-//   })
-// );
+app.use(
+  session({
+    store: MongoStore.create({
+      mongoUrl:
+        "mongodb+srv://legarrajuan:21dBt5XzVUd2DOlQ@cluster0.ftgsun9.mongodb.net/ecommerse?retryWrites=true&w=majority",
+      mongoOption: { useNewUrlParser: true, useUnifiedTopology: true },
+      ttl: 20,
+    }),
+    secret: "s3cr3t",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 
 //SOCKET SERVER CONECCTION
 const socketServer = new Server(httpserver);
