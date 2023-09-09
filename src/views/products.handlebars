@@ -9,9 +9,12 @@
               <img src="{{this.img}}" alt="" style="width:150px; heigth:auto" />
             </div>
             <div>
-              <h3>{{this.title}} {{this.description}}</h3>
-              <p>Precio: {{this.price}}</p>
+              <h3>{{this.title}} </h3>
+              <h4> {{this.description}} </h4>
+              <hr />
+              <p><span> Precio: {{this.price}} </span></p>
               <p>ID: {{this.id}}</p>
+              <p>stock {{this.stock}}</p>
             </div>
             <button onclick="agregar(`{{this._id}}`)">Agregar</button>
           </div>

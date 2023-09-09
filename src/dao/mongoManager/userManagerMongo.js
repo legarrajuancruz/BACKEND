@@ -6,6 +6,15 @@ export default class UserService {
   }
 
   crearUsuario = async (usuarioNuevo) => {
+    console.log(usuarioNuevo.email);
+    if (
+      usuarioNuevo.email === "adminCoder@coder.com" &&
+      usuarioNuevo.password === "adminCod3r123"
+    ) {
+      usuarioNuevo.role = "admin";
+      let result = await userModel.create(usuarioNuevo);
+      return result;
+    }
     let result = await userModel.create(usuarioNuevo);
     console.log(usuarioNuevo);
 

@@ -3,6 +3,11 @@ body {
   background-color: antiquewhite;
 }
 
+span {
+  font-weight: bolder;
+  font-size: medium;
+}
+
 #nuevo {
   display: flex;
   flex-direction: column;
