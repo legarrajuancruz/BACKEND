@@ -2,13 +2,11 @@ import express from "express";
 
 import ProductManager from "../dao/mongoManager/productManagerMongo.js";
 import CartService from "../dao/mongoManager/cartManagerMongo.js";
-import UserService from "../dao/mongoManager/userManagerMongo.js";
 
 const router = express.Router();
 
 const products = new ProductManager();
 const carts = new CartService();
-const user = new UserService();
 
 //HOME
 router.get("/", async (request, response) => {

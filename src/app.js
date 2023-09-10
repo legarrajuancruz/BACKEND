@@ -6,7 +6,7 @@ import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access
 import MongoStore from "connect-mongo";
 import cookieParser from "cookie-parser";
 import session from "express-session";
-import FileStore from "session-file-store";
+//import FileStore from "session-file-store";
 
 import __dirname from "./utils.js";
 import { Server } from "socket.io";
@@ -14,26 +14,14 @@ import mongoose from "mongoose";
 
 import ProductRouter from "./routes/product.routes.js";
 import CartRouter from "./routes/cart.routes.js";
-import SessionsRouter from "./routes/sessionsRouter.js";
+import SessionsRouter from "./routes/sessions.router.js";
 import usersViewRouter from "./routes/users.views.router.js";
 import viewRouter from "./routes/view.router.js";
 
 import MessagesManager from "./dao/mongoManager/messageManagerMongo.js";
 import ProductManager from "./dao/mongoManager/productManagerMongo.js";
 
-const fileStorage = FileStore(session);
-
 const app = express();
-
-const PORT = process.env.PORT || 8080;
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-//SERVER
-const httpserver = app.listen(PORT, () => {
-  console.log(`Server on port: ${PORT}`);
-});
 
 /*=================
 |    HANDLEBARS   |
@@ -46,34 +34,52 @@ app.engine(
   })
 );
 app.set("view engine", "handlebars");
-
-//STATIC
 app.use(express.static(__dirname + "/public"));
 
-//RUTAS
-app.use(`/api/products`, ProductRouter);
-app.use(`/api/carts`, CartRouter);
-app.use(`/api/sessions`, SessionsRouter);
-app.use("/users", usersViewRouter);
-app.use("/", viewRouter);
+/*================
+|      SERVER    |
+================*/
+const PORT = process.env.PORT || 8080;
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+const httpserver = app.listen(PORT, () => {
+  console.log(`Server on port: ${PORT}`);
+});
+
+//const fileStorage = FileStore(session);
+
+const MONGO_url =
+  "mongodb+srv://legarrajuan:21dBt5XzVUd2DOlQ@cluster0.ftgsun9.mongodb.net/ecommerse?retryWrites=true&w=majority";
 
 /*===============
 |    SESSIONS   |
 ===============*/
+app.use(cookieParser());
 
 app.use(
   session({
+    // store: new fileStorage({ path: "./sessions", ttl: 15, retries: 0 }),
     store: MongoStore.create({
-      mongoUrl:
-        "mongodb+srv://legarrajuan:21dBt5XzVUd2DOlQ@cluster0.ftgsun9.mongodb.net/ecommerse?retryWrites=true&w=majority",
-      mongoOption: { useNewUrlParser: true, useUnifiedTopology: true },
-      ttl: 20,
+      mongoUrl: MONGO_url,
+      mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
+      ttl: 10 * 60,
     }),
     secret: "s3cr3t",
     resave: false,
     saveUninitialized: false,
   })
 );
+
+/*=================
+|      ROUTES     |
+=================*/
+app.use(`/api/products`, ProductRouter);
+app.use(`/api/carts`, CartRouter);
+app.use(`/api/sessions`, SessionsRouter);
+app.use("/users", usersViewRouter);
+app.use("/", viewRouter);
 
 //SOCKET SERVER CONECCTION
 const socketServer = new Server(httpserver);
@@ -106,6 +112,7 @@ socketServer.on("connection", (socket) => {
     socket.emit("msgServer", "Producto eliminado de servidor");
   });
 
+  //ELIMINAR DESDE BOTON
   socket.on("elimarProductoBoton", (data) => {
     const productos = new ProductManager();
     console.log("Se envio ID");
@@ -149,12 +156,9 @@ socketServer.on("connection", (socket) => {
   });
 });
 
-const DB =
-  "mongodb+srv://legarrajuan:21dBt5XzVUd2DOlQ@cluster0.ftgsun9.mongodb.net/ecommerse?retryWrites=true&w=majority";
-
 const connectMongoDB = async () => {
   try {
-    await mongoose.connect(DB);
+    await mongoose.connect(MONGO_url);
     console.log("Conectado con exito a MongoDB usando mongoose");
   } catch (error) {
     console.error("No se pude conectar con la base de datos" + error);
