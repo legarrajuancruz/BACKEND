@@ -5,9 +5,9 @@ const SessionsRouter = Router();
 
 const UM = new UserManager();
 
-SessionsRouter.get("/login", async (req, res) => {
-  let { user, pass } = req.query;
-
+SessionsRouter.post("/login", async (req, res) => {
+  let { user, pass } = req.body;
+  console.log(user, pass);
   const userLogged = await UM.login(user, pass);
 
   if (userLogged) {

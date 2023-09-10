@@ -3,15 +3,18 @@
 ===========================*/
 
 const loginUser = async () => {
-  let email = document.getElementById("email").value;
-  let password = document.getElementById("password").value;
+  let user = document.getElementById("email").value;
+  let pass = document.getElementById("password").value;
 
-  const user = { email, password };
+  const usuario = { user, pass };
 
-  const response = await fetch(
-    `/api/sessions/login?user=${email}&pass=${password}`
-  );
+  const response = await fetch("/api/sessions/login", {
+    method: "POST",
+    headers: { "Content-type": "application/json; charset=UTF-8" },
+    body: JSON.stringify(usuario),
+  });
   const data = await response.json();
+  console.log(data);
   if (data.status === "OK") {
     location.href = "/products";
   }
