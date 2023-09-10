@@ -40,7 +40,10 @@ SessionsRouter.post("/register", async (req, res) => {
 
   const result = await UM.crearUsuario(user);
   console.log(result);
-  res.send({ status: "success", messgae: "Usuario creado con exito!" });
+  res.send({
+    status: "success",
+    messgae: "Usuario creado con exito! con ID:" + result._id,
+  });
 });
 
 export default SessionsRouter;
