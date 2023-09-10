@@ -64,7 +64,7 @@ app.use(
     store: MongoStore.create({
       mongoUrl: MONGO_url,
       mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
-      ttl: 10 * 60,
+      ttl: 10,
     }),
     secret: "s3cr3t",
     resave: false,
