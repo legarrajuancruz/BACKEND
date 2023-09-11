@@ -21,8 +21,8 @@ router.get("/", async (request, response) => {
 //PRODUCTS
 router.get("/products", async (req, res) => {
   const Products = await products.leerProductos(req.query);
-
-  res.render("products", { Products });
+  const user = req.session.user;
+  res.render("products", { Products, user });
 });
 
 //REALTIME PRODUCTS

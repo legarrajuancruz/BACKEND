@@ -1,6 +1,21 @@
-<div>
-  <h1> Perfil </h1>
-  <p>{{user.name}}</p>
-  <p>{{user.email}}</p>
-  <p>{{user.age}}</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <div class="user-data">
+        <h1 class="pb-5">Bienvenido,
+          {{user.first_name}}
+          {{user.last_name}}!</h1>
+        <h4>Tu correo electrónico es: {{user.email}}</h4>
+        <p>Tu rol es: {{user.role}}</p>
+      </div>
+
+      <form
+        action="/api/sessions/logout"
+        method="POST"
+        class="col-md-4 offset-md-4"
+      >
+        <button type="submit" class="btn btn-primary">Cerrar Sesión</button>
+      </form>
+    </div>
+  </div>
 </div>

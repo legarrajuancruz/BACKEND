@@ -10,7 +10,7 @@ userRouter.get("/register", (req, res) => {
   res.render("register");
 });
 
-userRouter.get("/", (req, res) => {
+userRouter.get("/profile", (req, res) => {
   res.render("profile", {
     user: req.session.user,
   });

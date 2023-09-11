@@ -61,4 +61,13 @@ sessionsRouter.post("/register", async (req, res) => {
   });
 });
 
+sessionsRouter.post("/logout", async (request, response) => {
+  request.session.destroy((err) => {
+    if (err) {
+      return response.redirect("/profile");
+    }
+    response.redirect("/users/login");
+  });
+});
+
 export default sessionsRouter;
