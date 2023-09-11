@@ -14,7 +14,7 @@ import mongoose from "mongoose";
 
 import ProductRouter from "./routes/product.routes.js";
 import CartRouter from "./routes/cart.routes.js";
-import SessionsRouter from "./routes/sessions.router.js";
+import sessionsRouter from "./routes/sessions.router.js";
 import usersViewRouter from "./routes/users.views.router.js";
 import viewRouter from "./routes/view.router.js";
 
@@ -77,7 +77,7 @@ app.use(
 =================*/
 app.use(`/api/products`, ProductRouter);
 app.use(`/api/carts`, CartRouter);
-app.use(`/api/sessions`, SessionsRouter);
+app.use(`/api/sessions`, sessionsRouter);
 app.use("/users", usersViewRouter);
 app.use("/", viewRouter);
 

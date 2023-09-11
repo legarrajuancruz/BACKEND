@@ -1,7 +1,7 @@
 import { Router } from "express";
 import UserManager from "../dao/mongoManager/userManagerMongo.js";
 
-const SessionsRouter = Router();
+const sessionsRouter = Router();
 
 const UM = new UserManager();
 
@@ -59,4 +59,4 @@ SessionsRouter.post("/register", async (req, res) => {
   });
 });
 
-export default SessionsRouter;
+export default sessionsRouter;
