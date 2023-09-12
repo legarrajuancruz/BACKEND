@@ -1,70 +1,51 @@
 import { Router } from "express";
 import UserManager from "../dao/mongoManager/userManagerMongo.js";
-import { createHash, isValidPassword } from "../utils.js";
+
+import passport from "passport";
 
 const sessionsRouter = Router();
 
 const UM = new UserManager();
 
-sessionsRouter.post("/login", async (req, res) => {
-  let { user, pass } = req.body;
-  console.log(user, pass);
-  const userLogged = await UM.login(user);
-  console.log(userLogged);
-
-  if (!isValidPassword(userLogged, pass)) {
-    return res
-      .status(401)
-      .send({ status: "error", error: "Credenciales incorrectas" });
-  }
-  if (userLogged) {
+sessionsRouter.post(
+  "/login",
+  passport.authenticate("login", {
+    failureRedirect: "/api/sessions/fail-login",
+  }),
+  async (req, res) => {
+    console.log("Usuario no encontrado");
+    const user = req.user;
+    console.log(user);
+    if (!user)
+      return res.status(401).send({
+        status: "error",
+        error: "Credenciales incorrectas",
+      });
     req.session.user = {
-      name: userLogged.first_name,
-      last_name: userLogged.last_name,
-      email: userLogged.email,
-      password: userLogged.password,
-      age: userLogged.age,
-      role: userLogged.role,
+      name: `${user.first_name} ${user.last_name}`,
+      email: user.email,
+      age: user.age,
     };
     res.send({
-      status: "OK",
-      message: "Logueo Exitoso",
+      status: "success",
       payload: req.session.user,
+      message: "Primer logueo realizados",
     });
-  } else {
+  }
+);
+
+sessionsRouter.post(
+  "/register",
+  passport.authenticate("register", {
+    failureRedirect: "/api/sessions/fail-register",
+  }),
+  async (req, res) => {
+    console.log("Nuevo usuario registrado");
     res
-      .status(401)
-      .send({ status: "Error", message: "No se pudo loguaer el usuario" });
+      .status(201)
+      .send({ status: "success", message: "Usuario creado con exito" });
   }
-  //DAMOS DE ALTA LA SESION
-});
-
-sessionsRouter.post("/register", async (req, res) => {
-  const { first_name, last_name, email, age, password } = req.body;
-
-  const exist = await UM.leerUsuarios(email);
-
-  if (exist) {
-    return res
-      .status(400)
-      .send({ status: "error", message: "Usuario ya registrado" });
-  }
-
-  const user = {
-    first_name,
-    last_name,
-    email,
-    age,
-    password: createHash(password),
-  };
-
-  const result = await UM.crearUsuario(user);
-  console.log(result);
-  res.send({
-    status: "success",
-    messgae: "Usuario creado con exito! con ID:" + result._id,
-  });
-});
+);
 
 sessionsRouter.post("/logout", async (request, response) => {
   request.session.destroy((err) => {
@@ -73,6 +54,14 @@ sessionsRouter.post("/logout", async (request, response) => {
     }
     response.redirect("/users/login");
   });
+});
+
+sessionsRouter.get("/fail-register", (req, res) => {
+  res.status(401).send({ error: "Error al procesar el registro" });
+});
+
+sessionsRouter.get("/fail-login", (req, res) => {
+  res.status(401).send({ error: "Error al procesar el login" });
 });
 
 export default sessionsRouter;
