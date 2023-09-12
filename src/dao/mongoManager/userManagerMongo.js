@@ -21,14 +21,13 @@ export default class UserService {
     return result;
   };
 
-  login = async (user, pass) => {
+  login = async (user) => {
     try {
       const userLogged = await userModel.findOne({
-        $and: [{ email: user }, { password: pass }],
+        $and: [{ email: user }],
       });
 
       if (userLogged) {
-        console.log("User Logged");
         return userLogged;
       }
       return false;

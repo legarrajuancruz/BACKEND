@@ -1,5 +1,6 @@
 import { Router } from "express";
 import UserManager from "../dao/mongoManager/userManagerMongo.js";
+import { createHash, isValidPassword } from "../utils.js";
 
 const sessionsRouter = Router();
 
@@ -8,10 +9,14 @@ const UM = new UserManager();
 sessionsRouter.post("/login", async (req, res) => {
   let { user, pass } = req.body;
   console.log(user, pass);
-  const userLogged = await UM.login(user, pass);
-  console.log("USER LOGIN");
+  const userLogged = await UM.login(user);
   console.log(userLogged);
 
+  if (!isValidPassword(userLogged, pass)) {
+    return res
+      .status(401)
+      .send({ status: "error", error: "Credenciales incorrectas" });
+  }
   if (userLogged) {
     req.session.user = {
       name: userLogged.first_name,
@@ -50,7 +55,7 @@ sessionsRouter.post("/register", async (req, res) => {
     last_name,
     email,
     age,
-    password,
+    password: createHash(password),
   };
 
   const result = await UM.crearUsuario(user);
