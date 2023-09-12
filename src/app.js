@@ -12,6 +12,9 @@ import __dirname from "./utils.js";
 import { Server } from "socket.io";
 import mongoose from "mongoose";
 
+import passport from "passport";
+import initializedPassport from "./config/passport.config.js";
+
 import ProductRouter from "./routes/product.routes.js";
 import CartRouter from "./routes/cart.routes.js";
 import sessionsRouter from "./routes/sessions.router.js";
@@ -71,6 +74,13 @@ app.use(
     saveUninitialized: false,
   })
 );
+
+/*===================
+|      PASSPORT     |
+===================*/
+initializedPassport();
+app.use(passport.initialize());
+app.use(passport.session());
 
 /*=================
 |      ROUTES     |
