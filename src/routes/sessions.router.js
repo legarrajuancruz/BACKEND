@@ -3,6 +3,12 @@ import passport from "passport";
 
 const sessionsRouter = Router();
 
+// Desde Postman --> POST http://localhost:8080/api/sessions/login
+// {
+//  "email":"test2@test",
+//  "password":"1234"
+// }
+
 sessionsRouter.post(
   "/login",
   passport.authenticate("login", {
@@ -29,6 +35,15 @@ sessionsRouter.post(
     });
   }
 );
+
+// Desde Postman --> POST http://localhost:8080/api/sessions/register
+// {
+//   "first_name":"test",
+//   "last_name":"test",
+//   "email":"test@test.com",
+//   "age":"00",
+//   "password":"test"
+// }
 
 sessionsRouter.post(
   "/register",
