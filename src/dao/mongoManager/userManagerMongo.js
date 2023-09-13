@@ -21,11 +21,10 @@ export default class UserService {
     return result;
   };
 
-  login = async (user) => {
+  login = async (email) => {
     try {
-      const userLogged = await userModel.findOne({
-        $and: [{ email: user }],
-      });
+      console.log(email);
+      const userLogged = await userModel.findOne({ email });
 
       if (userLogged) {
         return userLogged;

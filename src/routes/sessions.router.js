@@ -1,11 +1,7 @@
 import { Router } from "express";
-import UserManager from "../dao/mongoManager/userManagerMongo.js";
-
 import passport from "passport";
 
 const sessionsRouter = Router();
-
-const UM = new UserManager();
 
 sessionsRouter.post(
   "/login",
@@ -13,23 +9,23 @@ sessionsRouter.post(
     failureRedirect: "/api/sessions/fail-login",
   }),
   async (req, res) => {
-    console.log("Usuario no encontrado");
+    console.log("User found to login:");
     const user = req.user;
     console.log(user);
+
     if (!user)
-      return res.status(401).send({
-        status: "error",
-        error: "Credenciales incorrectas",
-      });
+      return res
+        .status(401)
+        .send({ status: "error", error: "credenciales incorrectas" });
     req.session.user = {
       name: `${user.first_name} ${user.last_name}`,
       email: user.email,
       age: user.age,
     };
     res.send({
-      status: "success",
+      status: "OK",
       payload: req.session.user,
-      message: "Primer logueo realizados",
+      message: "¡Primer logueo realizado! :)",
     });
   }
 );

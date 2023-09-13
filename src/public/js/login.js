@@ -3,10 +3,10 @@
 ===========================*/
 
 const loginUser = async () => {
-  let user = document.getElementById("email").value;
-  let pass = document.getElementById("password").value;
+  let email = document.getElementById("email").value;
+  let password = document.getElementById("password").value;
 
-  const usuario = { user, pass };
+  const usuario = { email, password };
 
   const response = await fetch("/api/sessions/login", {
     method: "POST",

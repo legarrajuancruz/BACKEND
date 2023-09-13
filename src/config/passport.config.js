@@ -1,7 +1,8 @@
 import passport from "passport";
 import passportLocal from "passport-local";
 import UserManager from "../dao/mongoManager/userManagerMongo.js";
-import { createHash, isValidPassword } from "../utils";
+import { createHash, isValidPassword } from "../utils.js";
+import userModel from "../dao/models/user.model.js";
 
 const UM = new UserManager();
 
@@ -17,17 +18,15 @@ const initializedPassport = () => {
       async (req, username, password, done) => {
         try {
           const user = await UM.login(username);
-          console.log("Usuario encontrado en la base de datos");
+          console.log("Usuario encontrado para login:");
           console.log(user);
           if (!user) {
-            console.warn("usuario no existe" + username);
+            console.warn("User doesn't exists with username: " + username);
             return done(null, false);
           }
-          //validacion password
+          // Validacion de el password
           if (!isValidPassword(user, password)) {
-            return res
-              .status(401)
-              .send({ status: "error", error: "Credenciales incorrectas" });
+            return done(null, false);
           }
           return done(null, user);
         } catch (error) {
@@ -43,7 +42,7 @@ const initializedPassport = () => {
     new localStrategy(
       { passReqToCallback: true, usernameField: "email" },
       async (req, username, password, done) => {
-        const { first_name, last_name, email, age, password } = req.body;
+        const { first_name, last_name, email, age } = req.body;
         try {
           const exist = await UM.leerUsuarios(email);
 
@@ -73,12 +72,13 @@ const initializedPassport = () => {
   passport.serializeUser((user, done) => {
     done(null, user._id);
   });
+
   passport.deserializeUser(async (id, done) => {
     try {
-      let user = await UM.login(id);
+      let user = await userModel.findById(id);
       done(null, user);
     } catch (error) {
-      console.error("Error deserealizando el usuario:" + error);
+      console.error("Error deserializando el usuario: " + error);
     }
   });
 };
