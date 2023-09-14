@@ -3,7 +3,6 @@ import passportLocal from "passport-local";
 import UserManager from "../dao/mongoManager/userManagerMongo.js";
 import GitHubStrategy from "passport-github2";
 import { createHash, isValidPassword } from "../utils.js";
-import userModel from "../dao/models/user.model.js";
 
 const UM = new UserManager();
 
