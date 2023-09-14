@@ -3,6 +3,7 @@ import passportLocal from "passport-local";
 import UserManager from "../dao/mongoManager/userManagerMongo.js";
 import GitHubStrategy from "passport-github2";
 import { createHash, isValidPassword } from "../utils.js";
+import userModel from "../dao/models/user.model.js";
 
 const UM = new UserManager();
 
@@ -27,14 +28,14 @@ const initializedPassport = () => {
         console.log(profile);
 
         try {
-          let email = profile._json.email;
-          const user = await UM.leerUsuarios(email);
+          let usuario = profile._json.email;
+          const user = await userModel.findOne({ usuario });
           console.log("Usuario encontrado para login");
-          console.log(user);
+          console.log({ user });
 
           if (!user) {
             console.warn(
-              "El suaurio no existe en la base de datos" + profile._json.email
+              "El suaurio no existe en la base de datos " + profile._json.email
             );
             let newUser = {
               first_neme: profile._json.name,
