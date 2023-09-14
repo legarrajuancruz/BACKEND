@@ -28,8 +28,8 @@ const initializedPassport = () => {
         console.log(profile);
 
         try {
-          let usuario = profile._json.email;
-          const user = await userModel.findOne({ usuario });
+          // let usuario = profile._json.email;
+          const user = await userModel.findOne({ email: profile._json.email });
           console.log("Usuario encontrado para login");
           console.log({ user });
 
