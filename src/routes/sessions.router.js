@@ -3,6 +3,29 @@ import passport from "passport";
 
 const sessionsRouter = Router();
 
+sessionsRouter.get(
+  "/github",
+  passport.authenticate("github", { scope: ["user:email"] }),
+  async (req, res) => {}
+);
+
+//Githubcallback
+sessionsRouter.get(
+  "/githubcallback",
+  passport.authenticate("github", { failureRedirect: "/github/error" }),
+  async (req, res) => {
+    const user = req.user;
+
+    req.session.user = {
+      name: `${user.first_name} ${user.last_name}`,
+      email: user.email,
+      age: user.age,
+    };
+    req.session.admin = true;
+    res.redirect("/profile");
+  }
+);
+
 // Desde Postman --> POST http://localhost:8080/api/sessions/login
 // {
 //  "email":"test2@test",

@@ -20,6 +20,7 @@ import CartRouter from "./routes/cart.routes.js";
 import sessionsRouter from "./routes/sessions.router.js";
 import usersViewRouter from "./routes/users.views.router.js";
 import viewRouter from "./routes/view.router.js";
+import githubLoginViewRouter from "./routes/github-login.views.router.js";
 
 import MessagesManager from "./dao/mongoManager/messageManagerMongo.js";
 import ProductManager from "./dao/mongoManager/productManagerMongo.js";
@@ -90,6 +91,7 @@ app.use(`/api/carts`, CartRouter);
 app.use(`/api/sessions`, sessionsRouter);
 app.use("/users", usersViewRouter);
 app.use("/", viewRouter);
+app.use("/github", githubLoginViewRouter);
 
 //SOCKET SERVER CONECCTION
 const socketServer = new Server(httpserver);
