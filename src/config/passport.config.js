@@ -38,7 +38,7 @@ const initializedPassport = () => {
               "El suaurio no existe en la base de datos " + profile._json.email
             );
             let newUser = {
-              first_neme: profile._json.name,
+              first_name: profile._json.name,
               last_name: ``,
               age: ``,
               email: profile._json.email,
