@@ -47,6 +47,8 @@ const initializedPassport = () => {
             };
             const result = await UM.crearUsuario(newUser);
             done(null, result);
+          } else {
+            return done(null, user);
           }
         } catch (error) {
           return done(error);
