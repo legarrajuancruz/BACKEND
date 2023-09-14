@@ -41,4 +41,11 @@ export default class UserService {
 
     return users;
   };
+
+  buscarID = async (id) => {
+    console.log(id);
+    let user = await userModel.findById(id);
+
+    return user;
+  };
 }

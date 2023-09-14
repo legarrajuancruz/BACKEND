@@ -3,7 +3,7 @@ import passportLocal from "passport-local";
 import UserManager from "../dao/mongoManager/userManagerMongo.js";
 import GitHubStrategy from "passport-github2";
 import { createHash, isValidPassword } from "../utils.js";
-import userModel from "../dao/models/user.model.js";
+//import userModel from "../dao/models/user.model.js";
 
 const UM = new UserManager();
 
@@ -28,7 +28,7 @@ const initializedPassport = () => {
         console.log(profile);
 
         try {
-          const user = await userModel.findOne({ email: profile._json.email });
+          const user = await UM.leerUsuarios({ email: profile._json.email });
           console.log("Usuario encontrado para login");
           console.log({ user });
 
@@ -128,7 +128,7 @@ const initializedPassport = () => {
 
   passport.deserializeUser(async (id, done) => {
     try {
-      let user = await userModel.findById(id);
+      let user = await UM.buscarID(id);
       done(null, user);
     } catch (error) {
       console.error("Error deserializando el usuario: " + error);
