@@ -3,6 +3,7 @@ import passportLocal from "passport-local";
 import UserManager from "../dao/mongoManager/userManagerMongo.js";
 import GitHubStrategy from "passport-github2";
 import { createHash, isValidPassword } from "../utils.js";
+import userModel from "../dao/models/user.model.js";
 
 const UM = new UserManager();
 
@@ -27,7 +28,7 @@ const initializedPassport = () => {
         console.log(profile);
 
         try {
-          const user = await UM.leerUsuarios({ email: profile._json.email });
+          const user = await userModel.findOne({ email: profile._json.email });
           console.log("Usuario encontrado para login");
           console.log({ user });
 
