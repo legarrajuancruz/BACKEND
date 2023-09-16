@@ -1,5 +1,6 @@
 import { Router } from "express";
 import passport from "passport";
+import { generateJWToken } from "../utils.js";
 
 const sessionsRouter = Router();
 
@@ -46,16 +47,10 @@ sessionsRouter.post(
       return res
         .status(401)
         .send({ status: "error", error: "credenciales incorrectas" });
-    req.session.user = {
-      name: `${user.first_name} ${user.last_name}`,
-      email: user.email,
-      age: user.age,
-    };
-    res.send({
-      status: "OK",
-      payload: req.session.user,
-      message: "¡Primer logueo realizado! :)",
-    });
+    //JWT
+    const access_token = generateJWToken(user);
+    console.log(access_token);
+    res.send({ access_token: access_token });
   }
 );
 
