@@ -36,7 +36,7 @@ export const authToken = (req, res, next) => {
 
   jwt.verify(token, PRIVATE_KEY, (error, credentials) => {
     if (error)
-      return res.status(403).send({ error: "Token invalido, no autorizado" });
+      return res.status(403).send({ error: "Token invalido: no autorizado" });
     req.user = credentials.user;
     console.log(req.user);
     next();

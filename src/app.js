@@ -15,12 +15,13 @@ import mongoose from "mongoose";
 import passport from "passport";
 import initializedPassport from "./config/passport.config.js";
 
-import ProductRouter from "./routes/product.routes.js";
-import CartRouter from "./routes/cart.routes.js";
+import ProductRouter from "./routes/product.router.js";
+import CartRouter from "./routes/cart.router.js";
 import sessionsRouter from "./routes/sessions.router.js";
 import usersViewRouter from "./routes/users.views.router.js";
 import viewRouter from "./routes/view.router.js";
 import githubLoginViewRouter from "./routes/github-login.views.router.js";
+import jwtRouter from "./routes/jwt.router.js";
 
 import MessagesManager from "./dao/mongoManager/messageManagerMongo.js";
 import ProductManager from "./dao/mongoManager/productManagerMongo.js";
@@ -92,6 +93,7 @@ app.use(`/api/sessions`, sessionsRouter);
 app.use("/users", usersViewRouter);
 app.use("/", viewRouter);
 app.use("/github", githubLoginViewRouter);
+app.use("/api/jwt", jwtRouter);
 
 //SOCKET SERVER CONECCTION
 const socketServer = new Server(httpserver);
