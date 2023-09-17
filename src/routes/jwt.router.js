@@ -36,7 +36,15 @@ JWTrouter.post("/login", async (req, res) => {
     console.log(access_Token);
 
     //localstorage
-    res.send({ message: "Login successs", jwt: access_Token });
+    // res.send({ message: "Login successs", jwt: access_Token });
+
+    //cookie
+    res.cookie("jwtCookieToken", access_Token, {
+      maxAge: 60000,
+      httpOnly: true,
+    });
+
+    res.send({ message: "Login success" });
   } catch (error) {
     console.error(error);
     return res

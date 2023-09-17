@@ -15,8 +15,13 @@ const loginUser = async () => {
   }).then((result) => {
     if (result.status === 200) {
       result.json().then((json) => {
-        console.log(json);
-        localStorage.setItem("authToken", json.jwt);
+        //LOCALSTORAGE
+        // console.log(json);
+        // localStorage.setItem("authToken", json.jwt);
+
+        //COOKIES
+        console.log("Cookies generadas");
+        console.log(document.cookie);
       });
     } else if (result.status === 401) {
       console.log(result);
