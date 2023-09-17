@@ -1,12 +1,10 @@
-import { authToken } from "../../utils";
-
 function llamarApi() {
   console.log("Llamando a api users");
 
-  fetch("/api/users/profile/65051a60a7efd9b588fa9bf3", {
+  fetch("/api/users/65051a60a7efd9b588fa9bf3", {
     method: "GET",
     headers: {
-      "Content-type": "application/json; charset=UTF-8",
+      "Content-type": "application/json; charset=utf-8",
       Authorization: `Bearer ${localStorage.getItem("authToken")}`,
     },
   }).then((result) => {

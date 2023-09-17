@@ -87,11 +87,11 @@ app.use(passport.session());
 app.use(`/api/products`, ProductRouter);
 app.use(`/api/carts`, CartRouter);
 app.use(`/api/sessions`, sessionsRouter);
+app.use("/api/users", usersRouter);
 app.use("/users", usersViewRouter);
 app.use("/", viewRouter);
 app.use("/github", githubLoginViewRouter);
 app.use("/api/jwt", jwtRouter);
-app.use("/api/users", usersRouter);
 
 //SOCKET SERVER CONECCTION
 const socketServer = new Server(httpserver);

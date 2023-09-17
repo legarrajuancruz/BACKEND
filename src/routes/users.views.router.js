@@ -12,7 +12,7 @@ userRouter.get("/register", (req, res) => {
   res.render("register");
 });
 
-userRouter.get("/profile", authToken, (req, res) => {
+userRouter.get("/", (req, res) => {
   res.render("profile", {
     user: req.user,
   });

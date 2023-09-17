@@ -23,7 +23,7 @@ sessionsRouter.get(
       age: user.age,
     };
     req.session.admin = true;
-    res.redirect("/users/profile");
+    res.redirect("/users/");
   }
 );
 
@@ -79,7 +79,7 @@ sessionsRouter.post(
 sessionsRouter.post("/logout", async (request, response) => {
   request.session.destroy((err) => {
     if (err) {
-      return response.redirect("/profile");
+      return response.redirect("/");
     }
     response.redirect("/users/login");
   });
