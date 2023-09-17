@@ -6,7 +6,6 @@ import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access
 import MongoStore from "connect-mongo";
 import cookieParser from "cookie-parser";
 import session from "express-session";
-//import FileStore from "session-file-store";
 
 import __dirname from "./utils.js";
 import { Server } from "socket.io";
@@ -19,6 +18,7 @@ import ProductRouter from "./routes/product.router.js";
 import CartRouter from "./routes/cart.router.js";
 import sessionsRouter from "./routes/sessions.router.js";
 import usersViewRouter from "./routes/users.views.router.js";
+import usersRouter from "./routes/users.router.js";
 import viewRouter from "./routes/view.router.js";
 import githubLoginViewRouter from "./routes/github-login.views.router.js";
 import jwtRouter from "./routes/jwt.router.js";
@@ -53,8 +53,6 @@ const httpserver = app.listen(PORT, () => {
   console.log(`Server on port: ${PORT}`);
 });
 
-//const fileStorage = FileStore(session);
-
 const MONGO_url =
   "mongodb+srv://legarrajuan:21dBt5XzVUd2DOlQ@cluster0.ftgsun9.mongodb.net/ecommerse?retryWrites=true&w=majority";
 
@@ -65,7 +63,6 @@ app.use(cookieParser());
 
 app.use(
   session({
-    // store: new fileStorage({ path: "./sessions", ttl: 15, retries: 0 }),
     store: MongoStore.create({
       mongoUrl: MONGO_url,
       mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
@@ -94,6 +91,7 @@ app.use("/users", usersViewRouter);
 app.use("/", viewRouter);
 app.use("/github", githubLoginViewRouter);
 app.use("/api/jwt", jwtRouter);
+app.use("/api/users", usersRouter);
 
 //SOCKET SERVER CONECCTION
 const socketServer = new Server(httpserver);

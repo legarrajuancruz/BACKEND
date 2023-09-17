@@ -27,7 +27,7 @@ sessionsRouter.get(
   }
 );
 
-// Desde Postman --> POST http://localhost:8080/api/sessions/login
+// Desde Postman --> POST http://localhost:8080/api/jwt/login
 // {
 //  "email":"test2@test",
 //  "password":"1234"
@@ -39,8 +39,8 @@ sessionsRouter.post(
     failureRedirect: "/api/sessions/fail-login",
   }),
   async (req, res) => {
-    console.log("User found to login:");
     const user = req.user;
+    console.log("Usuario encontrado para login:");
     console.log(user);
 
     if (!user)

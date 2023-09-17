@@ -1,4 +1,5 @@
 import { Router } from "express";
+import passport from "passport";
 import { authToken } from "../utils.js";
 
 const userRouter = Router();

@@ -9,6 +9,8 @@ JWTrouter.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await userModel.findOne({ email });
+    console.log("Usuario encontrado para login");
+    console.log(user);
     if (!user) {
       console.warn("Usuario no existe en la base de datos" + email);
       return res.status(204).send({
@@ -30,15 +32,15 @@ JWTrouter.post("/login", async (req, res) => {
       age: user.age,
       role: user.role,
     };
-    const accessToken = generateJWToken(tokenUser);
-    console.log(accessToken);
+    const access_Token = generateJWToken(tokenUser);
+    console.log(access_Token);
 
     //localstorage
-    res.send({ message: "Login successs", jwt: accessToken });
+    res.send({ message: "Login successs", jwt: access_Token });
   } catch (error) {
     console.error(error);
     return res
-      .status(401)
+      .status(500)
       .send({ status: "error", error: "error interno de la aplicacion" });
   }
 });

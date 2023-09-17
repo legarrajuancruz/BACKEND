@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 import jwt from "jsonwebtoken";
+import passport from "passport";
 
 //IMPLEMENTACION BCRYPT
 export const createHash = (password) =>
@@ -20,7 +21,7 @@ export const isValidPassword = (user, password) => {
 const PRIVATE_KEY = "CoderhouseSecretKeyJWT";
 
 export const generateJWToken = (user) => {
-  return jwt.sign({ user }, PRIVATE_KEY, { expiresIn: "24h" });
+  return jwt.sign({ user }, PRIVATE_KEY, { expiresIn: "1h" });
 };
 
 export const authToken = (req, res, next) => {

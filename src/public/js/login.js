@@ -8,16 +8,21 @@ const loginUser = async () => {
 
   const usuario = { email, password };
 
-  const response = await fetch("/api/sessions/login", {
+  const response = await fetch("/api/jwt/login", {
     method: "POST",
     headers: { "Content-type": "application/json; charset=UTF-8" },
     body: JSON.stringify(usuario),
+  }).then((result) => {
+    if (result.status === 200) {
+      result.json().then((json) => {
+        console.log(json);
+        localStorage.setItem("authToken", json.jwt);
+      });
+    } else if (result.status === 401) {
+      console.log(result);
+      alert("Login invalido, controla tus credenciales");
+    }
   });
-  const data = await response.json();
-  console.log(data);
-  if (data.status === "OK") {
-    location.href = "/products";
-  }
 };
 
 document.getElementById("btnLogin").onclick = loginUser;
