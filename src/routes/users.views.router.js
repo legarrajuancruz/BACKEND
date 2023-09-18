@@ -12,10 +12,14 @@ userRouter.get("/register", (req, res) => {
   res.render("register");
 });
 
-userRouter.get("/", (req, res) => {
-  res.render("profile", {
-    user: req.user,
-  });
-});
+userRouter.get(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    res.render("profile", {
+      user: req.user,
+    });
+  }
+);
 
 export default userRouter;

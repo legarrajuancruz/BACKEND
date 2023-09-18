@@ -3,14 +3,42 @@ import passportLocal from "passport-local";
 import UserManager from "../dao/mongoManager/userManagerMongo.js";
 import GitHubStrategy from "passport-github2";
 import { createHash, isValidPassword } from "../utils.js";
-//import userModel from "../dao/models/user.model.js";
+import jwtStrategy from "passport-jwt";
+import { PRIVATE_KEY } from "../utils.js";
 
 const UM = new UserManager();
 
 //ESTRATEGIA
 const localStrategy = passportLocal.Strategy;
 
+const JwtStrategy = jwtStrategy.Strategy;
+const ExtractJWT = jwtStrategy.ExtractJwt;
+
 const initializedPassport = () => {
+  /*==================================
+  |          PASSPORT JWT            |
+  ==================================*/
+
+  passport.use(
+    "jwt",
+    new JwtStrategy(
+      {
+        jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]),
+        secretOrKey: PRIVATE_KEY,
+      },
+      async (jwt_payload, done) => {
+        console.log("Entrando a passport Strategy con JWT");
+        try {
+          console.log(jwt_payload);
+          return done(null, jwt_payload.user);
+        } catch (error) {
+          console.error(error);
+          return done(error);
+        }
+      }
+    )
+  );
+
   /*==================================
   |        GITHUB STRATEGY           |
   ==================================*/
@@ -134,6 +162,19 @@ const initializedPassport = () => {
       console.error("Error deserializando el usuario: " + error);
     }
   });
+};
+
+const cookieExtractor = (req) => {
+  let token = null;
+  console.log("Entrando a Cookie Extractor");
+  if (req && req.cookies) {
+    console.log("Cookies presentes: ");
+    console.log(req.cookies);
+    token = req.cookies["jwtCookieToken"];
+    console.log("Token obtenido desde Cookie:");
+    console.log(token);
+  }
+  return token;
 };
 
 export default initializedPassport;
