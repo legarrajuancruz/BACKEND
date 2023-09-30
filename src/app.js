@@ -25,6 +25,8 @@ import jwtRouter from "./routes/jwt.router.js";
 import MessagesManager from "./dao/mongoManager/messageManagerMongo.js";
 import ProductManager from "./dao/mongoManager/productManagerMongo.js";
 
+import config from "./config/config.js";
+
 const app = express();
 
 /*=================
@@ -43,7 +45,7 @@ app.use(express.static(__dirname + "/public"));
 /*================
 |      SERVER    |
 ================*/
-const PORT = process.env.PORT || 8080;
+const PORT = config.port;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -59,7 +61,6 @@ const MONGO_url =
 |    SESSIONS   |
 ===============*/
 app.use(cookieParser());
-
 app.use(
   session({
     store: MongoStore.create({
@@ -91,14 +92,15 @@ app.use("/", viewRouter);
 app.use("/github", githubLoginViewRouter);
 app.use("/api/jwt", jwtRouter);
 
-//SOCKET SERVER CONECCTION
+/*================================
+|   SOCKET SERVER CONECCTION      |
+=================================*/
+
 const socketServer = new Server(httpserver);
 
 //SE ABRE CANAL
 socketServer.on("connection", (socket) => {
-  /*================================
-  |        REAL TIME PRODUCTS       |
-  =================================*/
+  /*  |        REAL TIME PRODUCTS       | */
 
   //CREAR PRODUCTO
   socket.on("mensajeKey", (data) => {
@@ -137,9 +139,7 @@ socketServer.on("connection", (socket) => {
     "Hay un nuevo producto en la base de datos"
   );
 
-  /*===================
-  |        CHAT       |
-  ===================*/
+  /*  |        CHAT       | */
 
   //CONVERSACION EN ARRAY
   const messagesManager = new MessagesManager();

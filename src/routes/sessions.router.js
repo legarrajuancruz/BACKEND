@@ -76,10 +76,10 @@ sessionsRouter.post(
   }
 );
 
-sessionsRouter.post("/logout", async (request, response) => {
-  request.session.destroy((err) => {
+sessionsRouter.post("/logout", async (req, res) => {
+  req.session.destroy((err) => {
     if (err) {
-      return response.redirect("/");
+      return res.redirect("/");
     }
     response.redirect("/users/login");
   });
