@@ -23,7 +23,7 @@ sessionsRouter.get(
       age: user.age,
     };
     req.session.admin = true;
-    res.redirect("/users/");
+    res.redirect("/users/profile");
   }
 );
 
