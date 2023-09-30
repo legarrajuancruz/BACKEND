@@ -164,6 +164,10 @@ const initializedPassport = () => {
   });
 };
 
+/*======================
+  |    cookieExtractor    |
+  =======================*/
+
 const cookieExtractor = (req) => {
   let token = null;
   console.log("Entrando a Cookie Extractor");
