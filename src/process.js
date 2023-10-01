@@ -14,6 +14,7 @@ program
 program.parse();
 
 console.log("Options", program.opts());
+console.log("Modo Opt: ", program.opts().mode);
 console.log("Remaining arguments: ", program.args);
 
-export default Command;
+export default program;

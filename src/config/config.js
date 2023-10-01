@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
+import program from "../process.js";
 
-const enviroment = "production";
+const enviroment = program.opts().mode;
 
 dotenv.config({
   path:
