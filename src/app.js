@@ -3,6 +3,8 @@ import expressHandlebars from "express-handlebars";
 import Handlebars from "handlebars";
 import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access";
 
+import config from "./config/config.js";
+
 import MongoStore from "connect-mongo";
 import cookieParser from "cookie-parser";
 import session from "express-session";
@@ -24,8 +26,6 @@ import jwtRouter from "./routes/jwt.router.js";
 
 import MessagesManager from "./dao/mongoManager/messageManagerMongo.js";
 import ProductManager from "./dao/mongoManager/productManagerMongo.js";
-
-import config from "./config/config.js";
 
 const app = express();
 
@@ -54,8 +54,7 @@ const httpserver = app.listen(PORT, () => {
   console.log(`Server on port: ${PORT}`);
 });
 
-const MONGO_url =
-  "mongodb+srv://legarrajuan:21dBt5XzVUd2DOlQ@cluster0.ftgsun9.mongodb.net/ecommerse?retryWrites=true&w=majority";
+const MONGO_url = config.mongoUrl;
 
 /*===============
 |    SESSIONS   |
