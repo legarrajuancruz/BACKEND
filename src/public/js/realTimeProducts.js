@@ -40,21 +40,3 @@ function enviarId(id) {
   console.log("Producto a eliminar", id);
   socket.emit("elimarProductoBoton", id);
 }
-
-/*==========================
--          CHATS            -
-===========================*/
-
-//RECIBE NOTIFICACIONES DESDE SERVER
-socket;
-socket.on("msgServer", (data) => {
-  console.log(data);
-});
-
-socket.on("mensajeKey", (data) => {
-  console.log("Se agrego un nuevo producto");
-});
-
-socket.on("eventoTodos", (data) => {
-  console.log(data);
-});
