@@ -4,7 +4,6 @@ import bcrypt from "bcrypt";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 import jwt from "jsonwebtoken";
-import passport from "passport";
 
 //IMPLEMENTACION BCRYPT
 export const createHash = (password) =>
