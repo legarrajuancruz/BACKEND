@@ -1,4 +1,3 @@
-import { Router } from "express";
 import ProductService from "../dao/mongoManager/productManagerMongo.js";
 
 const productService = new ProductService();
