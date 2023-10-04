@@ -23,7 +23,7 @@ class ProductManager {
   /*=============
 - ADD Products  -
 ===============*/
-  addProducts = async (product) => {
+  crearProducto = async (product) => {
     let productsOld = await this.readProducts();
     product.id = productsOld.length;
 
@@ -36,14 +36,14 @@ class ProductManager {
   /*=============
 - GET Products  -
 ===============*/
-  getProducts = async () => {
+  leerProductos = async () => {
     return await this.readProducts();
   };
 
   /*================
 - GET Products ID -
 ==================*/
-  getProductsById = async (id) => {
+  getProductbyId = async (id) => {
     let busquedaById = await this.existe(id);
     if (!busquedaById) {
       return "Producto no encontrado";
@@ -63,7 +63,7 @@ class ProductManager {
   /*================
 -     DELETE Id     -
 ==================*/
-  deleteById = async (id) => {
+  borrarProducto = async (id) => {
     let products = await this.readProducts();
     let busquedaId = products.some((eL) => eL.id === id);
 
@@ -78,7 +78,7 @@ class ProductManager {
   /*================
 -     UPDATE Id     -
 ==================*/
-  updateProduct = async (id, nuevo) => {
+  actualizarProducto = async (id, nuevo) => {
     let parseado = await this.readProducts();
     let productoExiste = await this.existe(id);
 

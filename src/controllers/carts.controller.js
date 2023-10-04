@@ -1,8 +1,14 @@
 import CartService from "../dao/mongoManager/cartManagerMongo.js";
 import ProductService from "../dao/mongoManager/productManagerMongo.js";
 
+import ProductManager from "../dao/fileManager/ProductManager.js";
+import CartManager from "../dao/fileManager/CartManager.js";
+
 const cart = new CartService();
+//const cart = new CartManager();
+
 const productos = new ProductService();
+//const productos = new ProductManager();
 
 //LEER
 const getCarts = async (req, res) => {

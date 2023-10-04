@@ -1,6 +1,8 @@
 import ProductService from "../dao/mongoManager/productManagerMongo.js";
+//import ProductManager from "../dao/fileManager/ProductManager.js";
 
 const productService = new ProductService();
+//const productService = new ProductManager()
 
 //CREAR
 const addProduct = async (req, res) => {
