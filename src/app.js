@@ -8,6 +8,7 @@ import config from "./config/config.js";
 import MongoStore from "connect-mongo";
 import cookieParser from "cookie-parser";
 import session from "express-session";
+import cors from "cors";
 
 import __dirname from "./utils.js";
 import { Server } from "socket.io";
@@ -47,15 +48,25 @@ app.use(express.static(__dirname + "/public"));
 |      SERVER    |
 ================*/
 const PORT = config.port;
+const MONGO_url = config.mongoUrl;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
+
+//CONECTAR A BASE DE DATOS CON PATRON SINGLETON
+const ConnectMongoDB = async () => {
+  try {
+    await singleton.getInstance();
+  } catch (error) {
+    console.log(error);
+  }
+};
+ConnectMongoDB();
 
 const httpserver = app.listen(PORT, () => {
   console.log(`Server on port: ${PORT}`);
 });
-
-const MONGO_url = config.mongoUrl;
 
 /*===============
 |    SESSIONS   |
@@ -165,12 +176,3 @@ socketServer.on("connection", (socket) => {
     }
   });
 });
-
-const ConnectMongoDB = async () => {
-  try {
-    await singleton.getInstance();
-  } catch (error) {
-    console.log(error);
-  }
-};
-ConnectMongoDB();
