@@ -12,6 +12,7 @@ import session from "express-session";
 import __dirname from "./utils.js";
 import { Server } from "socket.io";
 import mongoose from "mongoose";
+import singleton from "./config/singleton.js";
 
 import passport from "passport";
 import initializedPassport from "./config/passport.config.js";
@@ -165,14 +166,11 @@ socketServer.on("connection", (socket) => {
   });
 });
 
-const connectMongoDB = async () => {
+const singletonInstance = async () => {
   try {
-    await mongoose.connect(MONGO_url);
-    console.log("Conectado con exito a MongoDB usando mongoose");
+    await singleton.getInstance();
   } catch (error) {
-    console.error("No se pude conectar con la base de datos" + error);
-    process.exit();
+    console.log(error);
   }
 };
-
-connectMongoDB();
+singletonInstance();
