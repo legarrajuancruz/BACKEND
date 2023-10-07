@@ -166,11 +166,11 @@ socketServer.on("connection", (socket) => {
   });
 });
 
-const singletonInstance = async () => {
+const ConnectMongoDB = async () => {
   try {
     await singleton.getInstance();
   } catch (error) {
     console.log(error);
   }
 };
-singletonInstance();
+ConnectMongoDB();
