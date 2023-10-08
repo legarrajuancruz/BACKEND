@@ -6,6 +6,7 @@ import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access
 import config from "./config/config.js";
 
 import MongoStore from "connect-mongo";
+import singleton from "./config/singleton.js";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 import cors from "cors";
@@ -13,7 +14,6 @@ import cors from "cors";
 import __dirname from "./utils.js";
 import { Server } from "socket.io";
 import mongoose from "mongoose";
-import singleton from "./config/singleton.js";
 
 import passport from "passport";
 import initializedPassport from "./config/passport.config.js";

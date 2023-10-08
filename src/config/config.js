@@ -13,6 +13,7 @@ dotenv.config({
 export default {
   port: process.env.PORT,
   mongoUrl: process.env.URL_MONGO,
+  persistence: program.opts().persist,
   adminName: process.env.ADMIN_NAME,
   adminPassword: process.env.ADMIN_PASSWORD,
 };
