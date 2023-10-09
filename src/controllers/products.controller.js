@@ -1,4 +1,4 @@
-import ProductService from "../dao/mongoManager/productManagerMongo.js";
+import ProductService from "../services/factory.js";
 //import ProductManager from "../dao/fileManager/ProductManager.js";
 
 const productService = new ProductService();
