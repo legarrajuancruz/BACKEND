@@ -1,19 +1,23 @@
 import config from "../config/config.js";
 import singleton from "../config/singleton.js";
 
-/*================
-|     PRODUCT    |
-================*/
-let productService;
+let ProductService;
+let CartService;
 
-async function initMongoDBProduct() {
+async function initMongoDB() {
   try {
     await singleton.getInstance();
 
     const { default: productMONGO } = await import(
       "./dao/mongoManager/productManagerMongo.js"
     );
-    productService = new productMONGO();
+    ProductService = new productMONGO();
+    console.log("Servicio de persistencia de productos en MongoDB");
+
+    const { default: cartMONGO } = await import(
+      "./dao/mongoManager/cartManagerMongo.js"
+    );
+    CartService = new cartMONGO();
     console.log("Servicio de persistencia de productos en MongoDB");
   } catch (error) {
     console.error("Error al iniciar mongoDB", error);
@@ -23,14 +27,18 @@ async function initMongoDBProduct() {
 
 switch (config.persistence) {
   case "mongoDB":
-    initMongoDBProduct();
+    initMongoDB();
     break;
 
   case "fileSystem":
     const { default: productFS } = await import(
       "./dao/fileSystem/ProductManager.js"
     );
-    productService = new productFS();
+    ProductService = new productFS();
+    console.log("Servicio de persistencia de productos en FileSystem");
+
+    const { default: cartFS } = await import("./dao/fileSystem/CartManager.js");
+    CartService = new cartFS();
     console.log("Servicio de persistencia de productos en FileSystem");
 
     break;
@@ -40,4 +48,4 @@ switch (config.persistence) {
     process.exit(1);
 }
 
-export { ProductService };
+export { ProductService, CartService };
