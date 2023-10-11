@@ -48,4 +48,4 @@ switch (config.persistence) {
     process.exit(1);
 }
 
-export default { ProductService, CartService };
+export { ProductService, CartService };
