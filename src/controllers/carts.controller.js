@@ -1,8 +1,8 @@
-import CartService from "../dao/mongoManager/cartManagerMongo.js";
-import ProductService from "../dao/mongoManager/productManagerMongo.js";
+import CartService from "../services/dao/mongoManager/cartManagerMongo.js";
+import ProductService from "../services/dao/mongoManager/productManagerMongo.js";
 
-import ProductManager from "../dao/fileManager/ProductManager.js";
-import CartManager from "../dao/fileManager/CartManager.js";
+import ProductManager from "../services/dao/fileSystem/ProductManager.js";
+import CartManager from "../services/dao/fileSystem/CartManager.js";
 
 const cart = new CartService();
 //const cart = new CartManager();

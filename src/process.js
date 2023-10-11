@@ -5,7 +5,7 @@ const program = new Command();
 program
   .option("-d", "Variable para debug", false)
   .option("-p <port>", "Puerto del server", 8080)
-  .option("--persist <modo>", "Modo de persistencia", "mongoDB")
+  .option("--persist <mode>", "Modo de persistencia", "mongoDB")
   .option("--mode <mode>", "Modo de trabajo", "develop")
   .option(
     "-u <user>",

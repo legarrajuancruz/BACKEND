@@ -1,4 +1,4 @@
-import userModel from "../dao/models/user.model.js";
+import userModel from "../services/dao/models/user.model.js";
 import { isValidPassword } from "../utils.js";
 import { generateJWToken } from "../utils.js";
 

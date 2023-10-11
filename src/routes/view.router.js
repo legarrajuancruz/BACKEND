@@ -1,7 +1,7 @@
 import express from "express";
 
-import ProductManager from "../dao/mongoManager/productManagerMongo.js";
-import CartService from "../dao/mongoManager/cartManagerMongo.js";
+import ProductManager from "../services/dao/mongoManager/productManagerMongo.js";
+import CartService from "../services/dao/mongoManager/cartManagerMongo.js";
 
 const router = express.Router();
 
