@@ -1,19 +1,9 @@
-import CartService from "../services/dao/mongoManager/cartManagerMongo.js";
-import ProductService from "../services/dao/mongoManager/productManagerMongo.js";
-
-import ProductManager from "../services/dao/fileSystem/ProductManager.js";
-import CartManager from "../services/dao/fileSystem/CartManager.js";
-
-const cart = new CartService();
-//const cart = new CartManager();
-
-const productos = new ProductService();
-//const productos = new ProductManager();
+import { productService, cartService } from "../services/factory.js";
 
 //LEER
 const getCarts = async (req, res) => {
   try {
-    let productos = await cart.getCarts();
+    let productos = await cartService.getCarts();
 
     res.status(202).send({
       result: "Carrito obtenido con exito",
@@ -34,7 +24,7 @@ const getCartsById = async (req, res) => {
     let _id = req.params.id;
     console.log(_id);
 
-    let carritoId = await cart.getCartsById({ _id });
+    let carritoId = await cartService.getCartsById({ _id });
 
     res.status(202).send({
       result: "Carrito obtenido con exito",
@@ -52,7 +42,7 @@ const getCartsById = async (req, res) => {
 //CREAR
 const addCart = async (req, res) => {
   try {
-    let carritoNuevo = await cart.addCarts(req.body);
+    let carritoNuevo = await cartService.addCarts(req.body);
     res.status(201).send(carritoNuevo);
   } catch (error) {
     console.error(error);
@@ -68,7 +58,7 @@ const deleteCartById = async (req, res) => {
     let _id = req.params.id;
     console.log(_id);
 
-    let eliminado = await cart.getCartsById({ _id });
+    let eliminado = await cartService.getCartsById({ _id });
     await cart.deleteCart({ _id });
 
     res.status(202).send({
@@ -92,9 +82,9 @@ const addProductsToCart = async (req, res) => {
 
     const pid = req.params.pid;
 
-    let producto = await productos.getProductbyId(pid);
+    let producto = await productService.getProductbyId(pid);
 
-    let modificado = await cart.addProductToCart(cid.toString(), {
+    let modificado = await cartService.addProductToCart(cid.toString(), {
       _id: pid,
       quantity: quantity,
     });
@@ -120,7 +110,7 @@ const modProductsInCart = async (req, res) => {
   console.log({ body });
   const { cid } = req.params;
   try {
-    const existCart = await cart.getCartsById(cid);
+    const existCart = await cartService.getCartsById(cid);
     console.log(existCart);
 
     if (!existCart) {
@@ -132,7 +122,7 @@ const modProductsInCart = async (req, res) => {
     body.forEach(async (item) => {
       console.log(`ITEAM ${item._id}`);
 
-      const existProd = await productos.getProductById(item._id);
+      const existProd = await productService.getProductById(item._id);
 
       if (!existProd) {
         return res
@@ -141,7 +131,7 @@ const modProductsInCart = async (req, res) => {
       }
     });
 
-    const newCart = await cart.modificarProductInCart(cid, body);
+    const newCart = await cartService.modificarProductInCart(cid, body);
     res.status(200).send({ status: "success", newCart: newCart });
   } catch (err) {
     res.status(400).send({ error: err.message });

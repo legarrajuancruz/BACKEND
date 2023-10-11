@@ -1,9 +1,4 @@
-//import ProductService from "../services/factory.js";
-import ProductService from "../services/dao/mongoManager/productManagerMongo.js";
-//import ProductManager from "../dao/fileManager/ProductManager.js";
-
-const productService = new ProductService();
-//const productService = new ProductManager()
+import { productService } from "../services/factory.js";
 
 //CREAR
 const addProduct = async (req, res) => {
