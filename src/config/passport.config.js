@@ -1,12 +1,13 @@
 import passport from "passport";
 import passportLocal from "passport-local";
 import userModel from "../services/dao/models/user.model.js";
+import { CartsModel } from "../services/dao/models/carts.model.js";
+
 import GitHubStrategy from "passport-github2";
 import { createHash, isValidPassword } from "../utils.js";
 import jwtStrategy from "passport-jwt";
 import { PRIVATE_KEY } from "../utils.js";
 import userDto from "../services/dto/users.dto.js";
-import cartController from "../controllers/carts.controller.js";
 
 //ESTRATEGIA
 const localStrategy = passportLocal.Strategy;
@@ -121,7 +122,7 @@ const initializedPassport = () => {
     new localStrategy(
       { passReqToCallback: true, usernameField: "email" },
       async (req, username, password, done) => {
-        // const newCart = await cartController.addCart();
+        const newCart = await CartsModel.create();
         const { first_name, last_name, email, age } = req.body;
 
         try {
@@ -138,6 +139,7 @@ const initializedPassport = () => {
             last_name,
             email,
             age,
+            cart: newCart,
             password: createHash(password),
           };
 
