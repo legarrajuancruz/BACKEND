@@ -65,7 +65,7 @@ sessionsRouter.post("/logout", async (req, res) => {
     if (err) {
       return res.redirect("/");
     }
-    response.redirect("/users/login");
+    res.redirect("/users/login");
   });
 });
 

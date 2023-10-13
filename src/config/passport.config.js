@@ -6,6 +6,7 @@ import { createHash, isValidPassword } from "../utils.js";
 import jwtStrategy from "passport-jwt";
 import { PRIVATE_KEY } from "../utils.js";
 import userDto from "../services/dto/users.dto.js";
+import cartController from "../controllers/carts.controller.js";
 
 //ESTRATEGIA
 const localStrategy = passportLocal.Strategy;
@@ -71,7 +72,9 @@ const initializedPassport = () => {
               password: ``,
               loggedBy: "Github",
             };
+
             const result = await userModel.create(newUser);
+
             done(null, result);
           } else {
             return done(null, user);
@@ -118,9 +121,11 @@ const initializedPassport = () => {
     new localStrategy(
       { passReqToCallback: true, usernameField: "email" },
       async (req, username, password, done) => {
+        // const newCart = await cartController.addCart();
         const { first_name, last_name, email, age } = req.body;
+
         try {
-          const exist = await userModel.findOne(email);
+          const exist = await userModel.findOne({ email });
 
           if (exist) {
             return res
@@ -135,11 +140,12 @@ const initializedPassport = () => {
             age,
             password: createHash(password),
           };
+
           const newUser = new userDto(user);
 
           const result = await userModel.create(newUser);
           console.log(result);
-          console.log(result._id);
+          console.log(result.cart);
 
           return done(null, result);
         } catch (error) {
