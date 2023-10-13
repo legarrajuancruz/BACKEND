@@ -1,12 +1,11 @@
 import passport from "passport";
 import passportLocal from "passport-local";
-import UserManager from "../services/dao/mongoManager/userManagerMongo.js";
+import userModel from "../services/dao/models/user.model.js";
 import GitHubStrategy from "passport-github2";
 import { createHash, isValidPassword } from "../utils.js";
 import jwtStrategy from "passport-jwt";
 import { PRIVATE_KEY } from "../utils.js";
-
-const UM = new UserManager();
+import userDto from "../services/dto/users.dto.js";
 
 //ESTRATEGIA
 const localStrategy = passportLocal.Strategy;
@@ -56,7 +55,7 @@ const initializedPassport = () => {
         console.log(profile);
 
         try {
-          const user = await UM.leerUsuarios({ email: profile._json.email });
+          const user = await userModel.findOne({ email: profile._json.email });
           console.log("Usuario encontrado para login");
           console.log({ user });
 
@@ -72,7 +71,7 @@ const initializedPassport = () => {
               password: ``,
               loggedBy: "Github",
             };
-            const result = await UM.crearUsuario(newUser);
+            const result = await userModel.create(newUser);
             done(null, result);
           } else {
             return done(null, user);
@@ -94,7 +93,7 @@ const initializedPassport = () => {
       { passReqToCallback: true, usernameField: "email" },
       async (req, username, password, done) => {
         try {
-          const user = await UM.login(username);
+          const user = await userModel.findOne(username);
           console.log("Usuario encontrado para login:");
           console.log(user);
           if (!user) {
@@ -121,13 +120,14 @@ const initializedPassport = () => {
       async (req, username, password, done) => {
         const { first_name, last_name, email, age } = req.body;
         try {
-          const exist = await UM.leerUsuarios(email);
+          const exist = await userModel.findOne(email);
 
           if (exist) {
             return res
               .status(400)
               .send({ status: "error", message: "Usuario ya registrado" });
           }
+
           const user = {
             first_name,
             last_name,
@@ -135,8 +135,11 @@ const initializedPassport = () => {
             age,
             password: createHash(password),
           };
-          const result = await UM.crearUsuario(user);
+          const newUser = new userDto(user);
+
+          const result = await userModel.create(newUser);
           console.log(result);
+          console.log(result._id);
 
           return done(null, result);
         } catch (error) {
@@ -156,7 +159,7 @@ const initializedPassport = () => {
 
   passport.deserializeUser(async (id, done) => {
     try {
-      let user = await UM.buscarID(id);
+      let user = await userModel.findById(id);
       done(null, user);
     } catch (error) {
       console.error("Error deserializando el usuario: " + error);
