@@ -1,6 +1,22 @@
 import { productService, cartService } from "../services/factory.js";
 
-//LEER
+/*===============
+  -   ADD Carts   -
+  ================*/
+const addCart = async (req, res) => {
+  try {
+    let carritoNuevo = await cartService.addCarts();
+    res.status(201).send(carritoNuevo);
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .send({ error: error, message: "No se pudo guardar el Carrito." });
+  }
+};
+/*==============
+  -   GET Carts  -
+  ===============*/
 const getCarts = async (req, res) => {
   try {
     let productos = await cartService.getCarts();
@@ -17,8 +33,9 @@ const getCarts = async (req, res) => {
     });
   }
 };
-
-//LEER ID
+/*================
+  -   GET Carts ID  -
+  ==================*/
 const getCartsById = async (req, res) => {
   try {
     let _id = req.params.id;
@@ -38,21 +55,9 @@ const getCartsById = async (req, res) => {
     });
   }
 };
-
-//CREAR
-const addCart = async (req, res) => {
-  try {
-    let carritoNuevo = await cartService.addCarts(req.body);
-    res.status(201).send(carritoNuevo);
-  } catch (error) {
-    console.error(error);
-    res
-      .status(500)
-      .send({ error: error, message: "No se pudo guardar el Carrito." });
-  }
-};
-
-//ELIMINAR POR ID
+/*==================
+  -  DELETE CART ID  -
+  ==================*/
 const deleteCartById = async (req, res) => {
   try {
     let _id = req.params.id;
@@ -74,7 +79,9 @@ const deleteCartById = async (req, res) => {
   }
 };
 
-//AGREGAR AL CARRITO
+/*==========================
+  -   ADD Products to Cart   -
+  ==========================*/
 const addProductsToCart = async (req, res) => {
   try {
     let cid = req.params.cid;
@@ -102,7 +109,9 @@ const addProductsToCart = async (req, res) => {
   }
 };
 
-//MODIFICAR ITEM CON ARRAY  DE PRODUCTOS
+/*===============================
+  -   MODIFICAR Products en Cart  -
+  ================================*/
 const modProductsInCart = async (req, res) => {
   console.log("BODY");
   const { body } = req;
@@ -138,6 +147,19 @@ const modProductsInCart = async (req, res) => {
   }
 };
 
+/*==========================
+  -   DELETE Products to Cart   -
+  ==========================*/
+
+const borrarProductoEnCarrito = async (cid, pid) => {
+  try {
+    const cart = await cartService.deleteProductToCart(cid, pid);
+    return cart;
+  } catch (error) {
+    console.error(`Error al borrar  el producto del carrito`, error.nessage);
+  }
+};
+
 export default {
   getCarts,
   getCartsById,
@@ -145,4 +167,5 @@ export default {
   deleteCartById,
   addProductsToCart,
   modProductsInCart,
+  borrarProductoEnCarrito,
 };

@@ -4,6 +4,10 @@ export default class UserService {
   constructor() {
     console.log("Users with Database persistence in mongodb");
   }
+  getUsers = async () => {
+    let users = await userModel.find();
+    return users;
+  };
 
   crearUsuario = async (usuarioNuevo) => {
     console.log(usuarioNuevo.email);

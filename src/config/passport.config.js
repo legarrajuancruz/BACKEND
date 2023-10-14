@@ -5,7 +5,10 @@ import GitHubStrategy from "passport-github2";
 import { createHash, isValidPassword } from "../utils.js";
 import jwtStrategy from "passport-jwt";
 import { PRIVATE_KEY } from "../utils.js";
-import userDto from "../services/dto/users.dto.js";
+import UserService from "../services/dao/mongoManager/userManagerMongo.js";
+import { cartService } from "../services/factory.js";
+
+const US = new UserService();
 
 //ESTRATEGIA
 const localStrategy = passportLocal.Strategy;
@@ -93,7 +96,7 @@ const initializedPassport = () => {
       { passReqToCallback: true, usernameField: "email" },
       async (req, username, password, done) => {
         try {
-          const user = await userModel.findOne(username);
+          const user = await US.login(username);
           console.log("Usuario encontrado para login:");
           console.log(user);
           if (!user) {
@@ -120,7 +123,7 @@ const initializedPassport = () => {
       async (req, username, password, done) => {
         const { first_name, last_name, email, age } = req.body;
         try {
-          const exist = await userModel.findOne(email);
+          const exist = await US.login(email);
 
           if (exist) {
             return res
@@ -133,11 +136,11 @@ const initializedPassport = () => {
             last_name,
             email,
             age,
+            cart,
             password: createHash(password),
           };
-          const newUser = new userDto(user);
 
-          const result = await userModel.create(newUser);
+          const result = await US.crearUsuario(user);
           console.log(result);
           console.log(result._id);
 
@@ -159,7 +162,7 @@ const initializedPassport = () => {
 
   passport.deserializeUser(async (id, done) => {
     try {
-      let user = await userModel.findById(id);
+      let user = await US.login(id);
       done(null, user);
     } catch (error) {
       console.error("Error deserializando el usuario: " + error);
