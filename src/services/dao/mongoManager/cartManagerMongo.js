@@ -103,10 +103,10 @@ class CartService {
   };
 
   /*==========================
-  -   DELETE Products to Cart   -
+  -   DELETE Products in Cart   -
   ==========================*/
 
-  deleteProductToCart = async (cid, pid) => {
+  deleteProduct = async (cid, pid) => {
     try {
       const cart = await CartsModel.findByIdAndUpdate(cid, {
         $pull: { products: { _id: pid } },

@@ -136,7 +136,6 @@ const initializedPassport = () => {
             last_name,
             email,
             age,
-            cart,
             password: createHash(password),
           };
 

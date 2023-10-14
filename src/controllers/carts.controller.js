@@ -151,9 +151,14 @@ const modProductsInCart = async (req, res) => {
   -   DELETE Products to Cart   -
   ==========================*/
 
-const borrarProductoEnCarrito = async (cid, pid) => {
+const borrarProductoEnCarrito = async (req, res) => {
   try {
-    const cart = await cartService.deleteProductToCart(cid, pid);
+    let cid = req.params;
+    let pid = req.params;
+    console.log(cid);
+    Console.log(pid);
+    const cart = await cartService.deleteProduct(cid, pid);
+
     return cart;
   } catch (error) {
     console.error(`Error al borrar  el producto del carrito`, error.nessage);

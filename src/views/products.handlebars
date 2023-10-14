@@ -19,7 +19,10 @@
               <p>ID: {{this.id}}</p>
               <p>stock {{this.stock}}</p>
             </div>
-            <button onclick="agregar(`{{this._id}}`)">Agregar</button>
+            <button
+              onclick="agregar(this)"
+              data-id="{{this.id}}"
+            >Agregar</button>
           </div>
 
         {{/each}}
@@ -73,3 +76,4 @@
     </nav>
   </div>
 </div>
+<script src="/js/products.js"></script>
