@@ -1,18 +1,18 @@
-import userManager from "../services/dao/mongoManager/userManagerMongo.js";
+import userModel from "../services/dao/models/user.model.js";
 
 //LEER
 const getUsers = async (req, res) => {
   try {
-    let productos = await userManager.getAll();
-
+    let usuarios = await userModel.find();
+    console.log(usuarios);
     res.status(202).send({
-      result: "Carrito obtenido con exito",
-      Carritos: productos,
+      result: "Usuarios obtenidos con exito",
+      payload: usuarios,
     });
   } catch (error) {
-    console.error("No se pudo obtener carrito con mongoose:" + error);
+    console.error("No se pudo obtener los usuarios con mongoose:" + error);
     res.status(500).send({
-      error: "No se pudo obtener el carrito con mongoose",
+      error: "No se encontraron los usuarios con mongoose",
       message: error,
     });
   }
@@ -24,7 +24,7 @@ const getUsersById = async (req, res) => {
     let _id = req.params.id;
     console.log(_id);
 
-    let carritoId = await userManager.getCartsById({ _id });
+    let carritoId = await userModel.findById({ _id });
 
     res.status(202).send({
       result: "Carrito obtenido con exito",
@@ -42,7 +42,7 @@ const getUsersById = async (req, res) => {
 //CREAR
 const addUser = async (req, res) => {
   try {
-    let carritoNuevo = await userManager.addCarts();
+    let carritoNuevo = await userModel.addCarts();
     res.status(201).send(carritoNuevo);
   } catch (error) {
     console.error(error);
@@ -53,12 +53,12 @@ const addUser = async (req, res) => {
 };
 
 //ELIMINAR POR ID
-const deleteCartById = async (req, res) => {
+const deleteUserById = async (req, res) => {
   try {
     let _id = req.params.id;
     console.log(_id);
 
-    let eliminado = await userManager.getCartsById({ _id });
+    let eliminado = await userModel.getCartsById({ _id });
     await cart.deleteCart({ _id });
 
     res.status(202).send({
@@ -82,9 +82,9 @@ const addProductsToCart = async (req, res) => {
 
     const pid = req.params.pid;
 
-    let producto = await productService.getProductbyId(pid);
+    let producto = await userService.getProductbyId(pid);
 
-    let modificado = await cartService.addProductToCart(cid.toString(), {
+    let modificado = await userService.addProductToCart(cid.toString(), {
       _id: pid,
       quantity: quantity,
     });
@@ -106,6 +106,6 @@ export default {
   getUsers,
   getUsersById,
   addUser,
-  deleteCartById,
+  deleteUserById,
   addProductsToCart,
 };

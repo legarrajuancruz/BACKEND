@@ -20,7 +20,6 @@ import initializedPassport from "./config/passport.config.js";
 
 import ProductRouter from "./routes/product.router.js";
 import CartRouter from "./routes/cart.router.js";
-import userRouter from "./routes/users.router.js";
 import sessionsRouter from "./routes/sessions.router.js";
 import usersViewRouter from "./routes/users.views.router.js";
 import viewRouter from "./routes/view.router.js";
@@ -65,7 +64,6 @@ const ConnectMongoDB = async () => {
 };
 ConnectMongoDB();
 
-//PUERTO DE ESCUCHA
 const httpserver = app.listen(PORT, () => {
   console.log(`Server on port: ${PORT}`);
 });
@@ -99,9 +97,8 @@ app.use(passport.session());
 =================*/
 app.use(`/api/products`, ProductRouter);
 app.use(`/api/carts`, CartRouter);
-app.use("/api/users", usersViewRouter);
-app.use("/users", userRouter);
 app.use(`/api/sessions`, sessionsRouter);
+app.use("/users", usersViewRouter);
 app.use("/", viewRouter);
 app.use("/github", githubLoginViewRouter);
 app.use("/api/jwt", jwtRouter);

@@ -21,19 +21,6 @@ export default class UserService {
     return result;
   };
 
-  getAll = async () => {
-    try {
-      const users = await userModel.find();
-
-      if (users) {
-        return users;
-      }
-      return false;
-    } catch (error) {
-      return false;
-    }
-  };
-
   login = async (email) => {
     try {
       console.log(email);

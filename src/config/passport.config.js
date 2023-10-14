@@ -1,8 +1,6 @@
 import passport from "passport";
 import passportLocal from "passport-local";
 import userModel from "../services/dao/models/user.model.js";
-import { CartsModel } from "../services/dao/models/carts.model.js";
-
 import GitHubStrategy from "passport-github2";
 import { createHash, isValidPassword } from "../utils.js";
 import jwtStrategy from "passport-jwt";
@@ -73,9 +71,7 @@ const initializedPassport = () => {
               password: ``,
               loggedBy: "Github",
             };
-
             const result = await userModel.create(newUser);
-
             done(null, result);
           } else {
             return done(null, user);
@@ -122,11 +118,9 @@ const initializedPassport = () => {
     new localStrategy(
       { passReqToCallback: true, usernameField: "email" },
       async (req, username, password, done) => {
-        const newCart = await CartsModel.create();
         const { first_name, last_name, email, age } = req.body;
-
         try {
-          const exist = await userModel.findOne({ email });
+          const exist = await userModel.findOne(email);
 
           if (exist) {
             return res
@@ -139,15 +133,13 @@ const initializedPassport = () => {
             last_name,
             email,
             age,
-            cart: newCart,
             password: createHash(password),
           };
-
           const newUser = new userDto(user);
 
           const result = await userModel.create(newUser);
           console.log(result);
-          console.log(result.cart);
+          console.log(result._id);
 
           return done(null, result);
         } catch (error) {

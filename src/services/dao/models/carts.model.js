@@ -1,6 +1,11 @@
 import mongoose from "mongoose";
 
+const collectionName = "Carts";
+
 const cartsSchema = new mongoose.Schema({
+  // title: {
+  //   type: String,
+  // },
   products: [
     {
       product: {
@@ -16,4 +21,4 @@ cartsSchema.pre("findOne", function () {
   this.populate("products.product");
 });
 
-export const CartsModel = mongoose.model("Carts", cartsSchema);
+export const CartsModel = mongoose.model(collectionName, cartsSchema);

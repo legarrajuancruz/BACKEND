@@ -42,7 +42,7 @@ const getCartsById = async (req, res) => {
 //CREAR
 const addCart = async (req, res) => {
   try {
-    let carritoNuevo = await cartService.addCarts();
+    let carritoNuevo = await cartService.addCarts(req.body);
     res.status(201).send(carritoNuevo);
   } catch (error) {
     console.error(error);
