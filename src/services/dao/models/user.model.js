@@ -26,7 +26,6 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "product",
       },
-      quantity: { type: Number, default: 1 },
     },
   ],
   loggedBy: String,

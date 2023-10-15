@@ -131,6 +131,8 @@ const initializedPassport = () => {
               .send({ status: "error", message: "Usuario ya registrado" });
           }
 
+          const newCart = cartService.addCarts();
+
           const user = {
             first_name,
             last_name,
@@ -138,10 +140,9 @@ const initializedPassport = () => {
             age,
             password: createHash(password),
           };
+          user.cart = newCart;
 
           const result = await US.crearUsuario(user);
-          console.log(result);
-          console.log(result._id);
 
           return done(null, result);
         } catch (error) {
