@@ -28,6 +28,7 @@ const userSchema = new mongoose.Schema({
       },
     },
   ],
+
   loggedBy: String,
 });
 userSchema.pre("findOne", function () {
