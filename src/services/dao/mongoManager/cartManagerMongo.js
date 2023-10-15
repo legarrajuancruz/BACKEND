@@ -106,13 +106,16 @@ class CartService {
   -   DELETE Products in Cart   -
   ==========================*/
 
-  deleteProduct = async (cid, pid) => {
+  deleteProductInCart = async ({ cid, pid }) => {
     try {
+      const carritoEncontrado = await CartsModel.findById(cid);
+      console.log(carritoEncontrado);
+
       const cart = await CartsModel.findByIdAndUpdate(cid, {
         $pull: { products: { _id: pid } },
       });
 
-      return await CartsModel.findById(cart);
+      return cart;
     } catch (error) {
       console.error(`Error al borrar  el producto del carrito`, error.nessage);
     }

@@ -148,18 +148,20 @@ const modProductsInCart = async (req, res) => {
 };
 
 /*==========================
-  -   DELETE Products to Cart   -
+  -   DELETE Products in Cart   -
   ==========================*/
 
 const borrarProductoEnCarrito = async (req, res) => {
   try {
     let cid = req.params;
     let pid = req.params;
-    console.log(cid);
-    Console.log(pid);
-    const cart = await cartService.deleteProduct(cid, pid);
 
-    return cart;
+    const cart = await cartService.deleteProductInCart(cid, pid);
+
+    res.status(202).send({
+      result: "Carrito modificado con exito",
+      Carrito: { cart },
+    });
   } catch (error) {
     console.error(`Error al borrar  el producto del carrito`, error.nessage);
   }
