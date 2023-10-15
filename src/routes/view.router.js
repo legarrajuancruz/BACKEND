@@ -13,18 +13,22 @@ const carts = new CartService();
 router.get("/", async (request, response) => {
   try {
     const getProducts = await products.leerProductos(request.query);
-    response.render("home", { getProducts });
+    response.render("login", { getProducts });
   } catch (error) {
     response.status(500).send({ error: error.message });
   }
 });
 
 //PRODUCTS
-router.get("/products", async (req, res) => {
-  const Products = await products.leerProductos(req.query);
-  const user = req.session.user;
-  res.render("products", { Products, user });
-});
+router.get(
+  "/products",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    const Products = await products.leerProductos(req.query);
+    const user = req.session.user;
+    res.render("products", { Products, user });
+  }
+);
 
 //REALTIME PRODUCTS
 router.get("/realtimeproducts", async (req, res) => {
