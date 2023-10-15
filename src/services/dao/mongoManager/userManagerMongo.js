@@ -48,7 +48,7 @@ export default class UserService {
 
   buscarID = async (id) => {
     console.log(id);
-    let user = await userModel.findById(id);
+    let user = await userModel.findOne(id);
 
     return user;
   };
