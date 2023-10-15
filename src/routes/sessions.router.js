@@ -18,10 +18,11 @@ sessionsRouter.get(
     const user = req.user;
 
     req.session.user = {
-      name: `${user.first_name} ${user.last_name}`,
+      name: `${user.name} ${user.last_name}`,
       email: user.email,
       age: user.age,
     };
+    req.session.user.role = "user";
     req.session.admin = true;
     res.redirect("/users/profile");
   }
@@ -65,7 +66,7 @@ sessionsRouter.post("/logout", async (req, res) => {
     if (err) {
       return res.redirect("/");
     }
-    response.redirect("/users/login");
+    return res.redirect("/users/login");
   });
 });
 
