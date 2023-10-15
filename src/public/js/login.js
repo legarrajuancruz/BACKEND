@@ -15,7 +15,7 @@ const loginUser = async () => {
   }).then((result) => {
     if (result.status === 200) {
       result.json().then((json) => {
-        location.href = "/users/profile";
+        location.href = "/users/";
         //LOCALSTORAGE
         // console.log(json);
         // localStorage.setItem("authToken", json.jwt);

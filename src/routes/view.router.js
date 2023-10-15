@@ -20,15 +20,11 @@ router.get("/", async (request, response) => {
 });
 
 //PRODUCTS
-router.get(
-  "/products",
-  passport.authenticate("jwt", { session: false }),
-  async (req, res) => {
-    const Products = await products.leerProductos(req.query);
-    const user = req.session.user;
-    res.render("products", { Products, user });
-  }
-);
+router.get("/products", async (req, res) => {
+  const Products = await products.leerProductos(req.query);
+  const user = req.session.user;
+  res.render("products", { Products, user });
+});
 
 //REALTIME PRODUCTS
 router.get("/realtimeproducts", async (req, res) => {

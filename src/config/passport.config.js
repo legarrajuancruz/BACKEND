@@ -66,6 +66,7 @@ const initializedPassport = () => {
             console.warn(
               "El suaurio no existe en la base de datos " + profile._json.email
             );
+
             let newUser = {
               first_name: profile._json.name,
               last_name: ``,
@@ -74,6 +75,7 @@ const initializedPassport = () => {
               password: ``,
               loggedBy: "Github",
             };
+
             const result = await userModel.create(newUser);
             done(null, result);
           } else {
@@ -138,8 +140,13 @@ const initializedPassport = () => {
             last_name,
             email,
             age,
-            password: createHash(password),
+            password,
           };
+
+          if (!user.password === "adminCod3r123") {
+            user.password = createHash(password);
+          }
+
           user.cart = newCart;
 
           const result = await US.crearUsuario(user);
