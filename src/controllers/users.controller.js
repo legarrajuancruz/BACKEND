@@ -21,8 +21,8 @@ const leerUsuarios = async (req, res) => {
 
 const ControlgetUsersById = async (req, res) => {
   try {
-    const id = req.query;
-    let user = await US.buscarID(id);
+    const _id = req.params.id;
+    let user = await US.buscarID({ _id });
 
     res.status(202).send({
       result: "Usuario obtenido con exito",
