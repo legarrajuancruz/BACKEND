@@ -1,4 +1,5 @@
 import express from "express";
+import passport from "passport";
 
 import ProductManager from "../services/dao/mongoManager/productManagerMongo.js";
 import CartService from "../services/dao/mongoManager/cartManagerMongo.js";
@@ -38,8 +39,12 @@ router.get("/carts", async (req, res) => {
 });
 
 //CHAT
-router.get("/chat", (req, res) => {
-  res.render("messages", {});
-});
+router.get(
+  "/chat",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    res.render("messages", {});
+  }
+);
 
 export default router;

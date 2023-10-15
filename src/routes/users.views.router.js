@@ -11,14 +11,8 @@ userRouter.get("/register", (req, res) => {
   res.render("register");
 });
 
-userRouter.get("/profile", (req, res) => {
-  res.render("profile", {
-    user: req.session.user,
-  });
-});
-
 userRouter.get(
-  "/",
+  "/profile",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     res.render("profile", {
