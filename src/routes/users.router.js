@@ -16,6 +16,6 @@ UserRouter.get("/:id", UserController.ControlgetUsersById);
 // UserRouter.delete("/:id", UserController.getUsersById);
 
 // //AGREGAR AL CARRITO
-// UserRouter.post("/:cid/products/:pid", UserController.addProductsToCart);
+UserRouter.post("/:uid/products/:pid", UserController.agregaralCarritoUser);
 
 export default UserRouter;

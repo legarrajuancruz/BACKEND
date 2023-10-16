@@ -20,19 +20,20 @@ const userSchema = new mongoose.Schema({
     default: "user",
     enum: ["user", "admin"],
   },
-  cart: [
+  products: [
     {
       product: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "product",
       },
+      quantity: { type: Number, default: 1 },
     },
   ],
 
   loggedBy: String,
 });
 userSchema.pre("findOne", function () {
-  this.populate("cart.product");
+  this.populate("products.product");
 });
 
 const userModel = mongoose.model(collection, userSchema);

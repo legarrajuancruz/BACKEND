@@ -1,6 +1,10 @@
 import UserService from "../services/dao/mongoManager/userManagerMongo.js";
+import CartService from "../services/dao/mongoManager/cartManagerMongo.js";
+import ProductService from "../services/dao/mongoManager/productManagerMongo.js";
 
 const US = new UserService();
+const PS = new ProductService();
+const CS = new CartService();
 
 const leerUsuarios = async (req, res) => {
   try {
@@ -37,7 +41,41 @@ const ControlgetUsersById = async (req, res) => {
   }
 };
 
+/*==========================
+  -   ADD Products to Cart   -
+  ==========================*/
+const agregaralCarritoUser = async (req, res) => {
+  try {
+    let uid = req.params.uid;
+    const { quantity } = req.body;
+
+    const pid = req.params.pid;
+
+    let producto = await PS.getProductbyId(pid);
+    console.log(producto);
+
+    let modificado = await US.addProductToUserCart(uid.toString(), {
+      _id: pid,
+      quantity: quantity,
+    });
+
+    res.status(202).send({
+      result: "Carrito Usuario modificado con exito",
+      Carritos: modificado,
+    });
+  } catch (error) {
+    console.error(
+      "No se pudo actualizar carrito usuario con mongoose:" + error
+    );
+    res.status(500).send({
+      error: "No se pudo actualizar el carrito usuario con mongoose",
+      message: error,
+    });
+  }
+};
+
 export default {
   leerUsuarios,
   ControlgetUsersById,
+  agregaralCarritoUser,
 };
