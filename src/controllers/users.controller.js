@@ -12,7 +12,7 @@ const leerUsuarios = async (req, res) => {
 
     res.status(202).send({
       result: "Usuarios obtenidos con exito",
-      Carritos: users,
+      Usuarios: users,
     });
   } catch (error) {
     console.error("No se pudo obtener usuarios con mongoose:" + error);

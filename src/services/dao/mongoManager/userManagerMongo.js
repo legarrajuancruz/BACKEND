@@ -1,7 +1,5 @@
 import userModel from "../models/user.model.js";
 
-import CarttService from "./cartManagerMongo.js";
-
 export default class UserService {
   constructor() {
     console.log("Users with Database persistence in mongodb");
@@ -21,6 +19,7 @@ export default class UserService {
       let result = await userModel.create(usuarioNuevo);
       return result;
     }
+
     let result = await userModel.create(usuarioNuevo);
     console.log(usuarioNuevo);
 
