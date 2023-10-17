@@ -12,7 +12,7 @@ const carts = new CartService();
 //HOME
 router.get("/", async (request, response) => {
   try {
-    const getProducts = await products.leerProductos(request.query);
+    const getProducts = await products.leerProductos(req.query);
     response.render("login", { getProducts });
   } catch (error) {
     response.status(500).send({ error: error.message });

@@ -58,28 +58,31 @@ const initializedPassport = () => {
         console.log(profile);
 
         try {
-          const user = await userModel.findOne({ email: profile._json.email });
+          const nuevoUsuario = await userModel.findOne({
+            email: profile._json.email,
+          });
           console.log("Usuario encontrado para login");
-          console.log({ user });
+          console.log({ nuevoUsuario });
 
-          if (!user) {
+          if (!nuevoUsuario) {
             console.warn(
               "El suaurio no existe en la base de datos " + profile._json.email
             );
 
-            let newUser = {
+            let nuevoUsuario = {
               first_name: profile._json.name,
               last_name: ``,
               age: ``,
+              cart,
               email: profile._json.email,
               password: ``,
               loggedBy: "Github",
             };
 
-            const result = await userModel.create(newUser);
+            const result = await userModel.create(nuevoUsuario);
             done(null, result);
           } else {
-            return done(null, user);
+            return done(null, nuevoUsuario);
           }
         } catch (error) {
           return done(error);
