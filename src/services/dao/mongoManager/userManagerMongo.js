@@ -1,5 +1,7 @@
 import userModel from "../models/user.model.js";
 
+import CarttService from "./cartManagerMongo.js";
+
 export default class UserService {
   constructor() {
     console.log("Users with Database persistence in mongodb");
@@ -51,46 +53,5 @@ export default class UserService {
     let user = await userModel.findOne({ _id });
 
     return user;
-  };
-
-  /*===============================
-  -   ADD Products to User Cart   -
-  ===============================*/
-
-  addProductToUserCart = async (uid, obj) => {
-    try {
-      console.log("INFO EN USER CART");
-      console.log(uid);
-      console.log({ obj });
-      const { _id, quantity } = obj;
-
-      const filter = { _id: uid, "product._id": _id };
-      console.log("IMPRIMO EL FILTER");
-      console.log(filter);
-
-      const userCart = await userModel.findById(uid);
-      console.log("IMPRIMO EL CART");
-      console.log(userCart);
-
-      const findProduct = userCart.products.some(
-        (product) => product._id.toString() === _id
-      );
-
-      if (findProduct) {
-        const update = { $inc: { "products.$.quantity": quantity } };
-        await userModel.updateOne(filter, update);
-      } else {
-        const update = {
-          $push: { products: { _id: obj._id, quantity: quantity } },
-        };
-
-        await userModel.updateOne({ _id: uid }, update);
-      }
-      userCart = await userModel.findById(uid);
-      console.log(userCart);
-      return userCart;
-    } catch (error) {
-      console.error(`Error al agregar  el producto al carrito`, error.nessage);
-    }
   };
 }

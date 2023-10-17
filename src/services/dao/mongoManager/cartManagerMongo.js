@@ -1,4 +1,5 @@
 import { CartsModel } from "../models/carts.model.js";
+import userModel from "../models/user.model.js";
 
 import ProductService from "./productManagerMongo.js";
 
@@ -10,7 +11,7 @@ class CartService {
   -   ADD Carts   -
   ================*/
   addCarts = async () => {
-    let cart = await CartsModel.create();
+    let cart = await userModel.create();
     return cart;
   };
 
@@ -18,7 +19,7 @@ class CartService {
   -   GET Carts  -
   ===============*/
   getCarts = async () => {
-    let cart = await CartsModel.find();
+    let cart = await userModel.find();
     return cart;
   };
 
@@ -26,7 +27,7 @@ class CartService {
   -   GET Carts ID  -
   ==================*/
   getCartsById = async (id) => {
-    const cart = await CartsModel.findById(id);
+    const cart = await userModel.findById(id);
     return cart;
   };
 
@@ -34,36 +35,46 @@ class CartService {
   -  DELETE CART ID  -
   ==================*/
   deleteCart = async (id) => {
-    const result = await CartsModel.deleteOne(id);
+    const result = await userModel.deleteOne(id);
     return result;
   };
 
-  /*==========================
-  -   ADD Products to Cart   -
-  ==========================*/
+  /*===============================
+  -   ADD Products to User Cart   -
+  ===============================*/
 
-  addProductToCart = async (cid, obj) => {
+  addProductToCart = async (uid, obj) => {
     try {
+      console.log("INFO EN USER CART");
+      console.log(uid);
+      console.log({ obj });
       const { _id, quantity } = obj;
 
-      const filter = { _id: cid, "products._id": _id };
+      const filter = { _id: uid, "product._id": _id };
+      console.log("IMPRIMO EL FILTER");
+      console.log(filter);
 
-      const cart = await CartsModel.findById(cid);
-      const findProduct = cart.products.some(
+      const userCart = await userModel.findById(uid);
+      console.log("IMPRIMO EL CART");
+      console.log(userCart);
+
+      const findProduct = userCart.products.some(
         (product) => product._id.toString() === _id
       );
 
       if (findProduct) {
         const update = { $inc: { "products.$.quantity": quantity } };
-        await CartsModel.updateOne(filter, update);
+        await userModel.updateOne(filter, update);
       } else {
         const update = {
           $push: { products: { _id: obj._id, quantity: quantity } },
         };
-        await CartsModel.updateOne({ _id: cid }, update);
-      }
 
-      return await CartsModel.findById(cid);
+        await userModel.updateOne({ _id: uid }, update);
+      }
+      userCart = await userModel.findById(uid);
+      console.log(userCart);
+      return userCart;
     } catch (error) {
       console.error(`Error al agregar  el producto al carrito`, error.nessage);
     }
@@ -93,7 +104,7 @@ class CartService {
       // Actualizar con los nuevos datos
       const update = { $set: { products: arr } };
 
-      const updateCart = await CartsModel.findOneAndUpdate(filter, update, {
+      const updateCart = await userModel.findOneAndUpdate(filter, update, {
         new: true,
       });
       return updateCart;
@@ -108,10 +119,10 @@ class CartService {
 
   deleteProductInCart = async ({ cid, pid }) => {
     try {
-      const carritoEncontrado = await CartsModel.findById(cid);
+      const carritoEncontrado = await userModel.findById(cid);
       console.log(carritoEncontrado);
 
-      const cart = await CartsModel.findByIdAndUpdate(cid, {
+      const cart = await userModel.findByIdAndUpdate(cid, {
         $pull: { products: { _id: pid } },
       });
 
