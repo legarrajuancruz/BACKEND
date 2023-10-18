@@ -13,7 +13,6 @@ import cors from "cors";
 
 import __dirname from "./utils.js";
 import { Server } from "socket.io";
-import mongoose from "mongoose";
 
 import passport from "passport";
 import initializedPassport from "./config/passport.config.js";
@@ -74,16 +73,18 @@ const httpserver = app.listen(PORT, () => {
 |    SESSIONS   |
 ===============*/
 app.use(cookieParser());
+
 app.use(
   session({
     store: MongoStore.create({
-      mongoUrl: MONGO_url,
+      mongoUrl:
+        "mongodb+srv://legarrajuan:21dBt5XzVUd2DOlQ@cluster0.ftgsun9.mongodb.net/ecommerse?retryWrites=true&w=majority",
       mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
       ttl: 10 * 60,
     }),
     secret: "s3cr3t",
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
   })
 );
 
