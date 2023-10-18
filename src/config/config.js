@@ -5,7 +5,7 @@ const enviroment = program.opts().mode;
 
 dotenv.config({
   path:
-    enviroment === "production"
+    enviroment === "development"
       ? "./src/config/.env.production"
       : "./src/config/.env.development",
 });
