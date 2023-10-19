@@ -12,7 +12,6 @@ userRouter.get("/register", (req, res) => {
 });
 
 userRouter.get("/profile", (req, res) => {
-  console.log(req.session.user);
   res.render("profile", {
     user: req.session.user,
   });

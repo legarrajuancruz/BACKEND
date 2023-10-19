@@ -1,6 +1,6 @@
 import passport from "passport";
 import passportLocal from "passport-local";
-import userModel from "../services/dao/models/user.model.js";
+//import userModel from "../services/dao/models/user.model.js";
 import GitHubStrategy from "passport-github2";
 import { createHash, isValidPassword } from "../utils.js";
 import jwtStrategy from "passport-jwt";
@@ -58,31 +58,27 @@ const initializedPassport = () => {
         console.log(profile);
 
         try {
-          const nuevoUsuario = await userModel.findOne({
-            email: profile._json.email,
-          });
+          const user = await US.leerUsuarios({ email: profile._json.email });
           console.log("Usuario encontrado para login");
-          console.log({ nuevoUsuario });
+          console.log({ user });
 
-          if (!nuevoUsuario) {
+          if (!user) {
             console.warn(
               "El suaurio no existe en la base de datos " + profile._json.email
             );
-
-            let nuevoUsuario = {
+            let newUser = {
               first_name: profile._json.name,
               last_name: ``,
               age: ``,
-              cart,
               email: profile._json.email,
               password: ``,
               loggedBy: "Github",
+              role: "user",
             };
-
-            const result = await userModel.create(nuevoUsuario);
+            const result = await US.crearUsuario(newUser);
             done(null, result);
           } else {
-            return done(null, nuevoUsuario);
+            return done(null, user);
           }
         } catch (error) {
           return done(error);

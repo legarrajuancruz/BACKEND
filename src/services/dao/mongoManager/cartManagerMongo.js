@@ -1,5 +1,4 @@
-//import { CartsModel } from "../models/carts.model.js";
-import userModel from "../models/user.model.js";
+import { CartsModel } from "../models/carts.model.js";
 
 import ProductService from "./productManagerMongo.js";
 
@@ -10,8 +9,8 @@ class CartService {
   /*===============
   -   ADD Carts   -
   ================*/
-  addCarts = async () => {
-    let cart = await userModel.create();
+  addCarts = async (carritoNuevo) => {
+    let cart = await CartsModel.create(carritoNuevo);
     return cart;
   };
 
@@ -19,7 +18,7 @@ class CartService {
   -   GET Carts  -
   ===============*/
   getCarts = async () => {
-    let cart = await userModel.find();
+    let cart = await CartsModel.find();
     return cart;
   };
 
@@ -27,7 +26,7 @@ class CartService {
   -   GET Carts ID  -
   ==================*/
   getCartsById = async (id) => {
-    const cart = await userModel.findById(id);
+    const cart = await CartsModel.findById(id);
     return cart;
   };
 
@@ -35,46 +34,36 @@ class CartService {
   -  DELETE CART ID  -
   ==================*/
   deleteCart = async (id) => {
-    const result = await userModel.deleteOne(id);
+    const result = await CartsModel.deleteOne(id);
     return result;
   };
 
-  /*===============================
-  -   ADD Products to User Cart   -
-  ===============================*/
+  /*==========================
+  -   ADD Products to Cart   -
+  ==========================*/
 
-  addProductToCart = async (uid, obj) => {
+  addProductToCart = async (cid, obj) => {
     try {
-      console.log("INFO EN USER CART");
-      console.log(uid);
-      console.log({ obj });
       const { _id, quantity } = obj;
 
-      const filter = { _id: uid, "product._id": _id };
-      console.log("IMPRIMO EL FILTER");
-      console.log(filter);
+      const filter = { _id: cid, "products._id": _id };
 
-      const userCart = await userModel.findById(uid);
-      console.log("IMPRIMO EL CART");
-      console.log(userCart);
-
-      const findProduct = userCart.products.some(
+      const cart = await CartsModel.findById(cid);
+      const findProduct = cart.products.some(
         (product) => product._id.toString() === _id
       );
 
       if (findProduct) {
         const update = { $inc: { "products.$.quantity": quantity } };
-        await userModel.updateOne(filter, update);
+        await CartsModel.updateOne(filter, update);
       } else {
         const update = {
           $push: { products: { _id: obj._id, quantity: quantity } },
         };
-
-        await userModel.updateOne({ _id: uid }, update);
+        await CartsModel.updateOne({ _id: cid }, update);
       }
-      userCart = await userModel.findById(uid);
-      console.log(userCart);
-      return userCart;
+
+      return await CartsModel.findById(cid);
     } catch (error) {
       console.error(`Error al agregar  el producto al carrito`, error.nessage);
     }
@@ -104,7 +93,7 @@ class CartService {
       // Actualizar con los nuevos datos
       const update = { $set: { products: arr } };
 
-      const updateCart = await userModel.findOneAndUpdate(filter, update, {
+      const updateCart = await CartsModel.findOneAndUpdate(filter, update, {
         new: true,
       });
       return updateCart;
@@ -114,19 +103,16 @@ class CartService {
   };
 
   /*==========================
-  -   DELETE Products in Cart   -
+  -   DELETE Products to Cart   -
   ==========================*/
 
-  deleteProductInCart = async ({ cid, pid }) => {
+  deleteProductToCart = async (cid, pid) => {
     try {
-      const carritoEncontrado = await userModel.findById(cid);
-      console.log(carritoEncontrado);
-
-      const cart = await userModel.findByIdAndUpdate(cid, {
+      const cart = await CartsModel.findByIdAndUpdate(cid, {
         $pull: { products: { _id: pid } },
       });
 
-      return cart;
+      return await CartsModel.findById(cart);
     } catch (error) {
       console.error(`Error al borrar  el producto del carrito`, error.nessage);
     }

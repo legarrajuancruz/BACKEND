@@ -26,11 +26,11 @@ const leerUsuarios = async (req, res) => {
 const ControlgetUsersById = async (req, res) => {
   try {
     const _id = req.params.id;
-    let user = await US.buscarID({ _id });
+    let user = await US.getUserByID(_id);
 
     res.status(202).send({
       result: "Usuario obtenido con exito",
-      Carritos: user,
+      Usuario: user,
     });
   } catch (error) {
     console.error("No se pudo obtener el usuario con mongoose:" + error);
@@ -48,20 +48,18 @@ const agregaralCarritoUser = async (req, res) => {
   try {
     let uid = req.params.uid;
     const { quantity } = req.body;
-
     const pid = req.params.pid;
 
     let producto = await PS.getProductbyId(pid);
-    console.log(producto);
 
-    let modificado = await CS.addProductToCart(uid.toString(), {
+    let modificado = await US.addProductToCart(uid.toString(), {
       _id: pid,
       quantity: quantity,
     });
 
     res.status(202).send({
       result: "Carrito Usuario modificado con exito",
-      Carritos: modificado,
+      usuario: modificado,
     });
   } catch (error) {
     console.error(

@@ -1,9 +1,9 @@
 function agregar(button) {
-  const id = button.getAttribute("data-id");
+  const uid = document.getElementById("userID").textContent;
+  const pid = button.getAttribute("data-id");
 
-  console.log(id);
   //Deje el carrito 1 predeterminado
-  fetch(`api/carts/64ebbe696b25063b124086ab/products/${id}`, {
+  fetch(`api/users/${uid}/products/${pid}`, {
     method: "POST",
   })
     .then((response) => response.json())

@@ -18,12 +18,11 @@ sessionsRouter.get(
     const user = req.user;
 
     req.session.user = {
-      name: `${user.name} ${user.last_name}`,
+      name: `${user.first_name} ${user.last_name}`,
       email: user.email,
       age: user.age,
     };
     req.session.user.role = "user";
-    req.session.admin = true;
     res.redirect("/users/profile");
   }
 );

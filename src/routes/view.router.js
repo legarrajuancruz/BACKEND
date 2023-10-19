@@ -3,6 +3,7 @@ import passport from "passport";
 
 import ProductManager from "../services/dao/mongoManager/productManagerMongo.js";
 import CartService from "../services/dao/mongoManager/cartManagerMongo.js";
+import { cartService } from "../services/factory.js";
 
 const router = express.Router();
 
@@ -20,11 +21,16 @@ router.get("/", async (request, response) => {
 });
 
 //PRODUCTS
-router.get("/products", async (req, res) => {
-  const Products = await products.leerProductos(req.query);
-  //const user = req.user;
-  res.render("products", { Products, user: req.user });
-});
+router.get(
+  "/products",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    const Products = await products.leerProductos(req.query);
+
+    const user = req.user;
+    res.render("products", { Products, user });
+  }
+);
 
 //REALTIME PRODUCTS
 router.get("/realtimeproducts", async (req, res) => {
