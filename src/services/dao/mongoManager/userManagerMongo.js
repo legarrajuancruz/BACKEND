@@ -65,9 +65,8 @@ export default class UserService {
   addProductToCart = async (uid, obj) => {
     try {
       console.log("USER ID");
-      console.log(uid.toString());
+      console.log(uid);
       const { _id, quantity } = obj;
-      _id.toString();
       console.log("PRODUCT ID");
       console.log(obj);
 
