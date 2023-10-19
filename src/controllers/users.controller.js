@@ -47,7 +47,7 @@ const ControlgetUsersById = async (req, res) => {
 const agregaralCarritoUser = async (req, res) => {
   try {
     let uid = req.params.uid;
-    const { quantity } = req.body;
+    const { quantity = 1 } = req.body;
     const pid = req.params.pid;
 
     let producto = await PS.getProductbyId(pid);
