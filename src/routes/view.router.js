@@ -3,12 +3,14 @@ import passport from "passport";
 
 import ProductManager from "../services/dao/mongoManager/productManagerMongo.js";
 import CartService from "../services/dao/mongoManager/cartManagerMongo.js";
-import { cartService } from "../services/factory.js";
+import userService from "../services/dao/mongoManager/userManagerMongo.js";
+import UserService from "../services/dao/mongoManager/userManagerMongo.js";
 
 const router = express.Router();
 
 const products = new ProductManager();
 const carts = new CartService();
+const user = new UserService();
 
 //HOME
 router.get("/", async (request, response) => {
@@ -39,10 +41,14 @@ router.get("/realtimeproducts", async (req, res) => {
 });
 
 //CARTS
-router.get("/carts", async (req, res) => {
-  let allCarts = await carts.getCarts(req.query);
-  res.render("carts", { allCarts });
-});
+router.get(
+  "/carts",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    let allCarts = await carts.getCarts(req.query);
+    res.render("carts", { allCarts });
+  }
+);
 
 //CHAT
 router.get(
