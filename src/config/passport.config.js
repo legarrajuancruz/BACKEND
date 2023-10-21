@@ -143,6 +143,7 @@ const initializedPassport = () => {
           };
 
           if (usuarioNuevo.password === "adminCod3r123") {
+            usuarioNuevo.password = createHash(password);
             usuarioNuevo.cart = newCart;
             const result = await US.crearUsuario(usuarioNuevo);
             return done(null, result);
