@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <div class="user-data">
+        <h4 class="pb-5">Usuario Actual </h4>
+        <h2> {{user.first_name}} {{user.last_name}}</h2>
+        <p>Tu rol es: {{user.role}}</p>
+        <h3>{{user.cart}}</h3>
+
+      </div>
+
+      <form
+        action="/api/sessions/logout"
+        method="POST"
+        class="col-md-4 offset-md-4"
+      >
+        <button type="submit" class="btn btn-primary">Cerrar Sesión</button>
+      </form>
+    </div>
+  </div>
+</div>

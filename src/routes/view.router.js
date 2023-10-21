@@ -30,7 +30,11 @@ router.get(
     const Products = await products.leerProductos(req.query);
 
     const user = req.user;
-    res.render("products", { Products, user });
+    if (user.role === "user") {
+      res.render("products", { Products, user });
+    } else {
+      res.render("error");
+    }
   }
 );
 
@@ -58,5 +62,20 @@ router.get(
     res.render("messages", {});
   }
 );
+
+//CERRAR SESION
+router.get(
+  "/cerrar",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    res.render("cerrar", { user: req.user });
+  }
+);
+
+router.get("/profile", (req, res) => {
+  res.render("profile", {
+    user: req.session.user,
+  });
+});
 
 export default router;
