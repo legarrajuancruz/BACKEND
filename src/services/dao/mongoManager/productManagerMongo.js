@@ -11,6 +11,11 @@ export default class ProductService {
     return result;
   };
 
+  getProducts = async () => {
+    const productos = await ProductsModel.find();
+    return productos;
+  };
+
   leerProductos = async (obj) => {
     let { limit, page, query, sort } = obj;
 

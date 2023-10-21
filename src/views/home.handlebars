@@ -3,7 +3,7 @@
     <div>
       <h2>TODOS LOS PRODUCTOS</h2>
       <div class="row">
-        {{#each getProducts.payload}}
+        {{#each getProducts}}
           <div id="listadoProductos">
             <div>
               <img src="{{this.img}}" alt="" style="width:150px; heigth:auto" />
@@ -23,5 +23,3 @@
     </div>
   </div>
 </div>
-
-<script src="/socket.io/socket.io.js"></script>

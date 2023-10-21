@@ -15,14 +15,15 @@ const user = new UserService();
 //HOME
 router.get("/", async (request, response) => {
   try {
-    const getProducts = await products.leerProductos(req.query);
-    response.render("login", { getProducts });
+    const getProducts = await products.getProducts();
+    response.render("home", { getProducts });
   } catch (error) {
     response.status(500).send({ error: error.message });
   }
 });
 
 //PRODUCTS
+
 router.get(
   "/products",
   passport.authenticate("jwt", { session: false }),
