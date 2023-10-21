@@ -1,15 +1,14 @@
 <div class="container">
   <div class="productos">
 
-    <h2>TODOS LOS CARRITOS</h2>
-    <div class="column">
-      {{#each allCarts}}
+    <h2>Carrito de compras</h2>
+    
+    <div class="column">      
         <div id="listadoCarritos">          
-          <h3>{{this.title}}
-          <p>ID: {{this._id}}</p>  
+          <h3 style=display:none>{{userCart._id}} </h3>         
           </br>
             <div >
-                {{#each this.products}}
+                {{#each userCart.products}}
                 <h5>Producto: {{this._id}}<h5/>                
                 <h5>Cantidad: {{this.quantity}}<h5/>
                 </br>
@@ -17,7 +16,7 @@
             </div>        
                   
         </div>
-      {{/each}}
+      
       <br />
     </div>
   </div>

@@ -39,18 +39,28 @@ router.get(
 );
 
 //REALTIME PRODUCTS
-router.get("/realtimeproducts", async (req, res) => {
-  const allProducts = await products.leerProductos(req.query);
-  res.render("realtimeproducts", { allProducts });
-});
+router.get(
+  "/realtimeproducts",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    const allProducts = await products.leerProductos(req.query);
+    const user = req.user;
+    if (user.role !== "user") {
+      res.render("realtimeproducts", { allProducts });
+    } else {
+      res.render("error");
+    }
+  }
+);
 
 //CARTS
 router.get(
   "/carts",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    let allCarts = await carts.getCarts(req.query);
-    res.render("carts", { allCarts });
+    const _id = req.user._id;
+    let userCart = await user.getUserByID(_id);
+    res.render("carts", { userCart });
   }
 );
 
@@ -59,7 +69,12 @@ router.get(
   "/chat",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    res.render("messages", {});
+    const user = req.user;
+    if (user.role === "user") {
+      res.render("messages", {});
+    } else {
+      res.render("error");
+    }
   }
 );
 
