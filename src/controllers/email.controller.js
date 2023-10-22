@@ -23,7 +23,9 @@ const mailOptions = {
   from: "Coder" + config.emailAccount,
   to: config.emailAccount,
   subject: "Coreeo test Backend",
-  html: "<div> <h1>TEST EMAIL</h1></div>",
+  html: `<div> 
+            <h1>TEST EMAIL</h1>
+        </div>`,
   attachament: [],
 };
 
@@ -46,4 +48,36 @@ export const sendEmail = (req, res) => {
   }
 };
 
-export const sendEmailWithAttachements = (req, res) => {};
+const mailOptionsWithAttachments = {
+  from: "Coder" + config.emailAccount,
+  to: config.emailAccount,
+  subject: "Coreeo test Backend",
+  html: `<div> 
+            <h1>TEST EMAIL</h1>            
+        </div>`,
+  attachament: [
+    {
+      filename: "Imagen programacion.jpeg",
+      path: __dirname + "/public/img/creado.jpeg",
+      cid: "creado",
+    },
+  ],
+};
+
+export const sendEmailWithAttachements = (req, res) => {
+  try {
+    transporter.sendMail(mailOptionsWithAttachments, (error, info) => {
+      if (error) {
+        console.log(error);
+        res.status(400).send({ msg: "error", payload: error });
+      }
+      console.log("Message sent: %s", info.messageId);
+      res.send({ message: "success", payload: info });
+    });
+  } catch (error) {
+    res.status(500).send({
+      error: error,
+      message: "No se pudo enviar el email" + config.gmailAccount,
+    });
+  }
+};
