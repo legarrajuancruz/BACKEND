@@ -78,8 +78,7 @@ app.use(cookieParser());
 app.use(
   session({
     store: MongoStore.create({
-      mongoUrl:
-        "mongodb+srv://legarrajuan:legarrajuan@cluster0.ftgsun9.mongodb.net/ecommerse",
+      mongoUrl: config.mongoUrl,
       mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
       ttl: 10 * 60,
     }),

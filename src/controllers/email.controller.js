@@ -62,7 +62,7 @@ const mailOptionsWithAttachments = {
         </div>`,
   attachament: [
     {
-      filename: "Imagen programacion.jpeg",
+      filename: "ImagenProgramacion.jpeg",
       path: __dirname + "/public/img/creado.jpeg",
       cid: "creado",
     },
