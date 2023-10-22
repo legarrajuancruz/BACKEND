@@ -45,3 +45,5 @@ export const sendEmail = (req, res) => {
     });
   }
 };
+
+export const sendEmailWithAttachements = (req, res) => {};

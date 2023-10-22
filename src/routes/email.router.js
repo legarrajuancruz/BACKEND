@@ -7,6 +7,6 @@ import {
 const emailRouter = Router();
 
 emailRouter.get("/", sendEmail);
-emailRouter.get("/attachments", sendEmailWithAttachements);
+//emailRouter.get("/attachments", sendEmailWithAttachements);
 
 export default emailRouter;
