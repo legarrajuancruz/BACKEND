@@ -21,7 +21,6 @@ import ProductRouter from "./routes/product.router.js";
 import CartRouter from "./routes/cart.router.js";
 import UserRouter from "./routes/users.router.js";
 import emailRouter from "./routes/email.router.js";
-import SMSRouter from "./routes/sms.router.js";
 
 import sessionsRouter from "./routes/sessions.router.js";
 import usersViewRouter from "./routes/users.views.router.js";
@@ -109,7 +108,6 @@ app.use("/", viewRouter);
 app.use("/github", githubLoginViewRouter);
 app.use("/api/jwt", jwtRouter);
 app.use("/api/email", emailRouter);
-app.use("/api/sms", SMSRouter);
 
 /*================================
 |   SOCKET SERVER CONECCTION      |
