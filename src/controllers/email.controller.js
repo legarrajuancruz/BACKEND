@@ -3,11 +3,16 @@ import config from "../config/config.js";
 import __dirname from "../utils.js";
 
 const transporter = nodemailer.createTransport({
-  services: "gmail",
+  //services: "gmail",
+  host: "smtp.gmail.com",
   port: 587,
+  secure: false,
   auth: {
     user: config.emailAccount,
     pass: config.gmailAppPassword,
+  },
+  tls: {
+    rejectUnauthorized: false,
   },
 });
 
