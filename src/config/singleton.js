@@ -13,7 +13,7 @@ export default class singleton {
       console.log("Ya existe una coneccion a el servidor");
     } else {
       this.#instance = new singleton();
-      console.log("Coneccion establecida con servidor");
+      console.log("Coneccion establecida con servidor patron SINGLETON");
     }
     return this.#instance;
   }
