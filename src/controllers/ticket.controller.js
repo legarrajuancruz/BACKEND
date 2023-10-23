@@ -30,7 +30,7 @@ export const createTicket = async (req, res, next) => {
     console.log(_id);
 
     const resultUser = await userService.getUserByID(_id);
-    console.log("COMPRA USUARIO");
+    console.log("PRODUCTOS USUARIO");
     console.log(resultUser.products);
 
     console.log("EMAIL USUARIO");
@@ -45,9 +45,11 @@ export const createTicket = async (req, res, next) => {
       products: resultUser.products,
       amount: "1000",
     };
+    console.log("COMPRA USUARIO");
     console.log(ticket);
 
     const ticketResult = await ticketService.createTicket(ticket);
+    console.log(ticketResult);
     res.send({ status: 200, payload: ticketResult });
   } catch (error) {
     next(error);

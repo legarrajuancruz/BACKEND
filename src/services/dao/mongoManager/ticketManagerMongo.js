@@ -37,7 +37,8 @@ export default class TicketService {
   };
   createTicket = async (ticket) => {
     try {
-      ticket.status = "pending";
+      console.log("CREATE TICKET");
+      console.log(ticket);
       let resultTicket = await ticketModel.create(ticket);
 
       if (resultTicket) {
