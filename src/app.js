@@ -20,7 +20,7 @@ import initializedPassport from "./config/passport.config.js";
 import ProductRouter from "./routes/product.router.js";
 import CartRouter from "./routes/cart.router.js";
 import UserRouter from "./routes/users.router.js";
-import TicketRouter from "./routes/ticket.router.js";
+import ticketRouter from "./routes/ticket.router.js";
 import emailRouter from "./routes/email.router.js";
 
 import sessionsRouter from "./routes/sessions.router.js";
@@ -103,7 +103,7 @@ app.use(`/api/products`, ProductRouter);
 app.use(`/api/carts`, CartRouter);
 app.use("/api/users", UserRouter);
 app.use(`/api/sessions`, sessionsRouter);
-app.use("/api/ticket", TicketRouter);
+app.use("/api/ticket", ticketRouter);
 app.use("/users", usersViewRouter);
 app.use("/", viewRouter);
 app.use("/github", githubLoginViewRouter);

@@ -3,12 +3,12 @@ import {
   getTickets,
   createTicket,
   getTicketById,
-} from "../controllers/tickets.controller.js";
+} from "../controllers/ticket.controller.js";
 
 const ticketRouter = Router();
 
 ticketRouter.get("/", getTickets);
-ticketRouter.post("/", createTicket);
+ticketRouter.post("/:uid", createTicket);
 ticketRouter.get("/:tid", getTicketById);
 
 export default ticketRouter;

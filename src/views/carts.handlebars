@@ -5,18 +5,20 @@
     
     <div class="column">      
         <div id="listadoCarritos">          
-          <h3 style=display:none>{{userCart._id}} </h3>         
+          <h3 id="user">{{userCart._id}}</h3>         
           </br>
             <div >
                 {{#each userCart.products}}
-                <h5>Producto: {{this._id}}<h5/>                
+                <h5>Producto: <span>{{this._id}}</span><h5/>                           
                 <h5>Cantidad: {{this.quantity}}<h5/>
                 </br>
                 {{/each}}
             </div>        
-                  
+                  <button onclick="agregar(this)"  class="btn btn-primary"
+          id="btnLogin">TERMINAR COMPRA</button>
         </div>
       
       <br />
     </div>
   </div>
+  <script src="/js/comprar.js"></script>
