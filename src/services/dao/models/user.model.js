@@ -30,15 +30,6 @@ const userSchema = new mongoose.Schema({
       quantity: { type: Number, default: 1 },
     },
   ],
-  orders: {
-    type: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "tickets",
-      },
-    ],
-  },
-
   loggedBy: String,
 });
 userSchema.pre("findOne", function () {

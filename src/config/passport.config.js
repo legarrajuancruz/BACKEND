@@ -132,8 +132,6 @@ const initializedPassport = () => {
               .send({ status: "error", message: "Usuario ya registrado" });
           }
 
-          const newCart = cartService.addCarts();
-
           const usuarioNuevo = {
             first_name,
             last_name,
@@ -144,14 +142,13 @@ const initializedPassport = () => {
 
           if (usuarioNuevo.password === "adminCod3r123") {
             usuarioNuevo.password = createHash(password);
-            usuarioNuevo.cart = newCart;
-            const result = await US.crearUsuario(usuarioNuevo);
-            return done(null, result);
-          } else {
-            usuarioNuevo.password = createHash(password);
+
             const result = await US.crearUsuario(usuarioNuevo);
             return done(null, result);
           }
+          usuarioNuevo.password = createHash(password);
+          const result = await US.crearUsuario(usuarioNuevo);
+          return done(null, result);
         } catch (error) {
           return done("Error registrando al usuario" + error);
         }

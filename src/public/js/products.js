@@ -4,6 +4,7 @@ function agregar(button) {
 
   fetch(`api/users/${uid}/products/${pid}`, {
     method: "POST",
+    headers: { "Content-type": "application/json; charset=UTF-8" },
   })
     .then((response) => response.json())
     .then((data) => {

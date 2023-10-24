@@ -57,10 +57,9 @@ export const createTicket = async (req, res, next) => {
       products: resultUser.products,
       amount,
     };
-    const actualizado = await US.vaciarCarrito(_id);
-    const ticketResult = await ticketService.createTicket(ticket);
 
-    console.log(ticketResult);
+    const ticketResult = await ticketService.createTicket(ticket);
+    const actualizado = await US.vaciarCarrito(_id);
 
     res.send({ status: 200, payload: ticketResult });
   } catch (error) {

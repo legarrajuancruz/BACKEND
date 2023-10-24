@@ -2,14 +2,15 @@ function agregar(button) {
   const uid = document.getElementById("user").textContent;
   console.log(uid);
 
-  fetch(`api/ticket/${uid}`, {
+  fetch(`/api/ticket/${uid}`, {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
   })
     .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-    })
+    .then((data) => {})
     .catch((error) => {
-      console.error("Error:", error);
+      console.error("Error en la solicitud:", error);
     });
 }
