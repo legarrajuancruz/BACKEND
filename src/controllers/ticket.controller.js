@@ -24,7 +24,7 @@ export const getTicketById = async (req, res, next) => {
     next(error);
   }
 };
-export const createTicket = async (req, res, next) => {
+export const createTicket = async (req, res) => {
   try {
     const _id = req.params.uid;
     const resultUser = await US.getUserByID(_id);
@@ -63,7 +63,7 @@ export const createTicket = async (req, res, next) => {
 
     res.send({ status: 200, payload: ticketResult });
   } catch (error) {
-    next(error);
+    console.error(error);
   }
 };
 
