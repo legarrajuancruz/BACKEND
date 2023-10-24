@@ -1,9 +1,10 @@
 import TicketService from "../services/dao/mongoManager/ticketManagerMongo.js";
 import UserService from "../services/dao/mongoManager/userManagerMongo.js";
-import config from "../config/config.js";
+import ProductService from "../services/dao/mongoManager/productManagerMongo.js";
 
 const ticketService = new TicketService();
 const userService = new UserService();
+const PS = new ProductService();
 
 export const getTickets = async (req, res, next) => {
   try {
@@ -26,24 +27,32 @@ export const getTicketById = async (req, res, next) => {
 export const createTicket = async (req, res, next) => {
   try {
     const _id = req.params.uid;
-    console.log("USUARIO");
-    console.log(_id);
-
     const resultUser = await userService.getUserByID(_id);
-    console.log("PRODUCTOS USUARIO");
-    console.log(resultUser.products);
-
-    console.log("EMAIL USUARIO");
-    console.log(resultUser.email);
-
     let ticketNumber = Date.now() + Math.floor(Math.random() * 10000 + 1);
+
+    let amount = 0;
+
+    for (const productData of resultUser.products) {
+      const product = productData.product;
+      let { quantity, _id } = productData;
+
+      let productPrice = await PS.getProductbyId(_id);
+      console.log("PRODUCT PRICE");
+      console.log(productPrice.price);
+      console.log("CANTIDAD PRODUCTOS");
+      console.log(quantity);
+
+      amount += productPrice.price * quantity;
+    }
+    console.log("SUMA TOTAL PRODUCTOS");
+    console.log(amount);
 
     let ticket = {
       code: ticketNumber,
       purchaser: resultUser.email,
       purchase_datetime: new Date(),
       products: resultUser.products,
-      amount: "1000",
+      amount,
     };
     console.log("COMPRA USUARIO");
     console.log(ticket);
