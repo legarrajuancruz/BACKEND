@@ -1,5 +1,4 @@
 import ticketModel from "../models/ticket.model.js";
-import mongoose from "mongoose";
 
 export default class TicketService {
   getAll = async () => {

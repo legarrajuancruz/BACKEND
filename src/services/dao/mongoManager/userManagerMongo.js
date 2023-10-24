@@ -61,43 +61,39 @@ export default class UserService {
 
   addProductToCart = async (uid, obj) => {
     try {
-      console.log("USER ID");
-      console.log(uid);
       const { _id, quantity } = obj;
-      console.log("PRODUCT ID");
-      console.log(obj);
-
       const filter = { _id: uid, "products._id": _id };
-      console.log("FILTER");
-      console.log(filter);
-
       const userCart = await userModel.findById(uid);
-      console.log("USER CART ID");
-      console.log(userCart);
-
       const findProduct = userCart.products.some(
         (product) => product._id.toString() === _id
       );
-      console.log("Producto presente en carrito ?");
-      console.log({ findProduct });
-
       if (findProduct) {
         const update = { $inc: { "products.$.quantity": quantity } };
-        console.log("INC");
-        console.log(update);
         await userModel.updateOne(filter, update);
       } else {
-        console.log("PUSH");
         const update = {
           $push: { products: { _id: obj._id, quantity: quantity } },
         };
-        console.log(update);
         await userModel.updateOne({ _id: uid }, update);
       }
-
       return await userModel.findById(uid);
     } catch (error) {
       console.error(`Error al agregar  el producto al carrito`, error.nessage);
+    }
+  };
+  /*==========================
+  -      VACIAR CARRITO      -
+  ==========================*/
+  vaciarCarrito = async (_id) => {
+    try {
+      console.log(_id);
+      const user = await userModel.updateOne({ _id: _id, products: [] });
+
+      console.log(user.products);
+
+      return user;
+    } catch (error) {
+      console.error("No se pudo vaciar el carrito", error);
     }
   };
 }
