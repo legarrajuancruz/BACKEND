@@ -38,6 +38,7 @@ export default class TicketService {
     console.log("CREATE TICKET");
     console.log(ticket);
     let resultTicket = await ticketModel.create(ticket);
+    await US.vaciarCarrito(_id);
     return resultTicket;
   };
 

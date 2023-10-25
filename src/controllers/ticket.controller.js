@@ -60,9 +60,9 @@ export const createTicket = async (req, res, next) => {
       products: resultUser.products,
       amount,
     };
-
+    await US.vaciarCarrito(_id);
     const ticketResult = await ticketService.createTicket(ticket);
-    //const actualizado = await US.vaciarCarrito(_id);
+
     resultUser.orders.push(ticketResult._id);
 
     await US.updateUser({ _id }, resultUser);
