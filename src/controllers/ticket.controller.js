@@ -24,15 +24,15 @@ export const getTicketById = async (req, res, next) => {
     next(error);
   }
 };
-export const createTicket = async (req, res, next) => {
+export const createTicket = async (req, res) => {
   try {
     const _id = req.params.uid;
+
     const resultUser = await US.getUserByID({ _id });
     console.log(" USUARIO ENCONTRADO");
     console.log(resultUser);
 
-    let ticketNumber = Date.now() + Math.floor(Math.random() * 10000 + 1);
-
+    const outOfStock = {};
     let amount = 0;
 
     for (const productData of resultUser.products) {
@@ -42,9 +42,7 @@ export const createTicket = async (req, res, next) => {
       let productFinded = await PS.getProductbyId(_id);
 
       if (quantity > productFinded.stock) {
-        quantity = quantity;
-        let obj = { quantity, _id };
-        outOfStock.push(productFinded);
+        outOfStock.push(productData);
         console.log("PRODUCTO FUERA DE STOCK" + productFinded);
       }
 
@@ -53,6 +51,8 @@ export const createTicket = async (req, res, next) => {
     console.log("SUMA TOTAL PRODUCTOS");
     console.log(amount);
 
+    let ticketNumber = Date.now() + Math.floor(Math.random() * 10000 + 1);
+
     let ticket = {
       code: ticketNumber,
       purchaser: resultUser.email,
@@ -60,15 +60,35 @@ export const createTicket = async (req, res, next) => {
       products: resultUser.products,
       amount,
     };
-    await US.vaciarCarrito(_id);
+    const buscar = await ticketService.getTicketByPurchaser(ticket.purchaser);
+    console.log(" ACA ESTA EL USUARIO!!!!");
+    console.log(buscar);
+
+    if (buscar) {
+      let ticket = {
+        code: ticketNumber,
+        purchaser: resultUser.email,
+        purchase_datetime: new Date(),
+        products: resultUser.products,
+        amount,
+      };
+      const ticketResult = await ticketService.resolveTicket(
+        buscar._id,
+        ticket
+      );
+      res.send({ status: 200, payload: ticketResult });
+    }
+
+    //await US.vaciarCarrito(_id);
     const ticketResult = await ticketService.createTicket(ticket);
 
-    resultUser.orders.push(ticketResult._id);
+    const nuevaOrden = resultUser.orders.push(ticketResult._id);
+    console.log(nuevaOrden);
+    await US.updateUser({ _id }, nuevaOrden);
 
-    await US.updateUser({ _id }, resultUser);
     res.send({ status: 200, payload: ticketResult });
   } catch (error) {
-    next(error);
+    console.error(error);
   }
 };
 

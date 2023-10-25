@@ -18,6 +18,11 @@ export default class TicketService {
     }
   };
 
+  getTicketByPurchaser = async ({ username }) => {
+    let ticket = await ticketModel.findOne({ username });
+    return ticket;
+  };
+
   getTicketById = async (id) => {
     try {
       let ticket = await ticketModel.findById(id);
@@ -38,7 +43,6 @@ export default class TicketService {
     console.log("CREATE TICKET");
     console.log(ticket);
     let resultTicket = await ticketModel.create(ticket);
-    await US.vaciarCarrito(_id);
     return resultTicket;
   };
 
