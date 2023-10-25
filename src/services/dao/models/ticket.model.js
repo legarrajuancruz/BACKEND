@@ -2,29 +2,28 @@ import mongoose from "mongoose";
 
 const ticketsCollection = "tickets";
 
-const stringSchemaIndexedNonUniqueRequired = {
-  type: String,
-  require: true,
-  index: true,
-};
-const stringSchemaUniqueRequired = {
-  type: String,
-  unique: true,
-  require: true,
-};
 const ticketSchema = new mongoose.Schema({
-  code: stringSchemaUniqueRequired,
+  code: {
+    type: String,
+    required: true,
+    unique: true,
+  },
   purchase_datetime: Date,
   amount: Number,
-  purchaser: stringSchemaUniqueRequired,
-  products: {
-    type: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "products",
-      },
-    ],
+  purchaser: {
+    type: String,
+    ref: "users",
+    required: true,
   },
+  products: [
+    {
+      product: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "product",
+      },
+      quantity: { type: Number, default: 1 },
+    },
+  ],
 });
 
 const ticketModel = mongoose.model(ticketsCollection, ticketSchema);

@@ -72,8 +72,14 @@ const agregaralCarritoUser = async (req, res) => {
   }
 };
 
+const updateUser = async (filter, value) => {
+  let result = await userModel.updateOne(filter, value);
+  return result;
+};
+
 export default {
   leerUsuarios,
   ControlgetUsersById,
   agregaralCarritoUser,
+  updateUser,
 };

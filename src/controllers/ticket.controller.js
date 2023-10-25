@@ -24,12 +24,15 @@ export const getTicketById = async (req, res, next) => {
     next(error);
   }
 };
-export const createTicket = async (req, res) => {
+export const createTicket = async (req, res, next) => {
   try {
     const _id = req.params.uid;
-    const resultUser = await US.getUserByID(_id);
+    const resultUser = await US.getUserByID({ _id });
+    console.log(" USUARIO ENCONTRADO");
+    console.log(resultUser);
+
     let ticketNumber = Date.now() + Math.floor(Math.random() * 10000 + 1);
-    let outOfStock = {};
+
     let amount = 0;
 
     for (const productData of resultUser.products) {
@@ -59,11 +62,13 @@ export const createTicket = async (req, res) => {
     };
 
     const ticketResult = await ticketService.createTicket(ticket);
-    const actualizado = await US.vaciarCarrito(_id);
+    //const actualizado = await US.vaciarCarrito(_id);
+    resultUser.orders.push(ticketResult._id);
 
+    await US.updateUser({ _id }, resultUser);
     res.send({ status: 200, payload: ticketResult });
   } catch (error) {
-    console.error(error);
+    next(error);
   }
 };
 

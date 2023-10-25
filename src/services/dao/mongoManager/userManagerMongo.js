@@ -55,6 +55,11 @@ export default class UserService {
 
     return user;
   };
+  updateUser = async (filter, value) => {
+    let result = await userModel.updateOne(filter, value);
+    return result;
+  };
+
   /*==========================
   -   ADD Products to Cart   -
   ==========================*/

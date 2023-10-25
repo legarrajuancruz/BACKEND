@@ -30,10 +30,22 @@ const userSchema = new mongoose.Schema({
       quantity: { type: Number, default: 1 },
     },
   ],
+  orders: [
+    {
+      ticket: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "tickets",
+      },
+    },
+  ],
+
   loggedBy: String,
 });
 userSchema.pre("findOne", function () {
   this.populate("products.product");
+});
+userSchema.pre("findOne", function () {
+  this.populate("orders.ticket");
 });
 
 const userModel = mongoose.model(collection, userSchema);

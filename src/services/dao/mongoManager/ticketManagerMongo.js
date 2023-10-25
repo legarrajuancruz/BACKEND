@@ -35,26 +35,10 @@ export default class TicketService {
     }
   };
   createTicket = async (ticket) => {
-    try {
-      console.log("CREATE TICKET");
-      console.log(ticket);
-      let resultTicket = await ticketModel.create(ticket);
-
-      if (resultTicket) {
-        return resultTicket;
-      } else {
-        throw {
-          code: 404,
-          message: "Couldn't find the created ticket.",
-        };
-      }
-    } catch (error) {
-      throw {
-        code: error.code ? error.code : 400,
-        message: "Error creating new ticket",
-        detail: error.message,
-      };
-    }
+    console.log("CREATE TICKET");
+    console.log(ticket);
+    let resultTicket = await ticketModel.create(ticket);
+    return resultTicket;
   };
 
   resolveTicket = async (tid, order) => {
