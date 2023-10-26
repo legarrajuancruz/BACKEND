@@ -30,10 +30,7 @@ const userSchema = new mongoose.Schema({
   ],
   orders: [
     {
-      ticket: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "tickets",
-      },
+      ticket: {},
     },
   ],
 

@@ -91,6 +91,7 @@ export default class UserService {
   ==========================*/
   vaciarCarrito = async (_id) => {
     try {
+      console.log("VACIANDO CARRITO");
       console.log(_id);
       const user = await userModel.updateOne({ _id: _id, products: [] });
 

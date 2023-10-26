@@ -85,7 +85,7 @@ app.use(
     }),
     secret: "s3cr3t",
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
   })
 );
 

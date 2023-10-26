@@ -72,34 +72,36 @@ export const createTicket = async (req, res) => {
         products: resultUser.products,
         amount,
       };
+      console.log("TICKET USUARIO ACTUALIZADO");
       const ticketResult = await ticketService.resolveTicket(
         buscar._id,
         ticket
       );
+      resultUser.orders.push(ticketResult._id);
+      await US.updateUser({ buscar }, resultUser);
+
+      const nuevaOrden = resultUser.orders.push(ticketResult.code);
+      console.log("NUEVA ORDEN");
+      await US.updateUser(_id, nuevaOrden.toString());
+      const borrado = await US.vaciarCarrito(_id);
+      console.log("BORRADO");
+      console.log(borrado);
       res.send({ status: 200, payload: ticketResult });
     }
 
-    //await US.vaciarCarrito(_id);
+    console.log("NUEVO TICKET USUARIO");
     const ticketResult = await ticketService.createTicket(ticket);
+    resultUser.orders.push(ticketResult._id);
+    await US.updateUser({ buscar }, resultUser);
 
-    const nuevaOrden = resultUser.orders.push(ticketResult._id);
+    const nuevaOrden = resultUser.orders.push(ticketResult.code);
     console.log(nuevaOrden);
-    await US.updateUser({ _id }, nuevaOrden);
+    await US.create({ _id }, { orders: nuevaOrden });
 
+    const borrado = await US.vaciarCarrito(_id);
+    console.log(borrado);
     res.send({ status: 200, payload: ticketResult });
   } catch (error) {
     console.error(error);
-  }
-};
-
-export const resolveTicket = async (req, res, next) => {
-  try {
-    const { resolve } = req.query;
-    let ticket = await ticketService.getTicketById(req.params.tid);
-    ticket.status = resolve;
-    await ticketService.resolveTicket(ticket._id, ticket);
-    res.send({ status: 200, result: "Order solved" });
-  } catch (error) {
-    next(error);
   }
 };
