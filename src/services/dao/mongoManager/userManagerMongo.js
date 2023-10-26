@@ -49,12 +49,6 @@ export default class UserService {
     return users;
   };
 
-  buscarID = async ({ _id }) => {
-    console.log({ _id });
-    let user = await userModel.findOne({ _id });
-
-    return user;
-  };
   updateUser = async (userId, ticketId) => {
     const user = await userModel.findById(userId);
     if (user) {

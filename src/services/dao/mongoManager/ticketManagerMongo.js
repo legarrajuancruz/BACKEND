@@ -18,11 +18,6 @@ export default class TicketService {
     }
   };
 
-  getTicketByPurchaser = async ({ username }) => {
-    let ticket = await ticketModel.findOne({ username });
-    return ticket;
-  };
-
   getTicketById = async (id) => {
     try {
       let ticket = await ticketModel.findById(id);
