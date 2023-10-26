@@ -42,6 +42,17 @@ export const createTicket = async (req, res) => {
       let productFinded = await PS.getProductbyId(_id);
 
       amount += productFinded.price * quantity;
+      if (productData.quantity > productFinded.stock) {
+        console.log("PRODUCTO SIN STOCK SUFICIENTE");
+        console.loh(productData);
+        outOfStock = { productData };
+      }
+      let restado = productFinded.stock - productData.quantity;
+
+      let restarStock = {
+        stock: restado,
+      };
+      await PS.actualizarProducto(productFinded._id, restarStock);
     }
 
     let ticketNumber = Date.now() + Math.floor(Math.random() * 10000 + 1);
