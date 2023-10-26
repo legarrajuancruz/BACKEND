@@ -41,15 +41,8 @@ export const createTicket = async (req, res) => {
 
       let productFinded = await PS.getProductbyId(_id);
 
-      if (quantity > productFinded.stock) {
-        outOfStock.push(productData);
-        console.log("PRODUCTO FUERA DE STOCK" + productFinded);
-      }
-
       amount += productFinded.price * quantity;
     }
-    console.log("SUMA TOTAL PRODUCTOS");
-    console.log(amount);
 
     let ticketNumber = Date.now() + Math.floor(Math.random() * 10000 + 1);
 
@@ -60,46 +53,14 @@ export const createTicket = async (req, res) => {
       products: resultUser.products,
       amount,
     };
-    const buscar = await ticketService.getTicketByPurchaser(ticket.purchaser);
-    console.log(" ACA ESTA EL USUARIO!!!!");
-    console.log(buscar);
-
-    if (buscar) {
-      let ticket = {
-        code: ticketNumber,
-        purchaser: resultUser.email,
-        purchase_datetime: new Date(),
-        products: resultUser.products,
-        amount,
-      };
-      console.log("TICKET USUARIO ACTUALIZADO");
-      const ticketResult = await ticketService.resolveTicket(
-        buscar._id,
-        ticket
-      );
-      resultUser.orders.push(ticketResult._id);
-      await US.updateUser({ buscar }, resultUser);
-
-      const nuevaOrden = resultUser.orders.push(ticketResult.code);
-      console.log("NUEVA ORDEN");
-      await US.updateUser(_id, nuevaOrden.toString());
-      const borrado = await US.vaciarCarrito(_id);
-      console.log("BORRADO");
-      console.log(borrado);
-      res.send({ status: 200, payload: ticketResult });
-    }
 
     console.log("NUEVO TICKET USUARIO");
     const ticketResult = await ticketService.createTicket(ticket);
-    resultUser.orders.push(ticketResult._id);
-    await US.updateUser({ buscar }, resultUser);
+    const ticketId = ticketResult._id;
+    const userId = resultUser._id;
+    const alta = await US.updateUser(userId, ticketId);
+    console.log(alta);
 
-    const nuevaOrden = resultUser.orders.push(ticketResult.code);
-    console.log(nuevaOrden);
-    await US.create({ _id }, { orders: nuevaOrden });
-
-    const borrado = await US.vaciarCarrito(_id);
-    console.log(borrado);
     res.send({ status: 200, payload: ticketResult });
   } catch (error) {
     console.error(error);

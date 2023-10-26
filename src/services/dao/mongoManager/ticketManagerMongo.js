@@ -42,6 +42,7 @@ export default class TicketService {
   createTicket = async (ticket) => {
     console.log("CREATE TICKET");
     console.log(ticket);
+
     let resultTicket = await ticketModel.create(ticket);
     return resultTicket;
   };
@@ -50,7 +51,7 @@ export default class TicketService {
     try {
       let result = await ticketModel.updateOne({ _id: tid }, { $set: order });
       if (result.modifiedCount > 0) {
-        let ticket = await this.getTicketById(pid);
+        let ticket = await this.getTicketById(tid);
         return ticket;
       } else {
         throw Error("No se pudo resolver el ticket.");
@@ -58,7 +59,7 @@ export default class TicketService {
     } catch (error) {
       throw {
         code: error.code ? error.code : 409,
-        message: "Error al agregar al carrito.",
+        message: "Error al agregar el ticket.",
         detail: error.message,
       };
     }

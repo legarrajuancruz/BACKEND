@@ -30,7 +30,10 @@ const userSchema = new mongoose.Schema({
   ],
   orders: [
     {
-      ticket: {},
+      ticket: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "tickets",
+      },
     },
   ],
 
@@ -42,7 +45,6 @@ userSchema.pre("findOne", function () {
 userSchema.pre("findOne", function () {
   this.populate("orders.ticket");
 });
-
 const userModel = mongoose.model(collection, userSchema);
 
 export default userModel;
