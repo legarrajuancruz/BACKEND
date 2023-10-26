@@ -47,23 +47,6 @@ export default class TicketService {
     return resultTicket;
   };
 
-  resolveTicket = async (tid, order) => {
-    try {
-      let result = await ticketModel.updateOne({ _id: tid }, { $set: order });
-      if (result.modifiedCount > 0) {
-        let ticket = await this.getTicketById(tid);
-        return ticket;
-      } else {
-        throw Error("No se pudo resolver el ticket.");
-      }
-    } catch (error) {
-      throw {
-        code: error.code ? error.code : 409,
-        message: "Error al agregar el ticket.",
-        detail: error.message,
-      };
-    }
-  };
   deleteTicket = async (id) => {
     try {
       if (id) {
