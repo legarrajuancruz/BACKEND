@@ -44,7 +44,7 @@ export const createTicket = async (req, res) => {
       amount += productFinded.price * quantity;
       if (productData.quantity > productFinded.stock) {
         console.log("PRODUCTO SIN STOCK SUFICIENTE");
-        console.loh(productData);
+        console.log(productData);
         outOfStock = { productData };
       }
       let restado = productFinded.stock - productData.quantity;
@@ -71,6 +71,8 @@ export const createTicket = async (req, res) => {
     const userId = resultUser._id;
     const alta = await US.updateUser(userId, ticketId);
     console.log(alta);
+    const resetCart = await US.vaciarCarrito(userId);
+    console.log("SE VACIO EL CARRITO");
 
     res.send({ status: 200, payload: ticketResult });
   } catch (error) {
