@@ -18,11 +18,6 @@ export default class TicketService {
     }
   };
 
-  getTicketByPurchaser = async ({ username }) => {
-    let ticket = await ticketModel.findOne({ username });
-    return ticket;
-  };
-
   getTicketById = async (id) => {
     try {
       let ticket = await ticketModel.findById(id);
@@ -42,27 +37,11 @@ export default class TicketService {
   createTicket = async (ticket) => {
     console.log("CREATE TICKET");
     console.log(ticket);
+
     let resultTicket = await ticketModel.create(ticket);
     return resultTicket;
   };
 
-  resolveTicket = async (tid, order) => {
-    try {
-      let result = await ticketModel.updateOne({ _id: tid }, { $set: order });
-      if (result.modifiedCount > 0) {
-        let ticket = await this.getTicketById(pid);
-        return ticket;
-      } else {
-        throw Error("No se pudo resolver el ticket.");
-      }
-    } catch (error) {
-      throw {
-        code: error.code ? error.code : 409,
-        message: "Error al agregar al carrito.",
-        detail: error.message,
-      };
-    }
-  };
   deleteTicket = async (id) => {
     try {
       if (id) {

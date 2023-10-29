@@ -35,24 +35,32 @@ export const createTicket = async (req, res) => {
     const outOfStock = {};
     let amount = 0;
 
+    //HACEMOS LA SUMA DE TODOS LOS PRODUCTOS EN EL CARRITO USER
     for (const productData of resultUser.products) {
       const product = productData.product;
       let { quantity, _id } = productData;
 
       let productFinded = await PS.getProductbyId(_id);
 
-      if (quantity > productFinded.stock) {
-        outOfStock.push(productData);
-        console.log("PRODUCTO FUERA DE STOCK" + productFinded);
+      amount += productFinded.price * quantity;
+
+      //SI NO HAY STOCK SE ALMACENA EN UN NUEVO ARRAY
+      if (productData.quantity > productFinded.stock) {
+        console.log("PRODUCTO SIN STOCK SUFICIENTE");
+        console.log(productData);
+        outOfStock = { productData };
       }
 
-      amount += productFinded.price * quantity;
+      //LOGICA PARA RESTAR STOCK DE PRODUCTO
+      let restado = productFinded.stock - productData.quantity;
+      let restarStock = {
+        stock: restado,
+      };
+      await PS.actualizarProducto(productFinded._id, restarStock);
     }
-    console.log("SUMA TOTAL PRODUCTOS");
-    console.log(amount);
 
+    //GENERAMOS ARRAY PARA CREAR
     let ticketNumber = Date.now() + Math.floor(Math.random() * 10000 + 1);
-
     let ticket = {
       code: ticketNumber,
       purchaser: resultUser.email,
@@ -60,46 +68,27 @@ export const createTicket = async (req, res) => {
       products: resultUser.products,
       amount,
     };
-    const buscar = await ticketService.getTicketByPurchaser(ticket.purchaser);
-    console.log(" ACA ESTA EL USUARIO!!!!");
-    console.log(buscar);
-
-    if (buscar) {
-      let ticket = {
-        code: ticketNumber,
-        purchaser: resultUser.email,
-        purchase_datetime: new Date(),
-        products: resultUser.products,
-        amount,
-      };
-      console.log("TICKET USUARIO ACTUALIZADO");
-      const ticketResult = await ticketService.resolveTicket(
-        buscar._id,
-        ticket
-      );
-      resultUser.orders.push(ticketResult._id);
-      await US.updateUser({ buscar }, resultUser);
-
-      const nuevaOrden = resultUser.orders.push(ticketResult.code);
-      console.log("NUEVA ORDEN");
-      await US.updateUser(_id, nuevaOrden.toString());
-      const borrado = await US.vaciarCarrito(_id);
-      console.log("BORRADO");
-      console.log(borrado);
-      res.send({ status: 200, payload: ticketResult });
-    }
 
     console.log("NUEVO TICKET USUARIO");
+
+    //SE AGREGA TICKET A COLECCION TICKETS
     const ticketResult = await ticketService.createTicket(ticket);
-    resultUser.orders.push(ticketResult._id);
-    await US.updateUser({ buscar }, resultUser);
+    const ticketId = ticketResult._id;
+    const userId = resultUser._id;
 
-    const nuevaOrden = resultUser.orders.push(ticketResult.code);
-    console.log(nuevaOrden);
-    await US.create({ _id }, { orders: nuevaOrden });
+    //SE AGREGA TICKET A ORDERS DE USER
+    const alta = await US.updateUser(userId, ticketId);
+    console.log(alta);
 
-    const borrado = await US.vaciarCarrito(_id);
-    console.log(borrado);
+    //SI SE TERMINO LA COMPRA VACIAR CARRITO
+    const resetCart = await US.vaciarCarrito(userId);
+    console.log("SE VACIO EL CARRITO");
+
+    //SI NO HAY STOCK DE UN PRODUCTO RETORNA AL CARRITO
+    if (outOfStock.length > 0) {
+      const alta = await US.updateUser(userId, outOfStock);
+    }
+
     res.send({ status: 200, payload: ticketResult });
   } catch (error) {
     console.error(error);

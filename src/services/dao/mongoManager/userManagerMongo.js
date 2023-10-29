@@ -49,15 +49,13 @@ export default class UserService {
     return users;
   };
 
-  buscarID = async ({ _id }) => {
-    console.log({ _id });
-    let user = await userModel.findOne({ _id });
-
+  updateUser = async (userId, ticketId) => {
+    const user = await userModel.findById(userId);
+    if (user) {
+      user.orders.push({ ticket: ticketId });
+      await user.save();
+    }
     return user;
-  };
-  updateUser = async (filter, value) => {
-    let result = await userModel.updateOne(filter, value);
-    return result;
   };
 
   /*==========================
