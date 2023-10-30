@@ -4,6 +4,25 @@ import bcrypt from "bcrypt";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 import jwt from "jsonwebtoken";
+import { faker } from "@faker-js/faker";
+
+//FAKER
+faker.locale = "es";
+export const generateProducts = () => {
+  let numOfProducts = parseInt(
+    faker.random.numeric(1, { bannedDigits: ["0"] })
+  );
+  //  product = {};
+  for (let i = 0; i < numOfProducts; i++) {
+    return {
+      title: faker.commerce.productName(),
+      price: faker.commerce.price(),
+      stock: faker.random.numeric(1),
+      id: faker.database.mongodbObjectId(),
+      image: faker.image.image(),
+    };
+  }
+};
 
 //IMPLEMENTACION BCRYPT
 export const createHash = (password) =>

@@ -1,4 +1,5 @@
 import { productService } from "../services/factory.js";
+import { generateProducts } from "../utils.js";
 
 //CREAR
 const addProduct = async (req, res) => {
@@ -101,10 +102,31 @@ const modProduct = async (req, res) => {
   }
 };
 
+const getProductMockup = async (req, res) => {
+  try {
+    let products = [];
+    for (let i = 0; i < 100; i++) {
+      products.push(generateProducts());
+    }
+
+    res.send({
+      status: "success",
+      result: "Productos Generados con exito",
+      payload: products,
+    });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .send({ error: error, message: "No se pudo crear los productos." });
+  }
+};
+
 export default {
   addProduct,
   getProduct,
   getProductById,
   deleteProduct,
   modProduct,
+  getProductMockup,
 };

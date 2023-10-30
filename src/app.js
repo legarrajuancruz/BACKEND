@@ -32,6 +32,8 @@ import jwtRouter from "./routes/jwt.router.js";
 import MessagesManager from "./services/dao/mongoManager/messageManagerMongo.js";
 import ProductManager from "./services/dao/mongoManager/productManagerMongo.js";
 
+import ProductMockup from "./routes/mockingproducts.router.js";
+
 const app = express();
 
 /*=================
@@ -109,6 +111,7 @@ app.use("/", viewRouter);
 app.use("/github", githubLoginViewRouter);
 app.use("/api/jwt", jwtRouter);
 app.use("/api/email", emailRouter);
+app.use("/api/mockingproducts", ProductMockup);
 
 /*================================
 |   SOCKET SERVER CONECCTION      |
