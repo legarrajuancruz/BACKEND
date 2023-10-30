@@ -111,7 +111,7 @@ app.use("/", viewRouter);
 app.use("/github", githubLoginViewRouter);
 app.use("/api/jwt", jwtRouter);
 app.use("/api/email", emailRouter);
-app.use("/api/mockingproducts", ProductMockup);
+app.use("/mockingproducts", ProductMockup);
 
 /*================================
 |   SOCKET SERVER CONECCTION      |

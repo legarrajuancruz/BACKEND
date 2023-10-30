@@ -112,7 +112,7 @@ const getProductMockup = async (req, res) => {
     res.send({
       status: "success",
       result: "Productos Generados con exito",
-      payload: products,
+      Productos: products,
     });
   } catch (error) {
     console.error(error);
