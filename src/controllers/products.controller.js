@@ -2,7 +2,11 @@ import { productService } from "../services/factory.js";
 import { generateProducts } from "../utils.js";
 import EErrors from "../services/errors/errors-enum.js";
 import CustomError from "../services/errors/CustomError.js";
-import { generateProductsErrorInfo } from "../services/errors/messages/products-creation-error.js";
+import {
+  generateProductsErrorInfo,
+  eliminateProductsErrorInfo,
+  getProductByIdErrorInfo,
+} from "../services/errors/messages/products-creation-error.js";
 
 //CREAR
 const addProduct = async (req, res) => {
@@ -16,7 +20,11 @@ const addProduct = async (req, res) => {
       img: req.body.img,
     };
 
-    if (!producto.title || producto.price || producto.stock) {
+    if (
+      !producto.title ||
+      producto.price != Number ||
+      !producto.stock != Number
+    ) {
       CustomError.createError({
         name: "Product creation error",
         cause: generateProductsErrorInfo(producto),
@@ -61,6 +69,16 @@ const getProduct = async (req, res) => {
 const getProductById = async (req, res) => {
   try {
     let _id = req.params.id;
+    let products = await productService.leerProductos(req.query);
+
+    if (!_id || _id != products._id) {
+      CustomError.createError({
+        name: "Product Get error",
+        cause: getProductByIdErrorInfo(_id),
+        message: "Error al obtener el producto",
+        code: EErrors.INVALID_TYPES_ERROR,
+      });
+    }
 
     let producto = await productService.getProductbyId({ _id });
 
@@ -69,10 +87,10 @@ const getProductById = async (req, res) => {
       producto: producto,
     });
   } catch (error) {
-    console.error("No se pudo obtener producto con mongoose:" + error);
+    console.error(error);
     res.status(500).send({
-      error: "No se pudo obtener el producto con mongoose",
-      message: error,
+      error: error.code,
+      message: error.message,
     });
   }
 };
@@ -81,6 +99,16 @@ const getProductById = async (req, res) => {
 const deleteProduct = async (req, res) => {
   try {
     let _id = req.params.id;
+    let products = await productService.leerProductos(req.query);
+
+    if (!_id || _id != products._id) {
+      CustomError.createError({
+        name: "Product eliminate error",
+        cause: eliminateProductsErrorInfo(_id),
+        message: "Error al eliminar el producto",
+        code: EErrors.INVALID_TYPES_ERROR,
+      });
+    }
 
     let eliminado = await productService.getProductbyId(_id);
     await productService.borrarProducto(req.params.id);
@@ -90,10 +118,10 @@ const deleteProduct = async (req, res) => {
       payload: eliminado,
     });
   } catch (error) {
-    console.error("No se pudo obtener producto con mongoose:" + error);
+    console.error(error);
     res.status(500).send({
-      error: "No se pudo eliminar el producto con mongoose",
-      message: error,
+      error: error.code,
+      message: error.message,
     });
   }
 };
