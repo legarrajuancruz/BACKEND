@@ -99,9 +99,8 @@ const getProductById = async (req, res) => {
 const deleteProduct = async (req, res) => {
   try {
     let _id = req.params.id;
-    let products = await productService.leerProductos(req.query);
 
-    if (!_id || _id != products._id) {
+    if (!_id || !mongoose.Types.ObjectId.isValid(_id)) {
       CustomError.createError({
         name: "Product eliminate error",
         cause: eliminateProductsErrorInfo(_id),
