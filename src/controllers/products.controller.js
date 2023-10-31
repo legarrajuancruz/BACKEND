@@ -1,5 +1,6 @@
 import { productService } from "../services/factory.js";
 import { generateProducts } from "../utils.js";
+import mongoose from "mongoose";
 import EErrors from "../services/errors/errors-enum.js";
 import CustomError from "../services/errors/CustomError.js";
 import {
@@ -69,14 +70,13 @@ const getProduct = async (req, res) => {
 const getProductById = async (req, res) => {
   try {
     let _id = req.params.id;
-    let products = await productService.leerProductos(req.query);
 
-    if (!_id || _id != products._id) {
+    if (!_id || !mongoose.Types.ObjectId.isValid(_id)) {
       CustomError.createError({
         name: "Product Get error",
         cause: getProductByIdErrorInfo(_id),
         message: "Error al obtener el producto",
-        code: EErrors.INVALID_TYPES_ERROR,
+        code: EErrors.NI_EL_PROGRAMADOR_SABE_QUE_PASO,
       });
     }
 
