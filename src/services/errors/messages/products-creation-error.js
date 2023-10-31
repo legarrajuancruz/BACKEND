@@ -3,6 +3,6 @@ export const generateProductsErrorInfo = (producto) => {
         Lista de propiedades:
             --> title: type String, recibido: ${producto.title}
             --> price: type Number, recibido: ${producto.price}
-            --> stock: type Number, recibido: ${produco.stock}
+            --> stock: type Number, recibido: ${producto.stock}
         `;
 };
