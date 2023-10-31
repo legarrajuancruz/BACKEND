@@ -17,6 +17,6 @@ export const eliminateProductsErrorInfo = (_id) => {
 export const getProductByIdErrorInfo = (_id) => {
   return `Una o mas propiedades fueron enviadas incompletas o no no coinciden con el el _id
             Lista de propiedades del producto:
-                      --> Object._id: type String, recibido: ${_id}
+                    --> Object._id: type String, recibido: ${_id}
             `;
 };
