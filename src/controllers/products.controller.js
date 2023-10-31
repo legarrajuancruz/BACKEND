@@ -1,11 +1,29 @@
 import { productService } from "../services/factory.js";
 import { generateProducts } from "../utils.js";
+import EErrors from "../services/errors/errors-enum.js";
+import CustomError from "../services/errors/CustomError.js";
+import { generateProductsErrorInfo } from "../services/errors/messages/products-creation-error.js";
 
 //CREAR
 const addProduct = async (req, res) => {
   try {
-    let producto = req.body;
-    console.log(producto);
+    const producto = {
+      title: req.body.title,
+      description: req.body.description,
+      price: req.body.price,
+      stock: req.body.stock,
+      category: req.body.category,
+      img: req.body.img,
+    };
+
+    if (!producto.title || producto.price || producto.stock) {
+      CustomError.createError({
+        name: "Product creation error",
+        cause: generateProductsErrorInfo(producto),
+        message: "Error creando el producto",
+        code: EErrors.INVALID_TYPES_ERROR,
+      });
+    }
 
     let proudctoCreado = await productService.crearProducto(producto);
 
@@ -15,9 +33,11 @@ const addProduct = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res
-      .status(500)
-      .send({ error: error, message: "No se pudo guardar el producto." });
+    res.status(500).send({
+      error: error.code,
+      message: error,
+      message,
+    });
   }
 };
 
