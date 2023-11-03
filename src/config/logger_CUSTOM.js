@@ -1,6 +1,6 @@
 import winston from "winston";
 
-//Custom Logger Options
+//Custom Logger Options DEV
 const customLevelOptions = {
   levels: {
     fatal: 0,
