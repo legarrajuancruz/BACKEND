@@ -33,7 +33,7 @@ import MessagesManager from "./services/dao/mongoManager/messageManagerMongo.js"
 import ProductManager from "./services/dao/mongoManager/productManagerMongo.js";
 
 import ProductMockup from "./routes/mockingproducts.router.js";
-import { addLogger } from "./config/logger_BASE.js";
+import { addLogger } from "./config/logger_CUSTOM.js";
 
 const app = express();
 
@@ -59,6 +59,8 @@ const MONGO_url = config.mongoUrl;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+
+//LOGGER
 app.use(addLogger);
 
 //CONECTAR A BASE DE DATOS CON PATRON SINGLETON
