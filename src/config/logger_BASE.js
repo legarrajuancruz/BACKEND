@@ -2,7 +2,7 @@ import winston from "winston";
 
 //Configuracion winston
 const logger = winston.createLogger({
-  transports: [new winston.transport.Console({ level: "http" })],
+  transports: [new winston.transports.Console({ level: "http" })],
 });
 
 //Middleware
