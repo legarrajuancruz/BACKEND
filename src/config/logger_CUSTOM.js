@@ -1,11 +1,11 @@
 import winston, { transports } from "winston";
-import environment from "./config.js";
+import config from "./config.js";
 
 //Custom Logger Options DEV
 const customLevelOptions = {
   levels: {
     fatal: 0,
-    errror: 1,
+    error: 1,
     warning: 2,
     http: 3,
     info: 4,
@@ -74,12 +74,12 @@ export const addLogger = (req, res, next) => {
     );
   } else {
     req.logger = devLogger;
+
     req.logger.error(
       `${req.method} en ${
         req.url
       } - at ${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`
     );
-
     req.logger.warning(
       `${req.method} en ${
         req.url
