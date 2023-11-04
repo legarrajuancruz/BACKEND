@@ -1,5 +1,5 @@
 import winston, { transports } from "winston";
-import config from "./config.js";
+import environment from "./config.js";
 
 //Custom Logger Options DEV
 const customLevelOptions = {
@@ -26,6 +26,26 @@ const devLogger = winston.createLogger({
   levels: customLevelOptions.levels,
   transports: [
     new winston.transports.Console({
+      level: "fatal",
+      format: winston.format.combine(
+        winston.format.colorize({
+          colors: customLevelOptions.colors,
+        }),
+        winston.format.simple()
+      ),
+    }),
+    new winston.transports.File({
+      filename: "./errors.log",
+      level: "warning",
+      format: winston.format.simple(),
+    }),
+  ],
+});
+
+const prodLogger = winston.createLogger({
+  levels: customLevelOptions.levels,
+  transports: [
+    new winston.transports.Console({
       level: "info",
       format: winston.format.combine(
         winston.format.colorize({
@@ -42,24 +62,10 @@ const devLogger = winston.createLogger({
   ],
 });
 
-//Creating our logger:
-const prodLogger = winston.createLogger({
-  levels: customLevelOptions.levels,
-  transports: [
-    new winston.transports.Console({ level: "http" }),
-    new winston.transports.File({ filename: "./errors.log", level: "warning" }),
-  ],
-});
-
 //Middleware
 export const addLogger = (req, res, next) => {
   if (config.environment === "production") {
     req.logger = prodLogger;
-    req.logger.http(
-      `${req.method} en ${
-        req.url
-      } - at ${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`
-    );
 
     req.logger.info(
       `${req.method} en ${
@@ -68,17 +74,18 @@ export const addLogger = (req, res, next) => {
     );
   } else {
     req.logger = devLogger;
-    req.logger.http(
+    req.logger.error(
       `${req.method} en ${
         req.url
       } - at ${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`
     );
 
-    req.logger.info(
+    req.logger.warning(
       `${req.method} en ${
         req.url
       } - at ${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`
     );
   }
+
   next();
 };

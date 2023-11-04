@@ -22,8 +22,8 @@ import CartRouter from "./routes/cart.router.js";
 import UserRouter from "./routes/users.router.js";
 import ticketRouter from "./routes/ticket.router.js";
 import emailRouter from "./routes/email.router.js";
-import sessionsRouter from "./routes/sessions.router.js";
 
+import sessionsRouter from "./routes/sessions.router.js";
 import usersViewRouter from "./routes/users.views.router.js";
 import viewRouter from "./routes/view.router.js";
 import githubLoginViewRouter from "./routes/github-login.views.router.js";
@@ -34,7 +34,7 @@ import ProductManager from "./services/dao/mongoManager/productManagerMongo.js";
 
 import ProductMockup from "./routes/mockingproducts.router.js";
 import { addLogger } from "./config/logger_CUSTOM.js";
-//import { addLogger } from "./config/logger_BASE.js";
+import loggerRouter from "./routes/logger.router.js";
 
 const app = express();
 
@@ -117,6 +117,7 @@ app.use("/github", githubLoginViewRouter);
 app.use("/api/jwt", jwtRouter);
 app.use("/api/email", emailRouter);
 app.use("/mockingproducts", ProductMockup);
+app.use("/loggerTest", loggerRouter);
 
 /*================================
 |   SOCKET SERVER CONECCTION      |
