@@ -75,7 +75,7 @@ export const addLogger = (req, res, next) => {
   } else {
     req.logger = devLogger;
 
-    req.logger.error(
+    req.logger.fatal(
       `${req.method} en ${
         req.url
       } - at ${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`
