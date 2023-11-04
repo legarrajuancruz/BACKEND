@@ -1,4 +1,5 @@
-import winston from "winston";
+import winston, { transports } from "winston";
+import config from "./config.js";
 
 //Custom Logger Options DEV
 const customLevelOptions = {
@@ -41,20 +42,43 @@ const devLogger = winston.createLogger({
   ],
 });
 
+//Creating our logger:
+const prodLogger = winston.createLogger({
+  levels: customLevelOptions.levels,
+  transports: [
+    new winston.transports.Console({ level: "http" }),
+    new winston.transports.File({ filename: "./errors.log", level: "warning" }),
+  ],
+});
+
 //Middleware
 export const addLogger = (req, res, next) => {
-  req.logger = devLogger;
-  req.logger.http(
-    `${req.method} en ${
-      req.url
-    } - at ${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`
-  );
+  if (config.environment === "production") {
+    req.logger = prodLogger;
+    req.logger.http(
+      `${req.method} en ${
+        req.url
+      } - at ${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`
+    );
 
-  req.logger.info(
-    `${req.method} en ${
-      req.url
-    } - at ${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`
-  );
+    req.logger.info(
+      `${req.method} en ${
+        req.url
+      } - at ${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`
+    );
+  } else {
+    req.logger = devLogger;
+    req.logger.http(
+      `${req.method} en ${
+        req.url
+      } - at ${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`
+    );
 
+    req.logger.info(
+      `${req.method} en ${
+        req.url
+      } - at ${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`
+    );
+  }
   next();
 };
