@@ -1,7 +1,6 @@
-import winston, { transports } from "winston";
+import winston from "winston";
 import config from "./config.js";
 
-//Custom Logger Options DEV
 const customLevelOptions = {
   levels: {
     fatal: 0,
@@ -13,11 +12,11 @@ const customLevelOptions = {
   },
   colors: {
     fatal: "red",
-    error: "organge",
+    error: "magenta",
     warning: "yellow",
     http: "green",
     info: "blue",
-    debug: "white",
+    debug: "cyan",
   },
 };
 
@@ -26,18 +25,11 @@ const devLogger = winston.createLogger({
   levels: customLevelOptions.levels,
   transports: [
     new winston.transports.Console({
-      level: "fatal",
+      level: "debug",
       format: winston.format.combine(
-        winston.format.colorize({
-          colors: customLevelOptions.colors,
-        }),
+        winston.format.colorize({ colors: customLevelOptions.colors }),
         winston.format.simple()
       ),
-    }),
-    new winston.transports.File({
-      filename: "./errors.log",
-      level: "warning",
-      format: winston.format.simple(),
     }),
   ],
 });
@@ -56,7 +48,7 @@ const prodLogger = winston.createLogger({
     }),
     new winston.transports.File({
       filename: "./errors.log",
-      level: "warning",
+      level: "error",
       format: winston.format.simple(),
     }),
   ],
@@ -68,22 +60,17 @@ export const addLogger = (req, res, next) => {
     req.logger = prodLogger;
 
     req.logger.info(
-      `${req.method} en ${
+      `Se disparo un llamado ${req.method} en ${
         req.url
-      } - at ${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`
+      } - Fecha: ${new Date().toLocaleDateString()} - Hora: ${new Date().toLocaleTimeString()}`
     );
   } else {
     req.logger = devLogger;
 
-    req.logger.fatal(
-      `${req.method} en ${
+    req.logger.debug(
+      `Se disparo un llamado ${req.method} en ${
         req.url
-      } - at ${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`
-    );
-    req.logger.warning(
-      `${req.method} en ${
-        req.url
-      } - at ${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`
+      } - Fecha: ${new Date().toLocaleDateString()} - Hora: ${new Date().toLocaleTimeString()}`
     );
   }
 

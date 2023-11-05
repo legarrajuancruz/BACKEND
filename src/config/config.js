@@ -21,7 +21,6 @@ console.log("Modo persistencia", program.opts().persist);
 console.log("Remaining arguments: ", program.args);
 
 const environment = program.opts().mode;
-console.log(environment);
 
 dotenv.config({
   path:
