@@ -22,7 +22,7 @@ export default class singleton {
     try {
       await mongoose.connect(config.mongoUrl);
     } catch (error) {
-      console.error("No se pudo conectar con la base de datos");
+      console.error("No se pudo conectar con la base de datos" + error);
       process.exit();
     }
   };

@@ -21,12 +21,13 @@ console.log("Modo persistencia", program.opts().persist);
 console.log("Remaining arguments: ", program.args);
 
 const environment = program.opts().mode;
+console.log(environment);
 
 dotenv.config({
   path:
     environment === "production"
-      ? "./src/config/.env.production"
-      : "./src/config/.env.development",
+      ? "./config/.env.production"
+      : "./config/.env.development",
 });
 
 export default {
