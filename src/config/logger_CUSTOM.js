@@ -58,21 +58,14 @@ const prodLogger = winston.createLogger({
 export const addLogger = (req, res, next) => {
   if (config.environment === "production") {
     req.logger = prodLogger;
-
-    req.logger.info(
-      `Se disparo un llamado ${req.method} en ${
-        req.url
-      } - Fecha: ${new Date().toLocaleDateString()} - Hora: ${new Date().toLocaleTimeString()}`
-    );
   } else {
     req.logger = devLogger;
-
-    req.logger.debug(
-      `Se disparo un llamado ${req.method} en ${
-        req.url
-      } - Fecha: ${new Date().toLocaleDateString()} - Hora: ${new Date().toLocaleTimeString()}`
-    );
   }
+  req.logger.info(
+    `Se disparo un llamado ${req.method} en ${
+      req.url
+    } - Fecha: ${new Date().toLocaleDateString()} - Hora: ${new Date().toLocaleTimeString()}`
+  );
 
   next();
 };
