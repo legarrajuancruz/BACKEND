@@ -16,9 +16,6 @@ const loginUser = async () => {
     if (result.status === 200) {
       result.json().then((json) => {
         location.href = "/users/";
-        //LOCALSTORAGE
-        // console.log(json);
-        // localStorage.setItem("authToken", json.jwt);
 
         //COOKIES
         console.log("Cookies generadas");

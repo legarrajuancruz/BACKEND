@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 import crypto from "crypto";
-import { userModel } from "../dao/models/user.model.js";
-import { emailAccount, gmailAppPassword } from "../config/config.js";
+import userModel from "../services/dao/models/user.model.js";
+import config from "../config/config.js";
 
 //FUNCION ENVIAR MAIL RECUPERAR CONTRASEÑA
 const recoverPassword = async (userEmail) => {
@@ -21,20 +21,20 @@ const recoverPassword = async (userEmail) => {
     port: 587,
     secure: false,
     auth: {
-      user: emailAccount,
-      pass: gmailAppPassword,
+      user: config.emailAccount,
+      pass: config.gmailAppPassword,
     },
     tls: {
       rejectUnauthorized: false,
     },
   });
 
-  const recoverURL = `http://localhost:8080/newPassword/${resetToken}`;
+  const recoverURL = `http://localhost:8080/users/cambiarPassword/${resetToken}`;
 
   const mailOptionsRecover = {
     from: emailAccount,
     to: userEmail,
-    subject: "Recupera tu contraseña en PokeShop",
+    subject: "Recupera tu contraseña en SuperMarket",
     text: `Por favor, para restablecer tu contraseña haz clic en el siguiente enlace: ${recoverURL}`,
     html: `<p>Por favor, para restablecer tu contraseña haz clic en el siguiente enlace: <a href="${recoverURL}">restablecer contraseña</a></p>`,
   };
@@ -42,4 +42,4 @@ const recoverPassword = async (userEmail) => {
   await transporter.sendMail(mailOptionsRecover);
 };
 
-export default recoverPassword;
+export default { recoverPassword };

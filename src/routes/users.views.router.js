@@ -15,6 +15,10 @@ userRouter.get("/recuperar", (req, res) => {
   res.render("recuperar");
 });
 
+userRouter.get("/newPassword", (req, res) => {
+  res.render("newPassword");
+});
+
 userRouter.get("/profile", (req, res) => {
   res.render("profile", {
     user: req.session.user,
@@ -30,9 +34,5 @@ userRouter.get(
     });
   }
 );
-
-userRouter.get("/newPassword", (req, res) => {
-  res.render("newPassword");
-});
 
 export default userRouter;

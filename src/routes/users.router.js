@@ -1,6 +1,6 @@
 import { Router } from "express";
 import UserController from "../controllers/users.controller.js";
-
+import newPassword from "../controllers/newPassword.controller.js";
 const UserRouter = Router();
 
 //LEER USUARIOS
@@ -17,5 +17,7 @@ UserRouter.get("/:id", UserController.ControlgetUsersById);
 
 // //AGREGAR AL CARRITO
 UserRouter.post("/:uid/products/:pid", UserController.agregaralCarritoUser);
+
+UserRouter.post("/cambiarPassword", newPassword.recoverPassword);
 
 export default UserRouter;
