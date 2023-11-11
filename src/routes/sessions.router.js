@@ -77,4 +77,8 @@ sessionsRouter.get("/fail-login", (req, res) => {
   res.status(401).send({ error: "Error al procesar el login" });
 });
 
+sessionsRouter.post("/newPassword/:token", async (req, res) => {
+  authController.newPassword(req, res);
+});
+
 export default sessionsRouter;
