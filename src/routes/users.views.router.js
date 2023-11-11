@@ -11,10 +11,9 @@ userRouter.get("/register", (req, res) => {
   res.render("register");
 });
 
-userRouter.get("/recuperar"),
-  (req, res) => {
-    res.render("recuperar");
-  };
+userRouter.get("/recuperar", (req, res) => {
+  res.render("recuperar");
+});
 
 userRouter.get("/profile", (req, res) => {
   res.render("profile", {
