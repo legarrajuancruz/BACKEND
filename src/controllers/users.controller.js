@@ -86,12 +86,12 @@ const updateUser = async (filter, value) => {
   ==========================*/
 const recuperarPassword = async (req, res) => {
   try {
-    const userEmail = req.body;
+    let userEmail = req.body;
     console.log("USER EMAIL");
     console.log(userEmail);
 
-    console.log(userEmail);
     const result = await US.recoverPassword(userEmail);
+    console.log(result);
 
     res.status(202).send({ message: "email enviado con exito" });
   } catch (error) {

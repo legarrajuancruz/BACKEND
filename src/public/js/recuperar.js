@@ -9,7 +9,7 @@ const cambiarPassword = async () => {
 
   console.log(user);
 
-  const response = await fetch("/users/cambiarPassword", {
+  const response = await fetch("/api/users/cambiarPassword", {
     method: "POST",
     headers: { "Content-type": "application/json; charset=UTF-8" },
     body: JSON.stringify(user),
