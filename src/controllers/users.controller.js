@@ -2,6 +2,10 @@ import UserService from "../services/dao/mongoManager/userManagerMongo.js";
 import CartService from "../services/dao/mongoManager/cartManagerMongo.js";
 import ProductService from "../services/dao/mongoManager/productManagerMongo.js";
 
+import config from "../config/config.js";
+import nodemailer from "nodemailer";
+import crypto from "crypto";
+
 const US = new UserService();
 const PS = new ProductService();
 const CS = new CartService();
@@ -73,8 +77,30 @@ const agregaralCarritoUser = async (req, res) => {
 };
 
 const updateUser = async (filter, value) => {
-  let result = await userModel.updateOne(filter, value);
+  let result = await UserService.updateOne(filter, value);
   return result;
+};
+
+/*==========================
+  -    ENVIAR EMAIL PASS   -
+  ==========================*/
+const recuperarPassword = async (req, res) => {
+  try {
+    const userEmail = req.body;
+    console.log("USER EMAIL");
+    console.log(userEmail);
+
+    console.log(userEmail);
+    const result = await US.recoverPassword(userEmail);
+
+    res.status(202).send({ message: "email enviado con exito" });
+  } catch (error) {
+    console.error("No se pudo enviar el email con mongoose:" + error);
+    res.status(500).send({
+      error: "No se pudo enviar el correo, usuario no encontrado",
+      message: error,
+    });
+  }
 };
 
 export default {
@@ -82,4 +108,5 @@ export default {
   ControlgetUsersById,
   agregaralCarritoUser,
   updateUser,
+  recuperarPassword,
 };
