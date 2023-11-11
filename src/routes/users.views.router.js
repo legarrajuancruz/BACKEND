@@ -27,4 +27,8 @@ userRouter.get(
   }
 );
 
+userRouter.get("/newPassword", (req, res) => {
+  res.render("newPassword");
+});
+
 export default userRouter;
