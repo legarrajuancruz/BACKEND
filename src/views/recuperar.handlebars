@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="row">
+    <div>
+      <h3 class="col-md-6 offset-md-3">Recuperar Contraseña</h3>
+      <form
+        class="offset-md-3 w-50 p-3"
+        action="/recover-password"
+        method="POST"
+      >
+        <div class="mb-3">
+          <label class="form-label">Correo Electrónico</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            required
+          />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Enviar Correo de
+          Recuperación</button>
+      </form>
+    </div>
+  </div>
+</div>
