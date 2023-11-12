@@ -16,11 +16,12 @@ const cambiarPassword = async () => {
   }).then((result) => {
     if (result.status === 200) {
       result.json().then((json) => {
+        alert("correo enviado");
         location.href = "/users/login";
       });
     } else if (result.status === 401) {
       console.log(result);
-      alert("correo invalido");
+      alert("Debes poner un email");
     }
   });
 };

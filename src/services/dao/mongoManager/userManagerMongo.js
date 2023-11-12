@@ -61,12 +61,11 @@ export default class UserService {
     const timer = readToken.resetPasswordExpires;
     console.log("las puertas de Durin, Señor de Moria, habla amigo y entra");
     if (readToken && timer > 0) {
-      console.log("MELLON");
-      const mellon = "mellon";
-      return mellon;
+      console.log("-  MELLON  -");
+      return "mellon";
     } else {
       console.log("NO ERES AMIGO");
-      return orc;
+      return "orc";
     }
   };
 

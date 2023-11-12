@@ -18,7 +18,7 @@ const registerUser = async () => {
     headers: { "Content-type": "application/json; charset=UTF-8" },
     body: JSON.stringify(user),
   });
-  const data = await response.json();
+  const data = await res.json();
   if (data) {
     location.href = "/users/login";
   }

@@ -20,15 +20,15 @@ userRouter.get("/recuperar", (req, res) => {
 
 userRouter.get("/newPassword/:token", async (req, res) => {
   const { token } = req.params;
-
   console.log(token);
-  const resetPasswordToken = token;
-  const user = await US.getEmailToken({ resetPasswordToken });
 
-  if (user != "mellon") {
+  const resetPasswordToken = token;
+  const password = await US.getEmailToken({ resetPasswordToken });
+
+  if (password != "mellon" || password === null) {
     return res.redirect("/users/login");
   } else {
-    res.render("newPassword", { token });
+    res.render("newPassword");
   }
 });
 
