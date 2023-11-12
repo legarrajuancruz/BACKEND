@@ -167,4 +167,26 @@ export default class UserService {
     await transporter.sendMail(mailOptionsRecover);
     return;
   };
+
+  findByToken = async (token) => {
+    const user = await userModel.findOne(token);
+
+    if (!user) {
+      throw new Error("Usuario no encontrado!");
+    }
+    return user;
+  };
+
+  updatePassword = async (userPassword) => {
+    let { nueva, confirmar, token } = userPassword;
+    if (nueva != confirmar) {
+      return;
+    }
+    const user = await userModel.findOne(token);
+
+    if (user.password != nueva) {
+      encontrado.password = await userModel.updateOne({ password: nueva });
+    }
+    return user;
+  };
 }

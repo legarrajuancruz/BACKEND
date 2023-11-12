@@ -83,8 +83,6 @@ const updateUser = async (filter, value) => {
 const resetPassword = async (req, res) => {
   try {
     let userEmail = req.body;
-    console.log("USER EMAIL");
-    console.log(userEmail);
 
     await US.emailResetPassword(userEmail);
 
@@ -98,8 +96,27 @@ const resetPassword = async (req, res) => {
   }
 };
 
+/*===========================
+  -      NUEVA PASSWORD     -
+  ==========================*/
 const nuevaPassword = async (req, res) => {
   try {
+    let { nueva, confirmar } = req.body;
+    let { token } = req.params;
+    let user = await US.findByToken(token);
+
+    const update = {
+      nueva,
+      confirmar,
+      token,
+    };
+
+    let modificado = await US.updatePassword(update);
+
+    res.status(202).send({
+      result: " Usuario modificado con exito",
+      payload: modificado,
+    });
   } catch (error) {}
 };
 
