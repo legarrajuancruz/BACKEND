@@ -1,5 +1,8 @@
 import { Router } from "express";
 import passport from "passport";
+import UserService from "../services/dao/mongoManager/userManagerMongo.js";
+
+const US = new UserService();
 
 const userRouter = Router();
 
@@ -15,8 +18,20 @@ userRouter.get("/recuperar", (req, res) => {
   res.render("recuperar");
 });
 
-userRouter.get("/newPassword", (req, res) => {
-  res.render("newPassword");
+userRouter.get("/newPassword/:token", async (req, res) => {
+  const { token } = req.params;
+
+  console.log(token);
+
+  const user = await US.leerUsuarios({
+    resetPasswordToken: token,
+    resetPasswordExpires: { $gt: Date.now() },
+  });
+
+  if (!user) {
+    return res.redirect("/login");
+  }
+  res.render("newPassword", { token });
 });
 
 userRouter.get("/profile", (req, res) => {

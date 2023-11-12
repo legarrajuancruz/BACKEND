@@ -1,5 +1,9 @@
 import userModel from "../models/user.model.js";
 
+import config from "../../../config/config.js";
+import nodemailer from "nodemailer";
+import crypto from "crypto";
+
 export default class UserService {
   constructor() {
     console.log("Users with Database persistence in mongodb");
@@ -129,11 +133,11 @@ export default class UserService {
       },
     });
 
-    const recoverURL = `http://localhost:8080/api/users/cambiarPassword/${resetToken}`;
+    const recoverURL = `http://localhost:8080/users/newPassword/${resetToken}`;
 
     const mailOptionsRecover = {
-      from: emailAccount,
-      to: userEmail,
+      from: config.emailAccount,
+      to: user.email,
       subject: "Recupera tu contraseña en SuperMarket",
       text: `Por favor, para restablecer tu contraseña haz clic en el siguiente enlace: ${recoverURL}`,
       html: `<p>Por favor, para restablecer tu contraseña haz clic en el siguiente enlace: <a href="${recoverURL}">restablecer contraseña</a></p>`,

@@ -2,10 +2,6 @@ import UserService from "../services/dao/mongoManager/userManagerMongo.js";
 import CartService from "../services/dao/mongoManager/cartManagerMongo.js";
 import ProductService from "../services/dao/mongoManager/productManagerMongo.js";
 
-import config from "../config/config.js";
-import nodemailer from "nodemailer";
-import crypto from "crypto";
-
 const US = new UserService();
 const PS = new ProductService();
 const CS = new CartService();
@@ -103,10 +99,16 @@ const recuperarPassword = async (req, res) => {
   }
 };
 
+const nuevaPassword = async (req, res) => {
+  try {
+  } catch (error) {}
+};
+
 export default {
   leerUsuarios,
   ControlgetUsersById,
   agregaralCarritoUser,
   updateUser,
   recuperarPassword,
+  nuevaPassword,
 };

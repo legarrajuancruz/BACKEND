@@ -18,5 +18,6 @@ UserRouter.get("/:id", UserController.ControlgetUsersById);
 UserRouter.post("/:uid/products/:pid", UserController.agregaralCarritoUser);
 
 UserRouter.post("/cambiarPassword", UserController.recuperarPassword);
+UserRouter.post("/nuevaPassord", UserController.nuevaPassword);
 
 export default UserRouter;
