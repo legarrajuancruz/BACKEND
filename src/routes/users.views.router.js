@@ -22,16 +22,14 @@ userRouter.get("/newPassword/:token", async (req, res) => {
   const { token } = req.params;
 
   console.log(token);
+  const resetPasswordToken = token;
+  const user = await US.getEmailToken({ resetPasswordToken });
 
-  const user = await US.leerUsuarios({
-    resetPasswordToken: token,
-    resetPasswordExpires: { $gt: Date.now() },
-  });
-
-  if (!user) {
-    return res.redirect("/login");
+  if (user != "mellon") {
+    return res.redirect("/users/login");
+  } else {
+    res.render("newPassword", { token });
   }
-  res.render("newPassword", { token });
 });
 
 userRouter.get("/profile", (req, res) => {

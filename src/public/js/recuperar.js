@@ -1,5 +1,5 @@
 /*==========================
--        REGISTER           -
+-        RECUPERAR          -
 ===========================*/
 
 const cambiarPassword = async () => {

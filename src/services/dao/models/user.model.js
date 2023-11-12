@@ -36,7 +36,8 @@ const userSchema = new mongoose.Schema({
       },
     },
   ],
-
+  resetPasswordToken: String,
+  resetPasswordExpires: Date,
   loggedBy: String,
 });
 userSchema.pre("findOne", function () {

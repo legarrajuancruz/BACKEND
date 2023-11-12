@@ -53,6 +53,23 @@ export default class UserService {
     return users;
   };
 
+  getEmailToken = async ({ resetPasswordToken }) => {
+    let readToken = await userModel.findOne({ resetPasswordToken });
+    console.log("READ TOKEN - getEmailToken");
+    console.log(readToken);
+
+    const timer = readToken.resetPasswordExpires;
+    console.log("las puertas de Durin, Señor de Moria, habla amigo y entra");
+    if (readToken && timer > 0) {
+      console.log("MELLON");
+      const mellon = "mellon";
+      return mellon;
+    } else {
+      console.log("NO ERES AMIGO");
+      return orc;
+    }
+  };
+
   updateUser = async (userId, ticketId) => {
     const user = await userModel.findById(userId);
     if (user) {
@@ -106,10 +123,12 @@ export default class UserService {
     }
   };
 
-  recoverPassword = async (userEmail) => {
+  /*========================
+  -      RESET PASSWORD      -
+  ==========================*/
+  emailResetPassword = async (userEmail) => {
     const user = await userModel.findOne(userEmail);
-    console.log("HOLA");
-    console.log(user);
+
     if (!user) {
       throw new Error("Usuario no encontrado!");
     }
@@ -119,6 +138,9 @@ export default class UserService {
     user.resetPasswordToken = resetToken;
     user.resetPasswordExpires = Date.now() + 3600000;
     await user.save();
+
+    console.log("USUARIO EMAIL RESET");
+    console.log(user);
 
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",

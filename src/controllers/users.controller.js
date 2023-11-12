@@ -80,14 +80,13 @@ const updateUser = async (filter, value) => {
 /*==========================
   -    ENVIAR EMAIL PASS   -
   ==========================*/
-const recuperarPassword = async (req, res) => {
+const resetPassword = async (req, res) => {
   try {
     let userEmail = req.body;
     console.log("USER EMAIL");
     console.log(userEmail);
 
-    const result = await US.recoverPassword(userEmail);
-    console.log(result);
+    await US.emailResetPassword(userEmail);
 
     res.status(202).send({ message: "email enviado con exito" });
   } catch (error) {
@@ -109,6 +108,6 @@ export default {
   ControlgetUsersById,
   agregaralCarritoUser,
   updateUser,
-  recuperarPassword,
+  resetPassword,
   nuevaPassword,
 };
