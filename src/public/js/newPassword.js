@@ -2,7 +2,7 @@
 -     NEW PASSWORD      -
 =======================*/
 
-const cambiarPassword = async () => {
+const actualizarPassword = async () => {
   let nueva = document.getElementById("password").value;
   let confirmar = document.getElementById("confirmPassword").value;
 
@@ -10,7 +10,7 @@ const cambiarPassword = async () => {
 
   console.log(user);
 
-  const response = await fetch("/api/users/cambiarPassword", {
+  const response = await fetch("/api/users/nuevaPassord", {
     method: "POST",
     headers: { "Content-type": "application/json; charset=UTF-8" },
     body: JSON.stringify(user),
@@ -27,4 +27,4 @@ const cambiarPassword = async () => {
   });
 };
 
-document.getElementById("btn-cambiarPassword").onclick = cambiarPassword;
+document.getElementById("btn-actualizarPassword").onclick = actualizarPassword;

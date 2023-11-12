@@ -111,6 +111,8 @@ const nuevaPassword = async (req, res) => {
       token,
     };
 
+    console.log(update);
+
     let modificado = await US.updatePassword(update);
 
     res.status(202).send({
