@@ -101,8 +101,8 @@ const resetPassword = async (req, res) => {
   ==========================*/
 const nuevaPassword = async (req, res) => {
   try {
-    let { nueva, confirmar } = req.body;
-    let { token } = req.params;
+    let { nueva, confirmar, token } = req.body;
+
     let user = await US.findByToken(token);
 
     const update = {

@@ -5,8 +5,9 @@
 const actualizarPassword = async () => {
   let nueva = document.getElementById("password").value;
   let confirmar = document.getElementById("confirmPassword").value;
+  let token = document.getElementById("token").textContent;
 
-  const user = { nueva, confirmar };
+  const user = { nueva, confirmar, token };
 
   console.log(user);
 

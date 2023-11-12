@@ -28,7 +28,7 @@ userRouter.get("/newPassword/:token", async (req, res) => {
   if (password != "mellon" || password === null) {
     return res.redirect("/users/login");
   } else {
-    res.render("newPassword");
+    res.render("newPassword", { token });
   }
 });
 
