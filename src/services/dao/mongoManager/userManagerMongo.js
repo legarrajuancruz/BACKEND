@@ -178,11 +178,28 @@ export default class UserService {
   updatePassword = async (userPassword) => {
     let { nueva, confirmar, token } = userPassword;
 
-    const user = await userModel.findOne(token);
+    const user = await userModel.findOne({ token });
 
-    if (user.password != nueva) {
-      user.password = await userModel.updateOne({ password: nueva });
+    if (!user) {
+      return { error: "Usuario no encontrado" };
     }
-    return user;
+    if (nueva != confirmar) {
+      return { error: "Las contraseñas no coinciden" };
+    }
+    if (user.password != nueva) {
+      user.password = nueva;
+      try {
+        await user.update({ password: nueva });
+        return { success: "Contraseña actualizada con éxito", user };
+      } catch (error) {
+        return { error: "Error al actualizar la contraseña" };
+      }
+    } else {
+      return {
+        message:
+          "La contraseña nueva es la misma que la actual, no se realizó ninguna actualización",
+        user,
+      };
+    }
   };
 }
