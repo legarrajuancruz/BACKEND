@@ -53,22 +53,6 @@ export default class UserService {
     return users;
   };
 
-  getEmailToken = async ({ resetPasswordToken }) => {
-    let readToken = await userModel.findOne({ resetPasswordToken });
-    console.log("READ TOKEN - getEmailToken");
-    console.log(readToken);
-
-    const timer = readToken.resetPasswordExpires;
-    console.log("las puertas de Durin, Señor de Moria, habla amigo y entra");
-    if (readToken && timer > 0) {
-      console.log("-  MELLON  -");
-      return "mellon";
-    } else {
-      console.log("NO ERES AMIGO");
-      return "orc";
-    }
-  };
-
   updateUser = async (userId, ticketId) => {
     const user = await userModel.findById(userId);
     if (user) {
@@ -177,15 +161,27 @@ export default class UserService {
     return user;
   };
 
+  getEmailToken = async ({ resetPasswordToken }) => {
+    let readToken = await userModel.findOne({ resetPasswordToken });
+
+    const timer = readToken.resetPasswordExpires;
+    console.log("las puertas de Durin, Señor de Moria, habla amigo y entra");
+    if (readToken && timer > 0) {
+      console.log("-  MELLON  -");
+      return "mellon";
+    } else {
+      console.log("NO ERES AMIGO");
+      return "orc";
+    }
+  };
+
   updatePassword = async (userPassword) => {
     let { nueva, confirmar, token } = userPassword;
-    if (nueva != confirmar) {
-      return;
-    }
+
     const user = await userModel.findOne(token);
 
     if (user.password != nueva) {
-      encontrado.password = await userModel.updateOne({ password: nueva });
+      user.password = await userModel.updateOne({ password: nueva });
     }
     return user;
   };

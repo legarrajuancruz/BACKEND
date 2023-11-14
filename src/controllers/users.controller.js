@@ -102,24 +102,25 @@ const resetPassword = async (req, res) => {
 const nuevaPassword = async (req, res) => {
   try {
     let { nueva, confirmar, token } = req.body;
-
-    let user = await US.findByToken(token);
-
-    const update = {
-      nueva,
-      confirmar,
-      token,
-    };
-
-    console.log(update);
-
-    let modificado = await US.updatePassword(update);
+    console.log(req.body);
+    if (nueva != confirmar) {
+      res.status(500).send({
+        result: " Las contraseñas no son iguales",
+      });
+    }
+    let modificado = await US.updatePassword(req.body);
 
     res.status(202).send({
       result: " Usuario modificado con exito",
       payload: modificado,
     });
-  } catch (error) {}
+  } catch (error) {
+    console.error("No se pudo actualizar la contraseña con mongoose:" + error);
+    res.status(500).send({
+      error: "Las contraseñas no son iguales",
+      message: error,
+    });
+  }
 };
 
 export default {
