@@ -1,4 +1,5 @@
 import userModel from "../models/user.model.js";
+import { createHash } from "../utils.js";
 
 import config from "../../../config/config.js";
 import nodemailer from "nodemailer";
@@ -178,8 +179,10 @@ export default class UserService {
   updatePassword = async (userPassword) => {
     let { nueva, confirmar, token } = userPassword;
 
-    const user = await userModel.findOne({ token });
+    const user = await userModel.findOne({ resetPasswordToken: token });
 
+    console.log("ENCONTRO USUARIO EN UPDATE PASSWORD");
+    console.log(user.email);
     if (!user) {
       return { error: "Usuario no encontrado" };
     }
@@ -187,9 +190,9 @@ export default class UserService {
       return { error: "Las contraseñas no coinciden" };
     }
     if (user.password != nueva) {
-      user.password = nueva;
+      user.password = createHash(nueva);
       try {
-        await user.update({ password: nueva });
+        await user.save();
         return { success: "Contraseña actualizada con éxito", user };
       } catch (error) {
         return { error: "Error al actualizar la contraseña" };
@@ -198,7 +201,6 @@ export default class UserService {
       return {
         message:
           "La contraseña nueva es la misma que la actual, no se realizó ninguna actualización",
-        user,
       };
     }
   };
