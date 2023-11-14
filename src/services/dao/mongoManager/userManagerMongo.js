@@ -1,5 +1,5 @@
 import userModel from "../models/user.model.js";
-import { createHash } from "../utils.js";
+import { createHash } from "../../../utils.js";
 
 import config from "../../../config/config.js";
 import nodemailer from "nodemailer";
@@ -153,6 +153,9 @@ export default class UserService {
     return;
   };
 
+  /*========================
+  -      BUSCAR USUARIO     -
+  ==========================*/
   findByToken = async (token) => {
     const user = await userModel.findOne(token);
 
@@ -162,6 +165,9 @@ export default class UserService {
     return user;
   };
 
+  /*========================
+  -      VALIDAR TOKEN     -
+  ==========================*/
   getEmailToken = async ({ resetPasswordToken }) => {
     let readToken = await userModel.findOne({ resetPasswordToken });
 
@@ -176,6 +182,9 @@ export default class UserService {
     }
   };
 
+  /*========================
+  -      NUEVA PASSWORD      -
+  ==========================*/
   updatePassword = async (userPassword) => {
     let { nueva, confirmar, token } = userPassword;
 
