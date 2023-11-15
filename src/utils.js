@@ -35,24 +35,20 @@ export const isValidPassword = (user, password) => {
   return bcrypt.compareSync(password, user.password);
 };
 
-export const comparePasswords = async (newPassword, hashedPassword, res) => {
+export const comparePasswords = async (newPassword, hashedPassword) => {
   try {
     const passwordMatch = await bcrypt.compare(newPassword, hashedPassword);
 
     if (passwordMatch) {
       console.log("¡Alerta! Contraseña ya utilizada.");
-      return res
-        .status(401)
-        .json({ message: "Contraseña ya utilizada", passwordUsed: true });
+      return true;
     } else {
       console.log("Contraseña válida.");
-      return res
-        .status(200)
-        .json({ message: "Contraseña válida", passwordUsed: false });
+      return false;
     }
   } catch (error) {
     console.error("Error al comparar contraseñas:", error);
-    return res.status(500).json({ error: "Error interno del servidor" });
+    throw error;
   }
 };
 

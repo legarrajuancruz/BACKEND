@@ -103,27 +103,22 @@ const nuevaPassword = async (req, res) => {
   try {
     let { nueva, confirmar, token } = req.body;
     console.log(req.body);
-    if (nueva != confirmar) {
-      res.status(500).send({
-        result: " Las contraseñas no son iguales",
-      });
-    } else {
-      let modificado = await US.updatePassword(req.body, res);
 
-      console.log("NUEVA PASSWORD");
-      console.log(modificado);
+    let modificado = await US.updatePassword(req.body, res);
 
-      res.status(202).send({
-        result: " Usuario modificado con exito",
-        user: modificado.password,
-      });
-    }
+    console.log("NUEVA PASSWORD");
+    console.log(modificado);
+
+    res.status(202).send({
+      result: " Usuario modificado con exito",
+      user: modificado.password,
+    });
   } catch (error) {
     console.error("No se pudo actualizar la contraseña con mongoose:" + error);
-    // res.status(500).send({
-    //   error: "Error en la contraseña",
-    //   message: error,
-    // });
+    res.status(500).send({
+      error: "Error en la contraseña",
+      message: error,
+    });
   }
 };
 

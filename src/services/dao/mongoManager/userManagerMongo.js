@@ -183,34 +183,39 @@ export default class UserService {
   /*========================
   -      NUEVA PASSWORD      -
   ==========================*/
-  updatePassword = async (userPassword, res) => {
-    let { nueva, confirmar, token } = userPassword;
+  updatePassword = async (userPassword) => {
+    try {
+      let { nueva, confirmar, token } = userPassword;
 
-    const user = await userModel.findOne({ resetPasswordToken: token });
+      const user = await userModel.findOne({ resetPasswordToken: token });
 
-    console.log("ENCONTRO USUARIO EN UPDATE PASSWORD");
-    console.log(user.email);
-    if (!user) {
-      return { error: "Usuario no encontrado" };
-    }
-    if (nueva != confirmar) {
-      return { error: "Las contraseñas no coinciden" };
-    }
+      console.log("ENCONTRO USUARIO EN UPDATE PASSWORD");
+      console.log(user.email);
 
-    let notAuthorized = await comparePasswords(nueva, user.password, res);
-    if (notAuthorized) {
-      return {
-        error: "Contraseña no pudo ser actualizada",
-        payload: user.email,
-      };
-    } else {
-      user.password = createHash(nueva);
-      try {
-        await user.save();
-        return { success: "Contraseña actualizada con éxito", user };
-      } catch (error) {
-        return { error: "Error al actualizar la contraseña" };
+      if (!user) {
+        return { error: "Usuario no encontrado" };
       }
+
+      if (nueva !== confirmar) {
+        return { error: "Las contraseñas no coinciden" };
+      }
+
+      let notAuthorized = await comparePasswords(nueva, user.password);
+
+      if (notAuthorized) {
+        return {
+          error: "Contraseña no pudo ser actualizada",
+          payload: user.email,
+        };
+      }
+
+      user.password = createHash(nueva);
+      await user.save();
+
+      return { success: "Contraseña actualizada con éxito", user };
+    } catch (error) {
+      console.error("Error en updatePassword:", error);
+      throw error;
     }
   };
 }

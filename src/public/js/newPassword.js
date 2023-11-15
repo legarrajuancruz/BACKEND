@@ -18,8 +18,9 @@ const actualizarPassword = async () => {
   })
     .then((response) => response.json())
     .then((data) => {
-      if (data.passwordUsed === true) {
+      if (true) {
         alert("¡Alerta! La contraseña ya fue utilizada en el pasado.");
+        location.reload();
       } else {
         alert("contraseña es válida, puedes continuar");
         location.href = "/users/login";
