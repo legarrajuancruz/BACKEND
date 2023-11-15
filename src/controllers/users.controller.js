@@ -109,7 +109,14 @@ const nuevaPassword = async (req, res) => {
     console.log("NUEVA PASSWORD");
     console.log(modificado);
 
-    res.status(202).send({
+    if (modificado.error) {
+      return res.status(403).send({
+        result: " Usuario no pudo ser modificado",
+        user: modificado.password,
+      });
+    }
+
+    res.status(201).send({
       result: " Usuario modificado con exito",
       user: modificado.password,
     });
