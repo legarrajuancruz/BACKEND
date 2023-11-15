@@ -12,7 +12,6 @@ export const generateProducts = () => {
   let numOfProducts = parseInt(
     faker.random.numeric(1, { bannedDigits: ["0"] })
   );
-  //  product = {};
   for (let i = 0; i < numOfProducts; i++) {
     return {
       title: faker.commerce.productName(),
@@ -34,6 +33,27 @@ export const isValidPassword = (user, password) => {
     `Datos a validar: user-password: ${user.password}, password: ${password}`
   );
   return bcrypt.compareSync(password, user.password);
+};
+
+export const comparePasswords = async (newPassword, hashedPassword, res) => {
+  try {
+    const passwordMatch = await bcrypt.compare(newPassword, hashedPassword);
+
+    if (passwordMatch) {
+      console.log("¡Alerta! Contraseña ya utilizada.");
+      return res
+        .status(401)
+        .json({ message: "Contraseña ya utilizada", passwordUsed: true });
+    } else {
+      console.log("Contraseña válida.");
+      return res
+        .status(200)
+        .json({ message: "Contraseña válida", passwordUsed: false });
+    }
+  } catch (error) {
+    console.error("Error al comparar contraseñas:", error);
+    return res.status(500).json({ error: "Error interno del servidor" });
+  }
 };
 
 //JWT

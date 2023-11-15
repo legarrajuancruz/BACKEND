@@ -15,17 +15,15 @@ const actualizarPassword = async () => {
     method: "POST",
     headers: { "Content-type": "application/json; charset=UTF-8" },
     body: JSON.stringify(user),
-  }).then((result) => {
-    if (result.status === 200) {
-      result.json().then((json) => {
-        alert("correo enviado");
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.passwordUsed === true) {
+        alert("¡Alerta! La contraseña ya fue utilizada en el pasado.");
+      } else {
+        alert("contraseña es válida, puedes continuar");
         location.href = "/users/login";
-      });
-    } else if (result.status === 401) {
-      console.log(result);
-      alert("Debes poner un email");
-    }
-  });
+      }
+    });
 };
-
 document.getElementById("btn-actualizarPassword").onclick = actualizarPassword;

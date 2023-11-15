@@ -1,5 +1,9 @@
 import userModel from "../models/user.model.js";
-import { createHash } from "../../../utils.js";
+import {
+  createHash,
+  isValidPassword,
+  comparePasswords,
+} from "../../../utils.js";
 
 import config from "../../../config/config.js";
 import nodemailer from "nodemailer";
@@ -170,22 +174,16 @@ export default class UserService {
   ==========================*/
   getEmailToken = async ({ resetPasswordToken }) => {
     let readToken = await userModel.findOne({ resetPasswordToken });
-
     const timer = readToken.resetPasswordExpires;
     console.log("las puertas de Durin, Señor de Moria, habla amigo y entra");
-    if (readToken && timer > 0) {
-      console.log("-  MELLON  -");
-      return "mellon";
-    } else {
-      console.log("NO ERES AMIGO");
-      return "orc";
-    }
+    const result = readToken && timer > Date.now() ? "mellon" : "orc";
+    return result;
   };
 
   /*========================
   -      NUEVA PASSWORD      -
   ==========================*/
-  updatePassword = async (userPassword) => {
+  updatePassword = async (userPassword, res) => {
     let { nueva, confirmar, token } = userPassword;
 
     const user = await userModel.findOne({ resetPasswordToken: token });
@@ -198,7 +196,14 @@ export default class UserService {
     if (nueva != confirmar) {
       return { error: "Las contraseñas no coinciden" };
     }
-    if (user.password != nueva) {
+
+    let notAuthorized = await comparePasswords(nueva, user.password, res);
+    if (notAuthorized) {
+      return {
+        error: "Contraseña no pudo ser actualizada",
+        payload: user.email,
+      };
+    } else {
       user.password = createHash(nueva);
       try {
         await user.save();
@@ -206,11 +211,6 @@ export default class UserService {
       } catch (error) {
         return { error: "Error al actualizar la contraseña" };
       }
-    } else {
-      return {
-        message:
-          "La contraseña nueva es la misma que la actual, no se realizó ninguna actualización",
-      };
     }
   };
 }
