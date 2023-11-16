@@ -106,9 +106,6 @@ const nuevaPassword = async (req, res) => {
 
     let modificado = await US.updatePassword(req.body, res);
 
-    console.log("PASSWORD");
-    console.log(modificado);
-
     if (modificado.error) {
       return res.status(403).send({
         result: " Usuario no pudo ser modificado",
