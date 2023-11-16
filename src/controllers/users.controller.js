@@ -106,7 +106,7 @@ const nuevaPassword = async (req, res) => {
 
     let modificado = await US.updatePassword(req.body, res);
 
-    console.log("NUEVA PASSWORD");
+    console.log("PASSWORD");
     console.log(modificado);
 
     if (modificado.error) {
