@@ -30,6 +30,11 @@ export default class UserService {
       let result = await userModel.create(usuarioNuevo);
       return result;
     }
+    if (usuarioNuevo.email === "premiun@premiun.com") {
+      usuarioNuevo.role = "premium";
+      let result = await userModel.create(usuarioNuevo);
+      return result;
+    }
 
     let result = await userModel.create(usuarioNuevo);
     console.log(usuarioNuevo);

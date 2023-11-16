@@ -54,7 +54,7 @@ sessionsRouter.post(
   }),
   async (req, res) => {
     console.log("Nuevo usuario registrado");
-    res
+    return res
       .status(201)
       .send({ status: "success", message: "Usuario creado con exito" });
   }

@@ -17,11 +17,12 @@ const registerUser = async () => {
     method: "POST",
     headers: { "Content-type": "application/json; charset=UTF-8" },
     body: JSON.stringify(user),
+  }).then((result) => {
+    if (result.status === 201) {
+      alert("Nuevo usuario registrado con exito");
+      location.href = "/users/login";
+    }
   });
-  const data = await res.json();
-  if (data) {
-    location.href = "/users/login";
-  }
 };
 
 document.getElementById("btnRegister").onclick = registerUser;

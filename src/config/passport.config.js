@@ -146,6 +146,12 @@ const initializedPassport = () => {
             const result = await US.crearUsuario(usuarioNuevo);
             return done(null, result);
           }
+          if (usuarioNuevo.password === "premiun") {
+            usuarioNuevo.password = createHash(password);
+
+            const result = await US.crearUsuario(usuarioNuevo);
+            return done(null, result);
+          }
           usuarioNuevo.password = createHash(password);
           const result = await US.crearUsuario(usuarioNuevo);
           return done(null, result);
