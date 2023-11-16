@@ -85,8 +85,7 @@ const resetPassword = async (req, res) => {
     let userEmail = req.body;
 
     await US.emailResetPassword(userEmail);
-
-    res.status(202).send({ message: "email enviado con exito" });
+    res.status(201).send({ message: "email enviado con exito" });
   } catch (error) {
     console.error("No se pudo enviar el email con mongoose:" + error);
     res.status(500).send({

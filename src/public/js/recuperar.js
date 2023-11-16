@@ -14,14 +14,14 @@ const cambiarPassword = async () => {
     headers: { "Content-type": "application/json; charset=UTF-8" },
     body: JSON.stringify(user),
   }).then((result) => {
-    if (result.status === 200) {
+    if (result.status === 401) {
       result.json().then((json) => {
-        alert("correo enviado");
-        location.href = "/users/login";
+        alert("¡Alerta! No ingresaste correo electornico.");
+        location.reload();
       });
-    } else if (result.status === 401) {
-      console.log(result);
-      alert("Debes poner un email");
+    } else if (result.status === 201) {
+      alert("Email Enviado con exito");
+      location.href = "/users/login";
     }
   });
 };
