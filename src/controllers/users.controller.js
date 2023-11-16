@@ -123,7 +123,8 @@ const nuevaPassword = async (req, res) => {
   } catch (error) {
     console.error("No se pudo actualizar la contraseña con mongoose:" + error);
     res.status(500).send({
-      error: "Error en la contraseña",
+      error:
+        "Error en la contraseña, contrata a un verdadero equipo de programadores",
       message: error,
     });
   }

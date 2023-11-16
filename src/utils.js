@@ -24,7 +24,7 @@ export const generateProducts = () => {
   }
 };
 
-//IMPLEMENTACION BCRYPT
+//BCRYPT
 export const createHash = (password) =>
   bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 
@@ -34,7 +34,7 @@ export const isValidPassword = (user, password) => {
   );
   return bcrypt.compareSync(password, user.password);
 };
-
+//funcion para validar la contraseña
 export const comparePasswords = async (newPassword, hashedPassword) => {
   try {
     const passwordMatch = await bcrypt.compare(newPassword, hashedPassword);

@@ -111,25 +111,25 @@ export default class UserService {
     }
   };
 
-  /*========================
-  -      RESET PASSWORD      -
-  ==========================*/
+  /*================================
+  -   ENVIAR EMAIL RESET PASSWORD  -
+  ================================*/
   emailResetPassword = async (userEmail) => {
     const user = await userModel.findOne(userEmail);
 
     if (!user) {
       throw new Error("Usuario no encontrado!");
     }
-
+    //creamos un token de seguridad con crypto para poder adjuntar en el email
     const resetToken = crypto.randomBytes(20).toString("hex");
 
+    //creamos el token como un parametro del user
     user.resetPasswordToken = resetToken;
+    //asignamos timepo de vida al token
     user.resetPasswordExpires = Date.now() + 3600000;
     await user.save();
 
-    console.log("USUARIO EMAIL RESET");
-    console.log(user);
-
+    //configuracion para nodemailer
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 587,
@@ -142,7 +142,7 @@ export default class UserService {
         rejectUnauthorized: false,
       },
     });
-
+    //enviamos el email con el endpoint +token
     const recoverURL = `http://localhost:8080/users/newPassword/${resetToken}`;
 
     const mailOptionsRecover = {
@@ -172,6 +172,7 @@ export default class UserService {
   /*========================
   -      VALIDAR TOKEN     -
   ==========================*/
+  //la validacion del token primero lo busca, y si lo encuentra se fija el tiempo de vida del mismo
   getEmailToken = async ({ resetPasswordToken }) => {
     let readToken = await userModel.findOne({ resetPasswordToken });
     const timer = readToken.resetPasswordExpires;
@@ -186,20 +187,17 @@ export default class UserService {
   updatePassword = async (userPassword) => {
     try {
       let { nueva, confirmar, token } = userPassword;
-
       const user = await userModel.findOne({ resetPasswordToken: token });
-
-      console.log("ENCONTRO USUARIO EN UPDATE PASSWORD");
-      console.log(user.email);
 
       if (!user) {
         return { error: "Usuario no encontrado" };
       }
-
+      //comparo que las contraseñas que ingreso el usuario sean iguales
       if (nueva !== confirmar) {
         return { error: "Las contraseñas no coinciden" };
       }
-
+      //comparo la contraseña encriptada con bcrypt y la contraseña que ingresa el usuario
+      //si la contreseña ya fue utilizada no te deja usarala
       let notAuthorized = await comparePasswords(nueva, user.password);
 
       if (notAuthorized) {
@@ -208,13 +206,13 @@ export default class UserService {
           payload: user.email,
         };
       }
-
+      //si paso las validaciones actualiza password con bcrypt
       user.password = createHash(nueva);
       await user.save();
 
       return { success: "Contraseña actualizada con éxito", user };
     } catch (error) {
-      console.error("Error en updatePassword:", error);
+      console.error("Error en UserService -> updatePassword", error);
       throw error;
     }
   };
