@@ -26,7 +26,7 @@ userRouter.get("/newPassword/:token", async (req, res) => {
   const password = await US.getEmailToken({ resetPasswordToken });
 
   if (password != "mellon" || password === null) {
-    return res.redirect("/users/login");
+    return res.redirect("/users/recuperar");
   } else {
     res.render("newPassword", { token });
   }
