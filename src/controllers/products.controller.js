@@ -102,16 +102,17 @@ const getProductById = async (req, res) => {
 //ELIMINAR
 const deleteProduct = async (req, res) => {
   try {
-    let _id = req.params.id;
+    let _id = req.body;
+    console.log(_id);
 
-    if (!_id || !mongoose.Types.ObjectId.isValid(_id)) {
-      CustomError.createError({
-        name: "Product eliminate error",
-        cause: eliminateProductsErrorInfo(_id),
-        message: "Error al eliminar el producto",
-        code: EErrors.INVALID_TYPES_ERROR,
-      });
-    }
+    // if (!_id || !mongoose.Types.ObjectId.isValid(_id)) {
+    //   CustomError.createError({
+    //     name: "Product eliminate error",
+    //     cause: eliminateProductsErrorInfo(_id),
+    //     message: "Error al eliminar el producto",
+    //     code: EErrors.INVALID_TYPES_ERROR,
+    //   });
+    // }
 
     let eliminado = await productService.getProductbyId(_id);
     await productService.borrarProducto(req.params.id);

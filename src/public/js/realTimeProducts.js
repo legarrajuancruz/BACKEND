@@ -38,11 +38,6 @@ const createProduct = async () => {
 
 createProduct();
 
-// document.getElementById("btnCreate").onclick = createProduct;
-
-//   socket.emit("mensajeKey", formData);
-// });
-
 // //ELIMINAR POR ID DESDE HTML Y ENVIAR A SERVER
 // document
 //   .getElementById("miFormularioDos")
@@ -55,10 +50,24 @@ createProduct();
 //     socket.emit("mensajeID", _id);
 //   });
 
-// //ELIMINAR DESDE BOTON DESDE CLIENTE HTML Y ENVIAR A SERVER
-// function enviarId(id) {
-//   alert("Producto ELiminado");
+//ELIMINAR DESDE BOTON DESDE CLIENTE HTML Y ENVIAR A SERVER
+const deleteProductButton = async (id) => {
+  console.log(id);
 
-//   console.log("Producto a eliminar", id);
-//   socket.emit("elimarProductoBoton", id);
-// }
+  try {
+    fetch("/api/products/${id}", {
+      method: "DELETE",
+      headers: { "Content-type": "application/json; charset=UTF-8" },
+      body: JSON.stringify({ id }),
+    });
+
+    if (response.status === 202) {
+      alert("Oroducto eliminado con éxito");
+    } else {
+      alert("Hubo un problema para eliminar el producto");
+    }
+  } catch (error) {
+    console.error("Error al enviar la solicitud:", error);
+    alert("Hubo un error al procesar la solicitud");
+  }
+};

@@ -12,9 +12,11 @@
           <h4>{{this.description}} </h4>
           <hr />
           <p>Precio: {{this.price}}</p>
-          <p>ID: {{this._id}}</p>
+          <p id="ID">{{this._id}}</p>
 
-          <button onclick="enviarId(`{{this._id}}`)">Eliminar</button>
+          <button
+            onclick="deleteProductButton(`{{this._id}}`)"
+          >Eliminar</button>
         </div>
       {{/each}}
     </div>
