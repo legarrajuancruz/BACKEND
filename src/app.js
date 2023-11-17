@@ -129,17 +129,17 @@ const socketServer = new Server(httpserver);
 socketServer.on("connection", (socket) => {
   /*  |        REAL TIME PRODUCTS       | */
 
-  //CREAR PRODUCTO
-  socket.on("mensajeKey", (data) => {
-    const productos = new ProductManager();
+  // //CREAR PRODUCTO
+  // socket.on("mensajeKey", (data) => {
+  //   const productos = new ProductManager();
 
-    console.log("Se agrego producto");
-    console.log(data);
+  //   console.log("Se agrego producto");
+  //   console.log(data);
 
-    productos.crearProducto(data);
-    socket.emit("msgServer", "Nuevo Producto agregado");
-    socket.emit("msgServer", data);
-  });
+  //   productos.crearProducto(data);
+  //   socket.emit("msgServer", "Nuevo Producto agregado");
+  //   socket.emit("msgServer", data);
+  // });
 
   //ELIMINAR POR ID
   socket.on("mensajeID", (data) => {

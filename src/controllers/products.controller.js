@@ -15,17 +15,20 @@ const addProduct = async (req, res) => {
     const producto = {
       title: req.body.title,
       description: req.body.description,
-      price: req.body.price,
-      stock: req.body.stock,
+      price: Number(req.body.price),
+      stock: Number(req.body.stock),
       category: req.body.category,
       img: req.body.img,
       owner: req.body.owner,
     };
 
+    console.log("PRODUCTO");
+    console.log(producto);
+
     if (
       !producto.title ||
-      producto.price != Number ||
-      !producto.stock != Number
+      typeof producto.price !== "number" ||
+      !producto.stock
     ) {
       CustomError.createError({
         name: "Product creation error",

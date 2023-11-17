@@ -41,9 +41,9 @@
           <label for="price">Imagen:</label>
           <input type="img" id="img" name="img" required />
           <br />
-          <p id="owner">{{user._id}}</p>
+          <p style="visibility: hidden;" id="owner">{{user._id}}</p>
 
-          <button type="submit">Enviar</button>
+          <button id="btnCreate" type="submit">Enviar</button>
         </form>
       </div>
 
@@ -61,5 +61,4 @@
   </div>
 </div>
 
-<script src="/socket.io/socket.io.js"></script>
 <script src="/js/realTimeProducts.js"></script>
