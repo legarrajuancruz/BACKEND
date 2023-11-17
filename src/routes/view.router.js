@@ -47,7 +47,7 @@ router.get(
     const allProducts = await products.leerProductos(req.query);
     const user = req.user;
     if (user.role !== "user") {
-      res.render("realtimeproducts", { allProducts });
+      res.render("realtimeproducts", { allProducts, user });
     } else {
       res.render("error");
     }

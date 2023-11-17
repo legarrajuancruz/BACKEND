@@ -17,6 +17,7 @@ document.getElementById("miFormulario").addEventListener("submit", (event) => {
     stock: document.getElementById("stock").value,
     category: document.getElementById("category").value,
     img: document.getElementById("img").value,
+    owner: document.getElementById("owner").textContent,
   };
   socket.emit("mensajeKey", formData);
 });

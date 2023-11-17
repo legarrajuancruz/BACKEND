@@ -19,6 +19,7 @@ const addProduct = async (req, res) => {
       stock: req.body.stock,
       category: req.body.category,
       img: req.body.img,
+      owner: req.body.owner,
     };
 
     if (
