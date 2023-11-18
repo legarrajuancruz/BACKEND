@@ -61,7 +61,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-//LOGGER
+//LOGGER Global
 app.use(addLogger);
 
 //CONECTAR A BASE DE DATOS CON PATRON SINGLETON
@@ -129,19 +129,6 @@ const socketServer = new Server(httpserver);
 socketServer.on("connection", (socket) => {
   /*  |        REAL TIME PRODUCTS       | */
 
-  // //CREAR PRODUCTO
-  // socket.on("mensajeKey", (data) => {
-  //   const productos = new ProductManager();
-
-  //   console.log("Se agrego producto");
-  //   console.log(data);
-
-  //   productos.crearProducto(data);
-  //   socket.emit("msgServer", "Nuevo Producto agregado");
-  //   socket.emit("msgServer", data);
-  // });
-
-  //ELIMINAR POR ID
   socket.on("mensajeID", (data) => {
     const productos = new ProductManager();
     console.log("Se envio ID");
@@ -150,21 +137,6 @@ socketServer.on("connection", (socket) => {
     productos.borrarProducto(id);
     socket.emit("msgServer", "Producto eliminado de servidor");
   });
-
-  //ELIMINAR DESDE BOTON
-  socket.on("elimarProductoBoton", (data) => {
-    const productos = new ProductManager();
-    console.log("Se envio ID");
-    console.log(data);
-    let id = data;
-    productos.borrarProducto(id);
-    socket.emit("msgServer", "Producto eliminado de servidor");
-  });
-
-  socket.broadcast.emit(
-    "mensajeKey",
-    "Hay un nuevo producto en la base de datos"
-  );
 
   /*  |        CHAT       | */
 

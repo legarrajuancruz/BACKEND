@@ -1,6 +1,7 @@
 /*==========================
 -    REAL TIME PRODUCTS    -
 ===========================*/
+//CREAR PRODUCTO
 const createProduct = async () => {
   document
     .getElementById("miFormulario")
@@ -39,20 +40,28 @@ const createProduct = async () => {
 
 createProduct();
 
-// //ELIMINAR POR ID DESDE HTML Y ENVIAR A SERVER
-// document
-//   .getElementById("miFormularioDos")
-//   .addEventListener("submit", (event) => {
-//     event.preventDefault();
+//ELIMINAR POR ID DESDE EL BOX
+const borrarProductoID = async () => {
+  let id = document.getElementById("id").value;
 
-//     const _id = document.getElementById("id").value;
+  const producto = { _id: id };
+  await fetch(`/api/products/${id}`, {
+    method: "DELETE",
+    headers: { "Content-type": "application/json; charset=UTF-8" },
+    body: JSON.stringify(producto),
+  }).then((result) => {
+    if (result.status === 202) {
+      alert("Producto eliminado con éxito");
+      location.reload();
+    } else {
+      alert("Hubo un problema para eliminar el producto");
+    }
+  });
+};
 
-//     console.log(id);
-//     socket.emit("mensajeID", _id);
-//   });
+document.getElementById("btn-ID").onclick = borrarProductoID;
 
-//ELIMINAR DESDE BOTON DESDE CLIENTE HTML Y ENVIAR A SERVER
-
+//BORRAR DESDE BOTON PRODUCTO
 const deleteProductButton = async (id) => {
   console.log(id);
 
