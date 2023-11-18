@@ -1,6 +1,8 @@
 <div class="container">
   <div class="productos">
 
+    <p style="visibility: hidden;" id="owner">{{user._id}}</p>
+    <p style="visibility: hidden;" id="role">{{user.role}}</p>
     <h2>TODOS LOS PRODUCTOS</h2>
     <div class="row">
       {{#each allProducts.payload}}
@@ -43,7 +45,6 @@
           <label for="price">Imagen:</label>
           <input type="img" id="img" name="img" required />
           <br />
-          <p style="visibility: hidden;" id="owner">{{user._id}}</p>
 
           <button id="btnCreate" type="submit">Enviar</button>
         </form>

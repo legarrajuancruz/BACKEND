@@ -62,17 +62,25 @@ const borrarProductoID = async () => {
 document.getElementById("btn-ID").onclick = borrarProductoID;
 
 //BORRAR DESDE BOTON PRODUCTO
+let userRole = document.getElementById("role").textContent;
 const deleteProductButton = async (id) => {
   console.log(id);
+
+  console.log("USER ROLE");
+  console.log(userRole);
 
   await fetch(`/api/products/${id}`, {
     method: "DELETE",
     headers: { "Content-type": "application/json; charset=UTF-8" },
-    body: JSON.stringify({ _id: id }),
+    body: JSON.stringify({ _id: id, role: userRole }),
   }).then((result) => {
     if (result.status === 202) {
       alert("Producto eliminado con éxito");
+
       location.reload();
+    }
+    if (result.status === 203) {
+      alert("Producto eliminado por ADMIN con éxito");
     } else {
       alert("Hubo un problema para eliminar el producto");
     }

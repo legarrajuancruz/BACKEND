@@ -102,7 +102,8 @@ const getProductById = async (req, res) => {
 //ELIMINAR
 const deleteProduct = async (req, res) => {
   try {
-    let { _id } = req.body;
+    let { _id, role } = req.body;
+    console.log(req.body);
 
     if (!_id || !mongoose.Types.ObjectId.isValid(_id)) {
       CustomError.createError({
@@ -113,13 +114,26 @@ const deleteProduct = async (req, res) => {
       });
     }
 
-    let eliminado = await productService.getProductbyId(_id);
-    await productService.borrarProducto(req.body);
+    let find = await productService.getProductbyId(_id);
 
-    res.status(202).send({
-      result: "Producto eliminado con exito",
-      payload: eliminado,
-    });
+    if (find.role === req.body.role && req.body.role === "premium") {
+      let eliminado = await productService.getProductbyId(_id);
+      await productService.borrarProducto(req.body._id);
+
+      res.status(202).send({
+        result: "Producto eliminado con exito",
+        payload: eliminado,
+      });
+    }
+    if (req.body.role === "admin") {
+      let eliminado = await productService.getProductbyId(_id);
+      await productService.borrarProducto(req.body._id);
+
+      res.status(203).send({
+        result: "Producto eliminado por ADMIN con exito",
+        payload: eliminado,
+      });
+    }
   } catch (error) {
     console.error(error);
     res.status(500).send({
