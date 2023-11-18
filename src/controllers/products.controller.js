@@ -103,6 +103,8 @@ const getProductById = async (req, res) => {
 const deleteProduct = async (req, res) => {
   try {
     let _id = req.body;
+
+    console.log(" ENTRASTE EN DELETE CONTROLLER");
     console.log(_id);
 
     // if (!_id || !mongoose.Types.ObjectId.isValid(_id)) {
@@ -115,7 +117,7 @@ const deleteProduct = async (req, res) => {
     // }
 
     let eliminado = await productService.getProductbyId(_id);
-    await productService.borrarProducto(req.params.id);
+    await productService.borrarProducto(req.body);
 
     res.status(202).send({
       result: "Producto eliminado con exito",

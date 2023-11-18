@@ -26,6 +26,7 @@ const createProduct = async () => {
 
         if (response.status === 201) {
           alert("Nuevo producto creado con éxito");
+          location.href = "/realtimeproducts";
         } else {
           alert("Hubo un problema al crear el producto");
         }
@@ -51,23 +52,20 @@ createProduct();
 //   });
 
 //ELIMINAR DESDE BOTON DESDE CLIENTE HTML Y ENVIAR A SERVER
+
 const deleteProductButton = async (id) => {
   console.log(id);
 
-  try {
-    fetch("/api/products/${id}", {
-      method: "DELETE",
-      headers: { "Content-type": "application/json; charset=UTF-8" },
-      body: JSON.stringify({ id }),
-    });
-
-    if (response.status === 202) {
-      alert("Oroducto eliminado con éxito");
+  await fetch(`/api/products/${id}`, {
+    method: "DELETE",
+    headers: { "Content-type": "application/json; charset=UTF-8" },
+    body: JSON.stringify({ _id: id }),
+  }).then((result) => {
+    if (result.status === 202) {
+      alert("Producto eliminado con éxito");
+      location.reload();
     } else {
       alert("Hubo un problema para eliminar el producto");
     }
-  } catch (error) {
-    console.error("Error al enviar la solicitud:", error);
-    alert("Hubo un error al procesar la solicitud");
-  }
+  });
 };
