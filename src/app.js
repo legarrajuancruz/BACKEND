@@ -36,6 +36,9 @@ import ProductMockup from "./routes/mockingproducts.router.js";
 import { addLogger } from "./config/logger_CUSTOM.js";
 import loggerRouter from "./routes/logger.router.js";
 
+import swaggerJSDoc from "swagger-jsdoc";
+import swaggerUIExpress from "swagger-ui-express";
+
 const app = express();
 
 /*=================
@@ -77,6 +80,24 @@ ConnectMongoDB();
 const httpserver = app.listen(PORT, () => {
   console.log(`Server on port: ${PORT}`);
 });
+
+/*==============
+|    SWAGGER   |
+==============*/
+
+const swaggerOption = {
+  definition: {
+    openapi: "3.0.1",
+    info: {
+      title: "Documentancion API Adopment",
+      description: "Documentacion para uso de Swagger",
+    },
+  },
+  apis: [`./src/docs/**/*.yaml`],
+};
+
+const specs = swaggerJSDoc(swaggerOption);
+app.use("/apidocs", swaggerUIExpress.serve, swaggerUIExpress.setup(specs));
 
 /*===============
 |    SESSIONS   |
@@ -128,7 +149,6 @@ const socketServer = new Server(httpserver);
 //SE ABRE CANAL
 socketServer.on("connection", (socket) => {
   /*  |        CHAT       | */
-
   //CONVERSACION EN ARRAY
   const messagesManager = new MessagesManager();
   const mensajes = [];
