@@ -127,17 +127,6 @@ const socketServer = new Server(httpserver);
 
 //SE ABRE CANAL
 socketServer.on("connection", (socket) => {
-  /*  |        REAL TIME PRODUCTS       | */
-
-  socket.on("mensajeID", (data) => {
-    const productos = new ProductManager();
-    console.log("Se envio ID");
-    console.log(data);
-    let id = data;
-    productos.borrarProducto(id);
-    socket.emit("msgServer", "Producto eliminado de servidor");
-  });
-
   /*  |        CHAT       | */
 
   //CONVERSACION EN ARRAY
