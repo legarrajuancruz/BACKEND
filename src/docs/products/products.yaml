@@ -18,16 +18,16 @@ paths:
 
   /api/products/{pid}:
     get:
-      summary: Obtiene todos los productos disponibles
+      summary: Obtiene el producto solicitado por id
       tags:
         - Products
-      parameters:
-        name: pid
-        in: path
-        required: true
-        description: id del producto que se desea solicitar
-        schema:
-          $type: String
+      paramemeters:
+      name: pid
+      in: path
+      required: true
+      desription: El id del producto se debe ingresar
+      schema:
+        $type: String
       responses:
         "201":
           description: Los productos fueron obtenidos satisfactoriamente de la base de datos, se retorna arreglo con los productos
