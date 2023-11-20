@@ -85,18 +85,18 @@ const httpserver = app.listen(PORT, () => {
 |    SWAGGER   |
 ==============*/
 
-const swaggerOption = {
+const swaggerOptions = {
   definition: {
     openapi: "3.0.1",
     info: {
-      title: "Documentancion API Adopment",
+      title: "Documentancion API Adoptme",
       description: "Documentacion para uso de Swagger",
     },
   },
   apis: [`./src/docs/**/*.yaml`],
 };
 
-const specs = swaggerJSDoc(swaggerOption);
+const specs = swaggerJSDoc(swaggerOptions);
 app.use("/apidocs", swaggerUIExpress.serve, swaggerUIExpress.setup(specs));
 
 /*===============
