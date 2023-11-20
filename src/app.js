@@ -93,13 +93,13 @@ const swaggerOptions = {
       description: "Documentacion para uso de Swagger",
     },
   },
-  apis: [`./src/docs/**/*.yaml`],
+  apis: [`${__dirname}/docs/**/*.yaml`],
 };
 
 const specs = swaggerJSDoc(swaggerOptions);
 app.use("/apidocs", swaggerUIExpress.serve, swaggerUIExpress.setup(specs));
 
-/*===============
+/*===============   
 |    SESSIONS   |
 ===============*/
 app.use(cookieParser());
