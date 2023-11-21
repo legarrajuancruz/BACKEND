@@ -64,8 +64,6 @@ const deleteCartById = async (req, res) => {
     console.log(cid);
 
     let eliminado = await cartService.deleteCart(cid);
-    console.log("ELIMINADO");
-    console.log(eliminado);
 
     res.status(202).send({
       result: "Carrito eliminado con exito",
