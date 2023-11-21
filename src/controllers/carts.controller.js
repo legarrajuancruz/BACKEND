@@ -60,11 +60,12 @@ const getCartsById = async (req, res) => {
   ==================*/
 const deleteCartById = async (req, res) => {
   try {
-    let _id = req.params.id;
-    console.log(_id);
+    let { cid } = req.params.id;
+    console.log(cid);
 
-    let eliminado = await cartService.getCartsById({ _id });
-    await cart.deleteCart({ _id });
+    let eliminado = await cartService.deleteCart(cid);
+    console.log("ELIMINADO");
+    console.log(eliminado);
 
     res.status(202).send({
       result: "Carrito eliminado con exito",

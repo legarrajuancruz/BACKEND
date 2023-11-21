@@ -50,7 +50,7 @@
         description: ID del carrito
         schema:
           type: string
-          example: 64ebcc7bea820dcca1636c2b
+          example: 655c2025b41ab710641a286f
     responses:
       "202":
         description: La operación fue exitosa! Retorna los detalles del carrito.
@@ -72,7 +72,7 @@
         description: ID del carrito
         schema:
           type: string
-          example: 64ebcc7bea820dcca1636c2b
+          example: 655c27608435eafbe572e5b7
     responses:
       "202":
         description: La operación fue exitosa! El carrito fue vaciado!
