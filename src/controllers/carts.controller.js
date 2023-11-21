@@ -164,6 +164,7 @@ const borrarProductoEnCarrito = async (req, res) => {
     });
   } catch (error) {
     console.error(`Error al borrar  el producto del carrito`, error.nessage);
+    res.status(500).send(`Error al borrar  el producto del carrito`);
   }
 };
 

@@ -104,10 +104,8 @@
           type: string
           example: 64ea2fa6df927a75355dfe2d
     responses:
-      "200":
+      "202":
         description: Producto añadido al carrito correctamente
-      "404":
-        description: Carrito o producto no encontrado
       "500":
         description: Error inesperado en el servidor, no se pudo manejar el proceso
 
@@ -131,9 +129,7 @@
           type: string
           example: 64ea2fa6df927a75355dfe2d
     responses:
-      "200":
+      "202":
         description: Producto eliminado del carrito exitosamente.
-      "404":
-        description: Carrito o producto no encontrado.
       "500":
         description: Error del servidor.
