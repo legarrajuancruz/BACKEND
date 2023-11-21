@@ -1,0 +1,84 @@
+/api/carts/:
+  get:
+    summary: Obtiene los carritos existentes
+    tags:
+      - Cart
+    responses:
+      "202":
+        description: La operación fue exitosa. Se retorna un arreglo con los carritos
+        content:
+          application/json:
+            schema:
+              type: array
+      "500":
+        description: Error inesperado en el servidor, no se pudo manejar el proceso
+        content:
+          application/json:
+            schema:
+              type: object
+  post:
+    summary: Crea un nuevo carrito
+    tags:
+      - Cart
+    responses:
+      "201":
+        description: El carrito fue creado correctamente
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                _id:
+                  type: string
+                  description: ID autogenerado del carrito
+        "500":
+          description: No se pudo guardar el Carrito
+          content:
+            application/json:
+              schema:
+                type: object
+
+/api/carts/{cid}:
+  get:
+    summary: Obtiene los detalles de un carrito específico
+    tags:
+      - Cart
+    parameters:
+      - name: cid
+        in: path
+        required: true
+        description: ID del carrito
+        schema:
+          type: string
+          example: 64ebbe696b25063b124086ab
+    responses:
+      "202":
+        description: La operación fue exitosa! Retorna los detalles del carrito.
+        content:
+          application/json:
+            schema:
+              type: object
+      "500":
+        description: Error inesperado en el servidor, no se pudo manejar el proceso
+
+  delete:
+    summary: Vaciar el carrito por completo
+    tags:
+      - Cart
+    parameters:
+      - name: cid
+        in: path
+        required: true
+        description: ID del carrito
+        schema:
+          type: string
+          example: 65384476361317293439080f
+    responses:
+      "202":
+        description: La operación fue exitosa! El carrito fue vaciado!
+        content:
+          application/json:
+            schema:
+              type: object
+      "500":
+        description: Error inesperado en el servidor, no se pudo manejar el proceso
