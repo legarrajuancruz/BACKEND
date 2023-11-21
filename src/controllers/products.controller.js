@@ -173,7 +173,7 @@ const getProductMockup = async (req, res) => {
       products.push(generateProducts());
     }
 
-    res.send({
+    res.status(200).send({
       status: "success",
       result: "Productos Generados con exito",
       Productos: products,

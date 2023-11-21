@@ -18,16 +18,18 @@ paths:
 
   /api/products/{pid}:
     get:
-      summary: Obtiene el producto solicitado por id
+      summary: Obtiene un producto específico en la aplicación
       tags:
         - Products
-      paramemeters:
-      name: pid
-      in: path
-      required: true
-      desription: El id del producto se debe ingresar
-      schema:
-        $type: String
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: Id del producto
+          schema:
+            type: string
+            format: ObjectId
+            example: 64fcc6422682b0514878fb15
       responses:
         "201":
           description: Los productos fueron obtenidos satisfactoriamente de la base de datos, se retorna arreglo con los productos
@@ -39,6 +41,54 @@ paths:
                   $ref: "#components/schemas/product"
         "500":
           description: "Error interno del servidor, usualmente generado por una query  defectuosa o un fallo de conexion con la base de datos"
+
+    put:
+      summary: Actualiza un producto específico en la aplicación
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: ID del producto a actualizar
+          schema:
+            type: string
+            example: 64fcc6422682b0514878fb15
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/schemas/product"
+      responses:
+        "202":
+          description: El producto se actualizó correctamente
+          content:
+            application/json:
+              schema:
+                $ref: "#components/schemas/product"
+        "500":
+          description: Error inesperado en el servidor, no se pudo manejar el proceso
+
+    delete:
+      summary: Elimina un producto específico en la aplicación
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: ID del producto a eliminar
+          schema:
+            type: string
+            example: 64fcc6422682b0514878fb15
+      responses:
+        "202":
+          description: El producto se eliminó correctamente
+        "203":
+          description: El producto se eliminó correctamente por el administrador
+        "500":
+          description: Error inesperado en el servidor, no se pudo manejar el proceso
 
 components:
   schemas:
