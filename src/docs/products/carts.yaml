@@ -50,7 +50,7 @@
         description: ID del carrito
         schema:
           type: string
-          example: 64ebbe696b25063b124086ab
+          example: 64ebcc7bea820dcca1636c2b
     responses:
       "202":
         description: La operación fue exitosa! Retorna los detalles del carrito.
@@ -62,7 +62,7 @@
         description: Error inesperado en el servidor, no se pudo manejar el proceso
 
   delete:
-    summary: Vaciar el carrito por completo
+    summary: Eliminar el carrito por completo
     tags:
       - Cart
     parameters:
@@ -72,7 +72,7 @@
         description: ID del carrito
         schema:
           type: string
-          example: 65384476361317293439080f
+          example: 64ebcc7bea820dcca1636c2b
     responses:
       "202":
         description: La operación fue exitosa! El carrito fue vaciado!
