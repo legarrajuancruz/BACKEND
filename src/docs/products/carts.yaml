@@ -95,14 +95,14 @@
         description: ID del carrito
         schema:
           type: string
-          example: 64ebcc7bea820dcca1636c2b
+          example: 655c27608435eafbe572e5b7
       - name: pid
         in: path
         required: true
         description: ID del producto a añadir
         schema:
           type: string
-          example: 64ea2fa6df927a75355dfe2d
+          example: 64fcc6422682b0514878fb15
     responses:
       "202":
         description: Producto añadido al carrito correctamente
@@ -120,14 +120,14 @@
         description: ID del carrito.
         schema:
           type: string
-          example: 64ebcc7bea820dcca1636c2b
+          example: 655c253f0c3c557b01c2e255
       - name: pid
         in: path
         required: true
         description: ID del producto a eliminar
         schema:
           type: string
-          example: 64ea2fa6df927a75355dfe2d
+          example: 64fcc6422682b0514878fb15
     responses:
       "202":
         description: Producto Modificado del carrito exitosamente.
@@ -145,14 +145,14 @@
         description: ID del carrito.
         schema:
           type: string
-          example: 64ebcc7bea820dcca1636c2b
+          example: 655c253f0c3c557b01c2e255
       - name: pid
         in: path
         required: true
         description: ID del producto a eliminar
         schema:
           type: string
-          example: 64ea2fa6df927a75355dfe2d
+          example: 64fcc6422682b0514878fb15
     responses:
       "202":
         description: Producto eliminado del carrito exitosamente.
