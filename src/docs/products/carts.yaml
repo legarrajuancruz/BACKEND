@@ -82,3 +82,58 @@
               type: object
       "500":
         description: Error inesperado en el servidor, no se pudo manejar el proceso
+
+/api/carts/{cid}/products/{pid}:
+  post:
+    summary: Añade un producto al carrito
+    tags:
+      - Cart
+    parameters:
+      - name: cid
+        in: path
+        required: true
+        description: ID del carrito
+        schema:
+          type: string
+          example: 65384476361317293439080f
+      - name: pid
+        in: path
+        required: true
+        description: ID del producto a añadir
+        schema:
+          type: string
+          example: 652d8b70cc12e3accb8f1a9b
+    responses:
+      "200":
+        description: Producto añadido al carrito correctamente
+      "404":
+        description: Carrito o producto no encontrado
+      "500":
+        description: Error inesperado en el servidor, no se pudo manejar el proceso
+
+  delete:
+    summary: Elimina un producto del carrito.
+    tags:
+      - Cart
+    parameters:
+      - name: cid
+        in: path
+        required: true
+        description: ID del carrito.
+        schema:
+          type: string
+          example: 653138a895929a5c605a22ef
+      - name: pid
+        in: path
+        required: true
+        description: ID del producto a eliminar
+        schema:
+          type: string
+          example: 652b29ce8b1c2751a6e223bf
+    responses:
+      "200":
+        description: Producto eliminado del carrito exitosamente.
+      "404":
+        description: Carrito o producto no encontrado.
+      "500":
+        description: Error del servidor.

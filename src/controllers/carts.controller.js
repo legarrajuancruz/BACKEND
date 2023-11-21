@@ -143,7 +143,7 @@ const modProductsInCart = async (req, res) => {
     const newCart = await cartService.modificarProductInCart(cid, body);
     res.status(200).send({ status: "success", newCart: newCart });
   } catch (err) {
-    res.status(400).send({ error: err.message });
+    res.status(500).send({ error: err.message });
   }
 };
 
