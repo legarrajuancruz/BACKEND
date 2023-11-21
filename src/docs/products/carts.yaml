@@ -109,6 +109,31 @@
       "500":
         description: Error inesperado en el servidor, no se pudo manejar el proceso
 
+  put:
+    summary: Elimina un producto del carrito.
+    tags:
+      - Cart
+    parameters:
+      - name: cid
+        in: path
+        required: true
+        description: ID del carrito.
+        schema:
+          type: string
+          example: 64ebcc7bea820dcca1636c2b
+      - name: pid
+        in: path
+        required: true
+        description: ID del producto a eliminar
+        schema:
+          type: string
+          example: 64ea2fa6df927a75355dfe2d
+    responses:
+      "202":
+        description: Producto Modificado del carrito exitosamente.
+      "500":
+        description: Error inesperado en el servidor, no se pudo manejar el proceso
+
   delete:
     summary: Elimina un producto del carrito.
     tags:
@@ -132,4 +157,4 @@
       "202":
         description: Producto eliminado del carrito exitosamente.
       "500":
-        description: Error del servidor.
+        description: Error inesperado en el servidor, no se pudo manejar el proceso
