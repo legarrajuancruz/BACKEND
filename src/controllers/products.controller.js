@@ -115,10 +115,12 @@ const deleteProduct = async (req, res) => {
     }
 
     let find = await productService.getProductbyId(_id);
+    console.log("PRODUCTO ENCONTRADO");
+    console.log(find);
 
-    if (find.role === req.body.role && req.body.role === "premium") {
-      let eliminado = await productService.getProductbyId(_id);
-      await productService.borrarProducto(req.body._id);
+    if (req.body.role === "premium") {
+      const eliminado = await productService.borrarProducto(find._id);
+      console.log(eliminado);
 
       res.status(202).send({
         result: "Producto eliminado con exito",

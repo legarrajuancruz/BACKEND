@@ -8,14 +8,14 @@
       <div class="row justify-content-start">
         {{#each allProducts.payload}}
           <div class="col-md-4 col-lg-3 col-xl-3 mb-4">
-            <div class="card h-100" style="border-radius: 15px; w-75 h-75">
+            <div class="card h-100" style="border-radius: 15px; width: 100%;">
               <div
                 class="bg-image hover-overlay ripple ripple-surface ripple-surface-light"
                 data-mdb-ripple-color="light"
               >
                 <img
                   src={{this.img}}
-                  style="border-top-left-radius: 15px; border-top-right-radius: 15px;"
+                  style="border-top-left-radius: 15px; border-top-right-radius: 15px; max-width: 100%; height: auto;"
                   class="img-fluid w-100"
                   alt="product"
                 />
@@ -57,7 +57,7 @@
                   <a href="#!" class="text-dark fw-bold">Cancel</a>
                   <button
                     type="button"
-                    class="btn btn-primary"
+                    class="btn btn-danger"
                     onclick="deleteProductButton(`{{this._id}}`)"
                   >Eliminar</button>
                 </div>
