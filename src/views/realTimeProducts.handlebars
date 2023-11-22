@@ -4,61 +4,174 @@
     <p style="visibility: hidden;" id="owner">{{user._id}}</p>
     <p style="visibility: hidden;" id="role">{{user.role}}</p>
     <h2>TODOS LOS PRODUCTOS</h2>
-    <div class="row">
-      {{#each allProducts.payload}}
-        <div style="margin-rigth:15px" id="listadoProductos">
-          <div>
-            <img src={{this.img}} style="width:150px; heigth:auto" alt="" />
+    <div class="container py-5">
+      <div class="row justify-content-start">
+        {{#each allProducts.payload}}
+          <div class="col-md-4 col-lg-3 col-xl-3 mb-4">
+            <div class="card h-100" style="border-radius: 15px; w-75 h-75">
+              <div
+                class="bg-image hover-overlay ripple ripple-surface ripple-surface-light"
+                data-mdb-ripple-color="light"
+              >
+                <img
+                  src={{this.img}}
+                  style="border-top-left-radius: 15px; border-top-right-radius: 15px;"
+                  class="img-fluid w-100"
+                  alt="product"
+                />
+                <a href="#!">
+                  <div class="mask"></div>
+                </a>
+              </div>
+              <div class="card-body pb-0">
+                <div class="d-flex justify-content-between">
+                  <div>
+                    <p><a href="#!" class="text-dark">{{this.title}}</a></p>
+                    <p class="small text-muted">{{this.description}}</p>
+                  </div>
+                  <div>
+                    <div
+                      class="d-flex flex-row justify-content-end mt-1 mb-4 text-danger"
+                    >
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                    </div>
+                    <p class="small text-muted">Rated 4.0/5</p>
+                  </div>
+                </div>
+              </div>
+              <hr class="my-0" />
+              <div class="card-body pb-0">
+                <div class="d-flex justify-content-between">
+                  <p><a href="#!" class="text-dark">$ {{this.price}}</a></p>
+                </div>
+                <p class="small text-muted">ID: {{this._id}}</p>
+              </div>
+              <hr class="my-0" />
+              <div class="card-body">
+                <div
+                  class="d-flex justify-content-between align-items-center pb-2 mb-1"
+                >
+                  <a href="#!" class="text-dark fw-bold">Cancel</a>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    onclick="deleteProductButton(`{{this._id}}`)"
+                  >Eliminar</button>
+                </div>
+              </div>
+            </div>
           </div>
-          <h3>{{this.title}} </h3>
-          <h4>{{this.description}} </h4>
-          <hr />
-          <p>Precio: {{this.price}}</p>
-          <p>ID: {{this._id}}</p>
-
-          <button
-            onclick="deleteProductButton(`{{this._id}}`)"
-          >Eliminar</button>
-        </div>
-      {{/each}}
+        {{/each}}
+      </div>
     </div>
 
-    <div id="acciones">
-      <div id="nuevo">
-        <h3>NUEVO PRODUCTO</h3>
-        <form id="miFormulario" onsubmit>
-          <label for="title">Title:</label>
-          <input type="text" id="title" name="title" required />
-          <br />
-          <label for="Description">Description:</label>
-          <input type="text" id="description" name="description" required />
-          <br />
-          <label for="price">price:</label>
-          <input type="text" id="price" name="price" required />
-          <br />
-          <label for="price">Stock:</label>
-          <input type="text" id="stock" name="stock" required />
-          <br />
-          <label for="price">Category:</label>
-          <input type="text" id="category" name="category" required />
-          <br />
-          <label for="price">Imagen:</label>
-          <input type="img" id="img" name="img" required />
-          <br />
+    <div class="container mt-5">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h3 class="card-title">NUEVO PRODUCTO</h3>
+              <form id="miFormulario" onsubmit>
+                <div class="mb-3">
+                  <label for="title" class="form-label">Title:</label>
+                  <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label
+                    for="description"
+                    class="form-label"
+                  >Description:</label>
+                  <input
+                    type="text"
+                    id="description"
+                    name="description"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="price" class="form-label">Price:</label>
+                  <input
+                    type="text"
+                    id="price"
+                    name="price"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="stock" class="form-label">Stock:</label>
+                  <input
+                    type="text"
+                    id="stock"
+                    name="stock"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="category" class="form-label">Category:</label>
+                  <input
+                    type="text"
+                    id="category"
+                    name="category"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="img" class="form-label">Imagen:</label>
+                  <input
+                    type="img"
+                    id="img"
+                    name="img"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <button
+                  id="btnCreate"
+                  type="submit"
+                  class="btn btn-primary"
+                >Enviar</button>
+              </form>
+            </div>
+          </div>
+        </div>
 
-          <button id="btnCreate" type="submit">Enviar</button>
-        </form>
-      </div>
-
-      <div id="nuevo">
-        <h3>ELIMINAR PRODUCTO POR ID</h3>
-        <form id="miFormularioDos" onsubmit>
-          <label for="id">id:</label>
-          <input type="text" id="id" name="id" required />
-          <br />
-
-          <button id="btn-ID" type="button">Enviar</button>
-        </form>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h3 class="card-title">ELIMINAR PRODUCTO POR ID</h3>
+              <form id="miFormularioDos" onsubmit>
+                <div class="mb-3">
+                  <label for="id" class="form-label">ID:</label>
+                  <input
+                    type="text"
+                    id="id"
+                    name="id"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <button
+                  id="btn-ID"
+                  type="button"
+                  class="btn btn-danger"
+                >Enviar</button>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
