@@ -41,6 +41,7 @@ import swaggerUIExpress from "swagger-ui-express";
 
 const app = express();
 
+app.use(express.static(__dirname + "/public"));
 /*=================
 |    HANDLEBARS   |
 =================*/
@@ -52,7 +53,6 @@ app.engine(
   })
 );
 app.set("view engine", "handlebars");
-app.use(express.static(__dirname + "/public"));
 
 /*================
 |      SERVER    |

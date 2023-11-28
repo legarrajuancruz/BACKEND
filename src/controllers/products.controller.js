@@ -1,4 +1,5 @@
 import { productService } from "../services/factory.js";
+import userModel from "../services/dao/mongoManager/userManagerMongo.js";
 import { generateProducts } from "../utils.js";
 import mongoose from "mongoose";
 import EErrors from "../services/errors/errors-enum.js";
@@ -9,6 +10,8 @@ import {
   getProductByIdErrorInfo,
 } from "../services/errors/messages/products-creation-error.js";
 
+const US = new userModel();
+
 //CREAR
 const addProduct = async (req, res) => {
   try {
@@ -18,7 +21,7 @@ const addProduct = async (req, res) => {
       price: Number(req.body.price),
       stock: Number(req.body.stock),
       category: req.body.category,
-      img: req.body.img,
+      img: `/img/${req.file.filename}`,
       owner: req.body.owner,
     };
 
@@ -102,11 +105,11 @@ const getProductById = async (req, res) => {
 //ELIMINAR
 const deleteProduct = async (req, res) => {
   try {
-    let { _id, role } = req.body;
+    let { _id, uid } = req.body;
     console.log(req.body);
 
     if (!_id || !mongoose.Types.ObjectId.isValid(_id)) {
-      CustomError.createError({
+      throw CustomError.createError({
         name: "Product eliminate error",
         cause: eliminateProductsErrorInfo(_id),
         message: "Error al eliminar el producto",
@@ -115,19 +118,16 @@ const deleteProduct = async (req, res) => {
     }
 
     let find = await productService.getProductbyId(_id);
-    console.log("PRODUCTO ENCONTRADO");
-    console.log(find);
+    let user = await US.getUserByID(uid);
 
-    if (req.body.role === "premium") {
+    if (user.role === "premium") {
       const eliminado = await productService.borrarProducto(find._id);
-      console.log(eliminado);
 
       res.status(202).send({
         result: "Producto eliminado con exito",
         payload: eliminado,
       });
-    }
-    if (req.body.role === "admin") {
+    } else if (user.role === "admin") {
       let eliminado = await productService.getProductbyId(_id);
       await productService.borrarProducto(req.body._id);
 
@@ -135,6 +135,8 @@ const deleteProduct = async (req, res) => {
         result: "Producto eliminado por ADMIN con exito",
         payload: eliminado,
       });
+    } else {
+      console.log("Usuario no autorizado");
     }
   } catch (error) {
     console.error(error);

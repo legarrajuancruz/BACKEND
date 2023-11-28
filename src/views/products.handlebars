@@ -1,46 +1,44 @@
 <div class="container">
   <div class="productos">
-    <div>
-      <h3> {{user.first_name}} {{user.last_name}} </h3>
+    <div class="mb-4">
+      <h3>{{user.first_name}} {{user.last_name}}</h3>
       <h5 id="userID">{{user._id}}</h5>
-
     </div>
+
     <div>
       <h2>TODOS LOS PRODUCTOS</h2>
       <div class="row">
         {{#each Products.payload}}
-          <div id="listadoProductos">
-            <div>
-              <img src="{{this.img}}" alt="" style="width:150px; heigth:auto" />
+          <div class="col-md-4 mb-4">
+            <div class="card">
+              <img src="{{this.img}}" alt="Producto" style="width: 80%;" />
+              <div class="card-body">
+                <h3 class="card-title">{{this.title}}</h3>
+                <h4
+                  class="card-subtitle mb-2 text-muted"
+                >{{this.description}}</h4>
+                <hr />
+                <p>Precio: {{this.price}}</p>
+                <p>ID: {{this.id}}</p>
+                <p>Stock: {{this.stock}}</p>
+                <button onclick="agregar(this)" data-id="{{this.id}}">Agregar al
+                  carrito</button>
+              </div>
             </div>
-            <div>
-              <h3>{{this.title}} </h3>
-              <h4> {{this.description}} </h4>
-              <hr />
-              <p><span> Precio: {{this.price}} </span></p>
-              <p>ID: {{this.id}}</p>
-              <p>stock {{this.stock}}</p>
-            </div>
-            <button onclick="agregar(this)" data-id="{{this.id}}">Agregar al
-              carrito</button>
           </div>
-
         {{/each}}
-
       </div>
-
     </div>
   </div>
 </div>
+
 <div class="row my-5">
   <div class="col">
-    <nav>
+    <nav aria-label="Page navigation">
       <ul class="pagination justify-content-center">
         {{#if Products.hasPrevPage}}
           <li class="page-item">
-            <a class="page-link" href="{{Products.prevLink}}">
-              Anterior
-            </a>
+            <a class="page-link" href="{{Products.prevLink}}">Anterior</a>
           </li>
         {{/if}}
 
@@ -71,9 +69,9 @@
             <a class="page-link" href="{{Products.nextLink}}">Siguiente</a>
           </li>
         {{/if}}
-
       </ul>
     </nav>
   </div>
 </div>
+
 <script src="/js/products.js"></script>

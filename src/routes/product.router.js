@@ -1,5 +1,6 @@
 import { Router } from "express";
 import ProductController from "../controllers/products.controller.js";
+import { uploader } from "../utils.js";
 
 const productRouter = Router();
 
@@ -10,7 +11,7 @@ productRouter.get("/", ProductController.getProduct);
 productRouter.get("/:id", ProductController.getProductById);
 
 //CREAR
-productRouter.post("/", ProductController.addProduct);
+productRouter.post("/", uploader.single("img"), ProductController.addProduct);
 
 //ELIMINAR
 productRouter.delete("/:id", ProductController.deleteProduct);

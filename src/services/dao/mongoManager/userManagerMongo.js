@@ -19,6 +19,8 @@ export default class UserService {
   };
 
   getUserByID = async (id) => {
+    console.log("GET USER BY ID");
+    console.log(id);
     let usuarioEncontrado = await userModel.findById(id);
     return usuarioEncontrado;
   };

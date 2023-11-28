@@ -14,7 +14,7 @@ const createProduct = async () => {
         price: document.getElementById("price").value,
         stock: document.getElementById("stock").value,
         category: document.getElementById("category").value,
-        img: document.getElementById("img").value,
+        img: document.getElementById("img").file,
         owner: document.getElementById("owner").textContent,
       };
 
@@ -39,12 +39,14 @@ const createProduct = async () => {
 };
 
 createProduct();
-let userRole = document.getElementById("role").textContent;
+
+let userId = document.getElementById("owner").textContent;
+
 //ELIMINAR POR ID DESDE EL BOX
 const borrarProductoID = async () => {
   let id = document.getElementById("id").value;
 
-  const producto = { _id: id, role: userRole };
+  const producto = { _id: id, uid: userId };
   await fetch(`/api/products/${id}`, {
     method: "DELETE",
     headers: { "Content-type": "application/json; charset=UTF-8" },
@@ -56,8 +58,6 @@ const borrarProductoID = async () => {
     }
     if (result.status === 203) {
       alert("Producto eliminado por ADMIN con éxito");
-    } else {
-      alert("Hubo un problema para eliminar el producto");
     }
   });
 };
@@ -69,13 +69,10 @@ document.getElementById("btn-ID").onclick = borrarProductoID;
 const deleteProductButton = async (id) => {
   console.log(id);
 
-  console.log("USER ROLE");
-  console.log(userRole);
-
   await fetch(`/api/products/${id}`, {
     method: "DELETE",
     headers: { "Content-type": "application/json; charset=UTF-8" },
-    body: JSON.stringify({ _id: id, role: userRole }),
+    body: JSON.stringify({ _id: id, uid: userId }),
   }).then((result) => {
     if (result.status === 202) {
       alert("Producto eliminado con éxito");

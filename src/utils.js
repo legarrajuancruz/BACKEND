@@ -1,10 +1,32 @@
 import { fileURLToPath } from "url";
-import { dirname } from "path";
-import bcrypt from "bcrypt";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+import multer from "multer";
+import { dirname } from "path";
+import bcrypt from "bcrypt";
+import path from "path";
+
 import jwt from "jsonwebtoken";
 import { faker } from "@faker-js/faker";
+
+//MULTER
+const storage = multer.diskStorage({
+  destination: function (req, res, cb) {
+    cb(null, "./public/img/");
+  },
+  filename: function (req, file, cb) {
+    const fileName = path.basename(file.originalname);
+    cb(null, fileName);
+  },
+});
+
+export const uploader = multer({
+  storage,
+  onError: function (error, next) {
+    console.log(error);
+    next();
+  },
+});
 
 //FAKER
 faker.locale = "es";
