@@ -27,6 +27,7 @@ describe("Testing Supermarket app", () => {
       };
       // Then
       const result = requester.post("api/products").send(productMock);
+      console.log(result);
 
       // Assert
     });
