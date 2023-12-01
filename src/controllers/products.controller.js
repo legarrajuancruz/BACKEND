@@ -40,6 +40,7 @@ const addProduct = async (req, res) => {
         code: EErrors.INVALID_TYPES_ERROR,
       });
       res.status(400).send({
+        error: "Incompleto",
         result: "Producto no pudo ser creado",
         producto: producto,
       });
