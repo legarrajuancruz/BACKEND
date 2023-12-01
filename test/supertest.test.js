@@ -4,7 +4,9 @@ import supertest from "supertest";
 const requester = supertest("http://localhost:8080");
 const expect = chai.expect;
 
-//contexto global
+/*======================
+=       SECTION 01     =
+=======================*/
 describe("Testing products Api", () => {
   let productId;
 
@@ -98,3 +100,8 @@ describe("Testing products Api", () => {
     expect(response.body.payload._id).to.eql(productId);
   });
 });
+
+/*======================
+=       SECTION 02     =
+=======================*/
+describe("Testing Login and session with cookies", () => {});
