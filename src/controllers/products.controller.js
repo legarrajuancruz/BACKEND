@@ -39,6 +39,10 @@ const addProduct = async (req, res) => {
         message: "Error creando el producto",
         code: EErrors.INVALID_TYPES_ERROR,
       });
+      res.status(400).send({
+        result: "Producto no pudo ser creado",
+        producto: producto,
+      });
     }
 
     let proudctoCreado = await productService.crearProducto(producto);

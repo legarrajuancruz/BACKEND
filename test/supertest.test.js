@@ -26,10 +26,36 @@ describe("Testing Supermarket app", () => {
         img: "/img/fernetBranca.jpg",
       };
       // Then
-      const result = await requester.post("api/products").send(productMock);
+      const { statusCode, ok, _body } = await requester
+        .post("api/products")
+        .send(productMock);
       console.log(result);
 
       // Assert
+      expect(statusCode).is.eqls(201);
+      expect(_body.payload).is.ok.and.to.have.property("_id");
+      expect(_body.payload).to.have.property("owner");
+    });
+
+    // Test 02
+    it("Crear  un producto sin title o el precio no es numerico: precio: EL API POST /api/products debe retornar un codigo de estado HTTP 400", async () => {
+      // Given
+      const productMock = {
+        title: "Fernet",
+        description: "Branca clasico",
+        stock: 25,
+        category: "Bebidas",
+        img: "/img/fernetBranca.jpg",
+      };
+
+      //Then
+      const { statusCode, _body } = await requester
+        .post("api/products")
+        .send(productMock);
+      console.log(result);
+
+      // Assert
+      expect(statusCode).is.eqls(400);
     });
   });
 
