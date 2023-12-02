@@ -70,8 +70,8 @@ const getProduct = async (req, res) => {
   try {
     let products = await productService.leerProductos(req.query);
 
-    res.send({
-      result: "Productos obtenido con exito",
+    res.status(200).send({
+      result: "Productos obtenidos con exito",
       Productos: products,
     });
   } catch (error) {
