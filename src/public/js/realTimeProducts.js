@@ -77,11 +77,11 @@ const deleteProductButton = async (id) => {
   }).then((result) => {
     if (result.status === 202) {
       alert("Producto eliminado con éxito");
-
       location.reload();
     }
     if (result.status === 203) {
       alert("Producto eliminado por ADMIN con éxito");
+      location.reload();
     } else {
       alert("Hubo un problema para eliminar el producto");
     }

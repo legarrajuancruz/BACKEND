@@ -93,12 +93,44 @@ describe("Testing products Api", () => {
 
   // Test 05: Eliminar un producto
   it("Eliminar un producto: el API DELETE /api/products/:id debe eliminar un producto existente", async () => {
-    const response = await requester.delete(`/api/products/${productId}`);
+    // Simular la creación de un nuevo producto para ser eliminado
+    const productMock = {
+      title: "Producto a Eliminar",
+      description: "Descripción del producto a eliminar",
+      price: 100,
+      stock: 10,
+      category: "Test",
+      owner: "653aeeec4905f64e60f50b20", // Ajusta esto con un ID(admin) de usuario válido
+    };
 
-    expect(response.status).to.eql(202);
-    expect(response.body.result).to.eql("Producto eliminado con exito");
-    expect(response.body.payload).to.be.an("object");
-    expect(response.body.payload).to.have.property("_id", productId);
+    const createResponse = await requester
+      .post("/api/products")
+      .field("title", productMock.title)
+      .field("description", productMock.description)
+      .field("price", productMock.price)
+      .field("stock", productMock.stock)
+      .field("category", productMock.category)
+      .field("owner", productMock.owner)
+      .attach("img", fs.readFileSync(imagePath), "testing.jpg");
+
+    expect(createResponse.status).to.eql(201);
+    expect(createResponse.body.result).to.eql("Producto creado con exito");
+    expect(createResponse.body.producto).to.be.an("object");
+    expect(createResponse.body.producto).to.have.property("_id");
+
+    const productId = createResponse.body.producto._id;
+
+    // Simular la eliminación del producto recién creado
+    const deleteResponse = await requester
+      .delete(`/api/products/${productId}`)
+      .send({ _id: productId, uid: "653aeeec4905f64e60f50b20" }); // Ajusta el ID de usuario según tus necesidades
+
+    expect(deleteResponse.status).to.eql(203);
+    expect(deleteResponse.body.result).to.eql(
+      "Producto eliminado por ADMIN con exito"
+    );
+    expect(deleteResponse.body.payload).to.be.an("object");
+    expect(deleteResponse.body.payload).to.have.property("_id", productId);
   });
 });
 
