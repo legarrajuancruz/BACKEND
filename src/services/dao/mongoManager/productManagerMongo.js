@@ -7,7 +7,6 @@ export default class ProductService {
 
   crearProducto = async (productoNuevo) => {
     let result = await ProductsModel.create(productoNuevo);
-    console.log(result);
     return result;
   };
 

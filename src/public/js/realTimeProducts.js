@@ -8,21 +8,22 @@ const createProduct = async () => {
     .addEventListener("submit", async (event) => {
       event.preventDefault();
 
-      const formData = {
-        title: document.getElementById("title").value,
-        description: document.getElementById("description").value,
-        price: document.getElementById("price").value,
-        stock: document.getElementById("stock").value,
-        category: document.getElementById("category").value,
-        img: document.getElementById("img").file,
-        owner: document.getElementById("owner").textContent,
-      };
+      const formData = new FormData();
+      formData.append("title", document.getElementById("title").value);
+      formData.append(
+        "description",
+        document.getElementById("description").value
+      );
+      formData.append("price", document.getElementById("price").value);
+      formData.append("stock", document.getElementById("stock").value);
+      formData.append("category", document.getElementById("category").value);
+      formData.append("img", document.getElementById("img").files[0]);
+      formData.append("owner", document.getElementById("owner").textContent);
 
       try {
         const response = await fetch("/api/products/", {
           method: "POST",
-          headers: { "Content-type": "application/json; charset=UTF-8" },
-          body: JSON.stringify(formData),
+          body: formData,
         });
 
         if (response.status === 201) {

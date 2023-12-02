@@ -15,6 +15,9 @@ const US = new userModel();
 //CREAR
 const addProduct = async (req, res) => {
   try {
+    console.log("ENVIO ARCHIVO");
+    console.log(req.file);
+
     const producto = {
       title: req.body.title,
       description: req.body.description,
@@ -24,8 +27,7 @@ const addProduct = async (req, res) => {
       img: `/img/${req.file.filename}`,
       owner: req.body.owner,
     };
-
-    console.log("PRODUCTO");
+    console.log("VER PRODUCTO ENVIADO");
     console.log(producto);
 
     if (
@@ -47,6 +49,8 @@ const addProduct = async (req, res) => {
     }
 
     let proudctoCreado = await productService.crearProducto(producto);
+    console.log("Nuevo Producto Creado");
+    console.log(proudctoCreado);
 
     res.status(201).send({
       result: "Producto creado con exito",
