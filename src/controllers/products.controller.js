@@ -129,6 +129,9 @@ const deleteProduct = async (req, res) => {
     let find = await productService.getProductbyId(_id);
     let user = await US.getUserByID(uid);
 
+    console.log("ROL DE USUARIO");
+    console.log(user.role);
+
     if (user.role === "premium") {
       const eliminado = await productService.borrarProducto(find._id);
 
@@ -136,9 +139,13 @@ const deleteProduct = async (req, res) => {
         result: "Producto eliminado con exito",
         payload: eliminado,
       });
-    } else if (user.role === "admin") {
+    }
+    if (user.role === "admin") {
       let eliminado = await productService.getProductbyId(_id);
-      await productService.borrarProducto(req.body._id);
+      await productService.borrarProducto(eliminado._id);
+
+      console.log("PRODUCTO ELIMINADO");
+      console.log(eliminado);
 
       res.status(203).send({
         result: "Producto eliminado por ADMIN con exito",
