@@ -165,3 +165,62 @@ describe("Testing products Api", () => {
 
 //   //test 03: ruta protegida
 // });
+
+describe("Sessions API", () => {
+  // Prueba de inicio de sesión exitoso
+  //   it("Inicio de sesión exitoso y devuelve token", async () => {
+  //     const response = await requester.post("/api/sessions/login").send({
+  //       email: "adminCoder@coder.com",
+  //       password: "adminCod3r123",
+  //     });
+
+  //     expect(response.status).to.equal(200); // Ajusta según tu lógica
+  //     expect(response.body).to.have.property("access_token");
+  //   });
+
+  //   // Prueba de inicio de sesión fallido (credenciales incorrectas)
+  //   it("Inicio de sesión fallido para credenciales incorrectas y devuelve 401", async () => {
+  //     const response = await requester.post("/api/sessions/login").send({
+  //       email: "adminCoder@coder.com",
+  //       password: "contrasenaIncorrecta",
+  //     });
+
+  //     expect(response.status).to.equal(401);
+  //     expect(response.body).to.deep.equal({
+  //       status: "error",
+  //       error: "credenciales incorrectas",
+  //     });
+  //   });
+
+  // Prueba de registro exitoso
+  it("Registro exitoso y devuelve 201", async () => {
+    const response = await requester.post("/api/sessions/register").send({
+      first_name: "testing",
+      last_name: "testing",
+      email: "testing@testing.com",
+      age: 25,
+      password: "testing",
+    });
+
+    expect(response.status).to.equal(201);
+    expect(response.body).to.deep.equal({
+      status: "success",
+      message: "Usuario creado con exito",
+    });
+  });
+
+  // Prueba de registro fallido (usuario ya existente)
+  it("Registro fallido para usuario existente y devuelve 400", async () => {
+    const response = await requester.post("/api/sessions/register").send({
+      first_name: "testing",
+      last_name: "testing",
+      email: "testing@testing.com", //este usuario ya existe
+      age: 25,
+      password: "testing",
+    });
+
+    expect(response.status).to.equal(400);
+    expect(response.body).to.have.property("status", "error");
+    expect(response.body).to.have.property("message", "Usuario ya registrado");
+  });
+});
