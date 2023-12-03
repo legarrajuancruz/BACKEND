@@ -51,23 +51,22 @@ sessionsRouter.post(
   }
 );
 
-sessionsRouter.post(
-  "/register",
-  passport.authenticate("register", {
-    failureRedirect: "/api/sessions/fail-register",
-  }),
-  async (req, res) => {
-    if (req.user) {
-      return res
-        .status(201)
-        .send({ status: "success", message: "Usuario creado con éxito" });
-    } else {
-      return res
-        .status(400)
-        .send({ status: "error", message: "Usuario ya registrado" });
+sessionsRouter.post("/register", async (req, res) => {
+  passport.authenticate("register", async (err, user) => {
+    if (err) {
+      return res.status(500).send({ error: "Error interno del servidor" });
     }
-  }
-);
+    if (!user) {
+      return res.status(400).send({
+        status: "error",
+        message: "Usuario ya registrado",
+      });
+    }
+    res
+      .status(201)
+      .send({ status: "success", message: "Usuario creado con exito" });
+  })(req, res);
+});
 
 sessionsRouter.post("/logout", async (req, res) => {
   req.session.destroy((err) => {

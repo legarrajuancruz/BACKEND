@@ -127,9 +127,10 @@ const initializedPassport = () => {
           const exist = await US.login(email);
 
           if (exist) {
-            return res
-              .status(400)
-              .send({ status: "error", message: "Usuario ya registrado" });
+            return done(null, false, {
+              status: "400",
+              message: "Usuario ya registrado",
+            });
           }
 
           const usuarioNuevo = {
@@ -154,6 +155,7 @@ const initializedPassport = () => {
           }
           usuarioNuevo.password = createHash(password);
           const result = await US.crearUsuario(usuarioNuevo);
+
           return done(null, result);
         } catch (error) {
           return;
