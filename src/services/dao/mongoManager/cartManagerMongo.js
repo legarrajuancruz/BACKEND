@@ -2,6 +2,8 @@ import { CartsModel } from "../models/carts.model.js";
 
 import ProductService from "./productManagerMongo.js";
 
+const PS = new ProductService();
+
 class CartService {
   constructor() {
     console.log("Carts with Database persistence in mongodb");
@@ -79,7 +81,7 @@ class CartService {
       //A partir de los datos, buscar por idx los productos para obtener su _id para generar el populate
       const arr = [];
       for (const item of body) {
-        const object = await ProductService.getProductById(item._id);
+        const object = await PS.getProductbyId(item._id);
         arr.push({
           _id: item._id,
           quantity: item.quantity,

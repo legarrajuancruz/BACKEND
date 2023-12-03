@@ -6,7 +6,10 @@ import { productService, cartService } from "../services/factory.js";
 const addCart = async (req, res) => {
   try {
     let carritoNuevo = await cartService.addCarts();
-    res.status(201).send(carritoNuevo);
+    res.status(201).send({
+      result: "Carrito creado con exito",
+      carrito: carritoNuevo,
+    });
   } catch (error) {
     console.error(error);
     res
@@ -117,6 +120,7 @@ const modProductsInCart = async (req, res) => {
 
   console.log({ body });
   const { cid } = req.params;
+
   try {
     const existCart = await cartService.getCartsById(cid);
     console.log(existCart);
@@ -127,22 +131,23 @@ const modProductsInCart = async (req, res) => {
         .send({ Status: "error", message: "Cart not found" });
     }
 
-    body.forEach(async (item) => {
-      console.log(`ITEAM ${item._id}`);
-
-      const existProd = await productService.getProductById(item._id);
+    for (const item of body) {
+      console.log(`ITEM ${item._id}`);
+      const existProd = await productService.getProductbyId(item._id);
 
       if (!existProd) {
         return res
           .status(404)
           .send({ Status: "error", message: `Prod ${item._id} not found` });
       }
-    });
+    }
+    console.log("SALIO");
 
     const newCart = await cartService.modificarProductInCart(cid, body);
     res.status(200).send({ status: "success", newCart: newCart });
   } catch (err) {
-    res.status(500).send({ error: err.message });
+    console.log(err.message);
+    throw { status: "500", message: err.message };
   }
 };
 

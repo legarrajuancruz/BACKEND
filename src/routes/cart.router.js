@@ -19,7 +19,7 @@ CartRouter.delete("/:id", CartController.deleteCartById);
 CartRouter.post("/:cid/products/:pid", CartController.addProductsToCart);
 
 //MODIFICAR ITEM CON ARRAY  DE PRODUCTOS
-CartRouter.put("/:cid/products/:pid", CartController.modProductsInCart);
+CartRouter.put("/:cid", CartController.modProductsInCart);
 
 //ELIMINAR PRODUCTOS EN CARRITO
 CartRouter.delete(
