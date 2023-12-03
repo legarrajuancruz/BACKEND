@@ -137,60 +137,27 @@ describe("Testing products Api", () => {
 // /*======================
 // =       SECTION 02     =
 // =======================*/
-// describe("Testing Login and session with cookies", () => {
-//   // before
-//   before(function () {
-//     this.cookie;
-//     this.testUser = {
-//       first_name: "usuario de prueba",
-//       last_name: "usuario de prueba",
-//       email: "usuariodeprueba@usuariodeprueba.com",
-//       age: 0,
-//       password: 1234,
-//     };
-//   });
-//   // test 01: Registro usuario
-//   it(" Test registro de usuario: debe poder registrar un usuario", async function () {
-//     //given
-//     console.log(this.testUser);
-//     //then
-//     const { statusCode, _body } = await requester
-//       .post("/api/sessions/register")
-//       .send(this.testUser);
-//     // assert
-//     expect(statusCode).is.eqls(201);
-//   });
-
-//   //Test 02: Login user
-
-//   //test 03: ruta protegida
-// });
 
 describe("Sessions API", () => {
   // Prueba de inicio de sesión exitoso
-  //   it("Inicio de sesión exitoso y devuelve token", async () => {
-  //     const response = await requester.post("/api/sessions/login").send({
-  //       email: "adminCoder@coder.com",
-  //       password: "adminCod3r123",
-  //     });
+  it("Inicio de sesión exitoso y devuelve token", async () => {
+    const response = await requester.post("/api/sessions/login").send({
+      email: "adminCoder@coder.com",
+      password: "adminCod3r123",
+    });
 
-  //     expect(response.status).to.equal(200); // Ajusta según tu lógica
-  //     expect(response.body).to.have.property("access_token");
-  //   });
+    expect(response.status).to.equal(201); // Ajusta según tu lógica
+    expect(response.body).to.have.property("access_token");
+  });
 
-  //   // Prueba de inicio de sesión fallido (credenciales incorrectas)
-  //   it("Inicio de sesión fallido para credenciales incorrectas y devuelve 401", async () => {
-  //     const response = await requester.post("/api/sessions/login").send({
-  //       email: "adminCoder@coder.com",
-  //       password: "contrasenaIncorrecta",
-  //     });
-
-  //     expect(response.status).to.equal(401);
-  //     expect(response.body).to.deep.equal({
-  //       status: "error",
-  //       error: "credenciales incorrectas",
-  //     });
-  //   });
+  // Prueba de inicio de sesión fallido (credenciales incorrectas)
+  it("Inicio de sesión fallido para credenciales incorrectas y devuelve 401", async () => {
+    const response = await requester.post("/api/sessions/login").send({
+      email: "correo@incorrecto.com",
+      password: "contraseñaincorrecta",
+    });
+    expect(response.status).to.equal(401);
+  });
 
   // Prueba de registro exitoso
   it("Registro exitoso y devuelve 201", async () => {

@@ -27,29 +27,26 @@ sessionsRouter.get(
   }
 );
 
-sessionsRouter.post(
-  "/login",
-  passport.authenticate("login", {
-    failureRedirect: "/api/sessions/fail-login",
-  }),
-  async (req, res) => {
-    const user = req.user;
-    console.log("Usuario encontrado para login:");
-    console.log(user);
+sessionsRouter.post("/login", async (req, res) => {
+  passport.authenticate("login", async (err, user) => {
+    if (err) {
+      return res.status(500).send({ error: "Error interno del servidor" });
+    }
 
-    if (!user)
-      return res
-        .status(401)
-        .send({ status: "error", error: "credenciales incorrectas" });
+    if (!user) {
+      return res.status(401).send({
+        status: "error",
+        message: "Credenciales incorrectas",
+      });
+    }
     const access_token = generateJWToken(user);
-    console.log(access_token);
     res.status(201).send({
       status: "success",
-      message: "Usuario logueado con exito",
+      message: "Usuario logueado con éxito",
       access_token: access_token,
     });
-  }
-);
+  })(req, res);
+});
 
 sessionsRouter.post("/register", async (req, res) => {
   passport.authenticate("register", async (err, user) => {
