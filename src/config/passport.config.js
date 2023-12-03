@@ -101,7 +101,7 @@ const initializedPassport = () => {
           console.log("Usuario encontrado para login:");
           console.log(user);
           if (!user) {
-            console.warn("User doesn't exists with username: " + username);
+            console.warn("Usuario no encontrado con ese nombre: " + username);
             return done(null, false);
           }
           // Validacion de el password
@@ -156,7 +156,8 @@ const initializedPassport = () => {
           const result = await US.crearUsuario(usuarioNuevo);
           return done(null, result);
         } catch (error) {
-          return done("Error registrando al usuario" + error);
+          return;
+          done("Error registrando al usuario" + error);
         }
       }
     )

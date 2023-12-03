@@ -43,7 +43,11 @@ sessionsRouter.post(
         .send({ status: "error", error: "credenciales incorrectas" });
     const access_token = generateJWToken(user);
     console.log(access_token);
-    res.send({ access_token: access_token });
+    res.status(201).send({
+      status: "success",
+      message: "Usuario logueado con exito",
+      access_token: access_token,
+    });
   }
 );
 
@@ -53,10 +57,15 @@ sessionsRouter.post(
     failureRedirect: "/api/sessions/fail-register",
   }),
   async (req, res) => {
-    console.log("Nuevo usuario registrado");
-    return res
-      .status(201)
-      .send({ status: "success", message: "Usuario creado con exito" });
+    if (req.user) {
+      return res
+        .status(201)
+        .send({ status: "success", message: "Usuario creado con éxito" });
+    } else {
+      return res
+        .status(400)
+        .send({ status: "error", message: "Usuario ya registrado" });
+    }
   }
 );
 
