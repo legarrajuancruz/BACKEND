@@ -39,6 +39,14 @@ const userSchema = new mongoose.Schema({
   resetPasswordToken: String,
   resetPasswordExpires: Date,
   loggedBy: String,
+  last_connection: Date,
+  documents: [
+    {
+      name: { type: String, unique: true },
+      reference: String,
+      status: { type: String, default: "Pending" },
+    },
+  ],
 });
 userSchema.pre("findOne", function () {
   this.populate("products.product");

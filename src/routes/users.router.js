@@ -14,6 +14,8 @@ UserRouter.get("/:id", UserController.ControlgetUsersById);
 // //ELIMINAR POR ID
 // UserRouter.delete("/:id", UserController.getUsersById);
 
+UserRouter.get("/api/users/premium/:uid");
+
 // //AGREGAR AL CARRITO
 UserRouter.post("/:uid/products/:pid", UserController.agregaralCarritoUser);
 
