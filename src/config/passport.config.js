@@ -98,7 +98,8 @@ const initializedPassport = () => {
       async (req, username, password, done) => {
         try {
           const user = await US.login(username);
-
+          console.log("Usuario encontrado para login:");
+          console.log(user);
           if (!user) {
             console.warn("Usuario no encontrado con ese nombre: " + username);
             return done(null, false);
@@ -107,10 +108,6 @@ const initializedPassport = () => {
           if (!isValidPassword(user, password)) {
             return done(null, false);
           }
-
-          console.log("Usuario encontrado para login:");
-          console.log(user);
-
           return done(null, user);
         } catch (error) {
           return done(error);
@@ -142,7 +139,6 @@ const initializedPassport = () => {
             email,
             age,
             password,
-            last_connection: new Date(),
           };
 
           if (usuarioNuevo.password === "adminCod3r123") {

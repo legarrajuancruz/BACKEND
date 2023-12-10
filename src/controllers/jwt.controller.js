@@ -40,7 +40,7 @@ const JWT = async (req, res) => {
 
     //cookie
     res.cookie("jwtCookieToken", access_Token, {
-      maxAge: 60000,
+      maxAge: 3600000,
       httpOnly: true,
     });
 
