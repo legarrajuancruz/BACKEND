@@ -131,7 +131,7 @@ const nuevaPassword = async (req, res) => {
   ==========================*/
 const handlePremiumUpload = async (req, res) => {
   try {
-    const { uid } = req.params;
+    const { uid } = req.body;
     const profileImage = req.files["profiles"][0];
     const productImage = req.files["products"][0];
     const documentFile = req.files["document"][0];
@@ -141,7 +141,7 @@ const handlePremiumUpload = async (req, res) => {
     console.log("Producto:", productImage);
     console.log("Documento:", documentFile);
 
-    // Responde al cliente con el éxito o cualquier otra respuesta necesaria
+    // Responde al cliente
     res.send("Archivos subidos con éxito");
   } catch (error) {
     console.error("Error al procesar la subida de archivos", error);

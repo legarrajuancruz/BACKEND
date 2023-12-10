@@ -42,7 +42,12 @@ userRouter.get(
   "/premium",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    res.render("premium", { user: req.user });
+    const user = req.user;
+    if (user.role === "user") {
+      res.render("premium", { user });
+    } else {
+      res.render("error");
+    }
   }
 );
 
