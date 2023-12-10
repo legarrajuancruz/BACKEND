@@ -107,8 +107,9 @@ const initializedPassport = () => {
           if (!isValidPassword(user, password)) {
             return done(null, false);
           }
+
           user.last_connection = Date.now();
-          user.save();
+          await user.save();
 
           console.log("Usuario encontrado para login:");
           console.log(user);
@@ -144,6 +145,7 @@ const initializedPassport = () => {
             email,
             age,
             password,
+            last_connection: new Date(),
           };
 
           if (usuarioNuevo.password === "adminCod3r123") {

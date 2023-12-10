@@ -46,10 +46,14 @@ export default class UserService {
 
   login = async (email) => {
     try {
-      console.log(email);
       const userLogged = await userModel.findOne({ email });
 
       if (userLogged) {
+        await userModel.updateOne(
+          { _id: userLogged._id },
+          { $set: { last_connection: Date.now() } }
+        );
+        console.log("last_connection actualizado:", Date.now());
         return userLogged;
       }
       return false;
