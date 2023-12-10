@@ -132,6 +132,9 @@ const nuevaPassword = async (req, res) => {
 const handlePremiumUpload = async (req, res) => {
   try {
     const { uid } = req.body;
+    let user = await US.getUserByID(uid);
+    console.log(user);
+
     const profileImage = req.files["profiles"][0];
     const documentFile = req.files["document"][0];
 
@@ -139,12 +142,16 @@ const handlePremiumUpload = async (req, res) => {
     console.log("Perfil:", profileImage);
     console.log("Documento:", documentFile);
 
+    user.role = "premium";
+    user.save();
+
     const script = `
       <script>
-        alert('Archivos subidos con éxito');
+        alert('Ahora eres usuario PREMIUM');
         window.location.href = '/users/login'; 
       </script>
     `;
+
     res.send(script);
   } catch (error) {
     console.error("Error al procesar la subida de archivos", error);

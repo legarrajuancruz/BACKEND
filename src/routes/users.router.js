@@ -13,7 +13,7 @@ UserRouter.get("/:id", UserController.ControlgetUsersById);
 // UserRouter.delete("/:id", UserController.getUsersById);
 
 UserRouter.post(
-  "/premium/:uid",
+  "/:uid/documents",
   uploader.fields([
     { name: "profiles", maxCount: 1 },
     { name: "document", maxCount: 1 },
