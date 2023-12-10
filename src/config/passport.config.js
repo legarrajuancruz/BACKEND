@@ -108,9 +108,6 @@ const initializedPassport = () => {
             return done(null, false);
           }
 
-          user.last_connection = Date.now();
-          await user.save();
-
           console.log("Usuario encontrado para login:");
           console.log(user);
 

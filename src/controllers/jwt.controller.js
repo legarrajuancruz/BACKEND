@@ -22,6 +22,9 @@ const JWT = async (req, res) => {
         error: "El usuario o la contraseña no coinciden",
       });
     }
+    user.last_connection = Date.now();
+    await user.save();
+
     const tokenUser = {
       _id: user._id,
       first_name: user.first_name,
@@ -29,12 +32,11 @@ const JWT = async (req, res) => {
       email: user.email,
       age: user.age,
       role: user.role,
+      last_connection: user.last_connection,
     };
     const access_Token = generateJWToken(tokenUser);
+    console.log("TOKEN JWT");
     console.log(access_Token);
-
-    //localstorage
-    // res.send({ message: "Login successs", jwt: access_Token });
 
     //cookie
     res.cookie("jwtCookieToken", access_Token, {
