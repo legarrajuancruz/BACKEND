@@ -126,6 +126,29 @@ const nuevaPassword = async (req, res) => {
   }
 };
 
+/*============================
+-  SUBIR ARCHIVOS PREMIUM    -
+  ==========================*/
+const handlePremiumUpload = async (req, res) => {
+  try {
+    const { uid } = req.params;
+    const profileImage = req.files["profiles"][0];
+    const productImage = req.files["products"][0];
+    const documentFile = req.files["document"][0];
+
+    // Lógica para manejar los archivos subidos
+    console.log("Perfil:", profileImage);
+    console.log("Producto:", productImage);
+    console.log("Documento:", documentFile);
+
+    // Responde al cliente con el éxito o cualquier otra respuesta necesaria
+    res.send("Archivos subidos con éxito");
+  } catch (error) {
+    console.error("Error al procesar la subida de archivos", error);
+    res.status(500).send("Error interno del servidor");
+  }
+};
+
 export default {
   leerUsuarios,
   ControlgetUsersById,
@@ -133,4 +156,5 @@ export default {
   updateUser,
   resetPassword,
   nuevaPassword,
+  handlePremiumUpload,
 };

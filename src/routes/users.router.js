@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { uploader } from "../utils.js";
 import UserController from "../controllers/users.controller.js";
 const UserRouter = Router();
 
@@ -8,13 +9,18 @@ UserRouter.get("/", UserController.leerUsuarios);
 //LEER USUARIOS POR ID
 UserRouter.get("/:id", UserController.ControlgetUsersById);
 
-// //CREAR USUARIOS
-// UserRouter.post("/", UserController.addUser);
-
 // //ELIMINAR POR ID
 // UserRouter.delete("/:id", UserController.getUsersById);
 
-UserRouter.get("/api/users/premium/:uid");
+UserRouter.post(
+  "/premium/:uid",
+  uploader.fields([
+    { name: "profiles", maxCount: 1 },
+    { name: "products", maxCount: 1 },
+    { name: "document", maxCount: 1 },
+  ]),
+  UserController.handlePremiumUpload
+);
 
 // //AGREGAR AL CARRITO
 UserRouter.post("/:uid/products/:pid", UserController.agregaralCarritoUser);

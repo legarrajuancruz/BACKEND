@@ -55,7 +55,7 @@ const borrarProductoID = async () => {
   }).then((result) => {
     if (result.status === 202) {
       alert("Producto eliminado con éxito");
-      location.href = href = "/realtimeproducts";
+      location.href = "/realtimeproducts";
     }
     if (result.status === 203) {
       alert("Producto eliminado por ADMIN con éxito");
@@ -77,11 +77,11 @@ const deleteProductButton = async (id) => {
   }).then((result) => {
     if (result.status === 202) {
       alert("Producto eliminado con éxito");
-      location.href = href = "/realtimeproducts";
+      location.href = "/realtimeproducts";
     }
     if (result.status === 203) {
       alert("Producto eliminado por ADMIN con éxito");
-      location.href = href = "/realtimeproducts";
+      location.href = "/realtimeproducts";
     } else {
       alert("Hubo un problema para eliminar el producto");
     }

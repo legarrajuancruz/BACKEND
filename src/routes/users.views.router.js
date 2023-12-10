@@ -38,6 +38,10 @@ userRouter.get("/profile", (req, res) => {
   });
 });
 
+userRouter.get("/premium", (req, res) => {
+  res.render("premium", { user: req.user });
+});
+
 userRouter.get(
   "/",
   passport.authenticate("jwt", { session: false }),
