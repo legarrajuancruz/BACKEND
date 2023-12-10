@@ -16,7 +16,6 @@ UserRouter.post(
   "/premium/:uid",
   uploader.fields([
     { name: "profiles", maxCount: 1 },
-    { name: "products", maxCount: 1 },
     { name: "document", maxCount: 1 },
   ]),
   UserController.handlePremiumUpload

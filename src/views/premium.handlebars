@@ -3,7 +3,6 @@
     <div class="col-md-8 mx-auto">
       <h1 class="mb-4">PREMIUM</h1>
       <div>
-        <p>{{user._id}}</p>
         <form
           action="/api/users/premium/{{user._id}}"
           method="post"
@@ -20,15 +19,7 @@
               accept="image/*"
             />
           </div>
-          <div class="mb-3">
-            <label for="productImage">Imagen de producto:</label>
-            <input
-              type="file"
-              name="products"
-              id="productImage"
-              accept="image/*"
-            />
-          </div>
+
           <div class="mb-3">
             <label for="document">Documento:</label>
             <input

@@ -12,8 +12,22 @@ import { faker } from "@faker-js/faker";
 
 //MULTER
 const storage = multer.diskStorage({
-  destination: function (req, res, cb) {
-    cb(null, "./public/img/");
+  destination: function (req, file, cb) {
+    // Determina el tipo de archivo y configura la carpeta correspondiente
+    let folder;
+    switch (file.fieldname) {
+      case "profiles":
+        folder = "profiles";
+        break;
+      case "document":
+        folder = "documents";
+        break;
+      default:
+        folder = "uploads"; // Carpeta predeterminada si no se encuentra ninguna coincidencia
+    }
+
+    const uploadPath = path.join(__dirname, "public", "img", folder);
+    cb(null, uploadPath);
   },
   filename: function (req, file, cb) {
     const fileName = path.basename(file.originalname);
