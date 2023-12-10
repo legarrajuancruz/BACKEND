@@ -38,9 +38,13 @@ userRouter.get("/profile", (req, res) => {
   });
 });
 
-userRouter.get("/premium", (req, res) => {
-  res.render("premium", { user: req.user });
-});
+userRouter.get(
+  "/premium",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    res.render("premium", { user: req.user });
+  }
+);
 
 userRouter.get(
   "/",

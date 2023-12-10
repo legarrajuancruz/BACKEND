@@ -3,9 +3,9 @@
     <div class="col-md-8 mx-auto">
       <h1 class="mb-4">PREMIUM</h1>
       <div>
-        <p>USER ID{{user.first_name}}</p>
+        <p>{{user._id}}</p>
         <form
-          action="/api/users/premium/{{userId}}"
+          action="/api/users/premium/{{user._id}}"
           method="post"
           enctype="multipart/form-data"
         >
