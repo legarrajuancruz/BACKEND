@@ -24,7 +24,7 @@ const addProduct = async (req, res) => {
       price: Number(req.body.price),
       stock: Number(req.body.stock),
       category: req.body.category,
-      img: `${req.file.filename}`,
+      img: `/products/${req.file.filename}`,
       owner: req.body.owner,
     };
     console.log("VER PRODUCTO ENVIADO");
