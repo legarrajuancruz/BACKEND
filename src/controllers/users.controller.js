@@ -1,3 +1,4 @@
+import path from "path";
 import UserService from "../services/dao/mongoManager/userManagerMongo.js";
 import CartService from "../services/dao/mongoManager/cartManagerMongo.js";
 import ProductService from "../services/dao/mongoManager/productManagerMongo.js";
@@ -126,9 +127,6 @@ const nuevaPassword = async (req, res) => {
   }
 };
 
-/*============================
--  SUBIR ARCHIVOS PREMIUM    -
-  ==========================*/
 const handlePremiumUpload = async (req, res) => {
   try {
     const { uid } = req.body;
@@ -141,13 +139,30 @@ const handlePremiumUpload = async (req, res) => {
     console.log("Perfil:", profileImage);
     console.log("Documento:", documentFile);
 
-    user.role = "premium";
-    user.save();
+    // Crear array documents
+    if (!user.documents) {
+      user.documents = [];
+    }
+
+    // Actualiza el estado de los documentos en el modelo del usuario
+    user.documents.push({
+      name: profileImage.originalname,
+      reference: path.join(`/uploads/profiles/${profileImage.filename}`),
+      status: "Uploaded",
+    });
+
+    user.documents.push({
+      name: documentFile.originalname,
+      reference: path.join(`/uploads/documents/${documentFile.filename}`),
+      status: "Uploaded",
+    });
+
+    await user.save();
 
     const script = `
       <script>
-        alert('Ahora eres usuario PREMIUM');
-        window.location.href = '/users/login'; 
+        alert('Archivos enviados correctamente');
+        window.location.href = '/users/'; 
       </script>
     `;
 
