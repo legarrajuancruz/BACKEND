@@ -49,7 +49,7 @@ describe("Testing products Api", () => {
     productId = response.body.producto._id;
   });
 
-  const imagePath = path.join(__dirname, "../src/public/img/test.jpg");
+  const imagePath = path.join(__dirname, "../src/uploads/products/test.jpg");
 
   // Test 02: Obtener todos los productos
   it("Obtener todos los productos: el API GET /api/products debe devolver una lista de productos", async () => {
