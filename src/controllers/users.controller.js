@@ -138,7 +138,6 @@ const handlePremiumUpload = async (req, res) => {
     const profileImage = req.files["profiles"][0];
     const documentFile = req.files["document"][0];
 
-    // Lógica para manejar los archivos subidos
     console.log("Perfil:", profileImage);
     console.log("Documento:", documentFile);
 

@@ -21,6 +21,16 @@ UserRouter.post(
   UserController.handlePremiumUpload
 );
 
+// UserRouter.post(
+//   "/:uid/premium-documents",
+//   uploader.fields([
+//     { name: "identificationDocument", maxCount: 1 },
+//     { name: "domicileProofDocument", maxCount: 1 },
+//     { name: "accountStatementDocument", maxCount: 1 },
+//   ]),
+//   userController.uploadPremiumDocuments
+// );
+
 // //AGREGAR AL CARRITO
 UserRouter.post("/:uid/products/:pid", UserController.agregaralCarritoUser);
 

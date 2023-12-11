@@ -17,16 +17,16 @@ const storage = multer.diskStorage({
     let folder;
     switch (file.fieldname) {
       case "profiles":
-        folder = "profiles";
+        folder = path.join(__dirname + "/uploads/profiles");
         break;
       case "document":
-        folder = "documents";
+        folder = path.join(__dirname + "/uploads/documents");
         break;
       default:
-        folder = "uploads"; // Carpeta predeterminada si no se encuentra ninguna coincidencia
+        folder = path.join(__dirname + "/uploads/products");
     }
 
-    const uploadPath = path.join(__dirname, "public", "img", folder);
+    const uploadPath = path.join(folder);
     cb(null, uploadPath);
   },
   filename: function (req, file, cb) {
