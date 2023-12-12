@@ -130,7 +130,7 @@ const nuevaPassword = async (req, res) => {
 /*==================================
   - SUBIR ARCHIVOS PROFILE Y DNI    -
   =================================*/
-const handlePremiumUpload = async (req, res) => {
+const handleProfileUpload = async (req, res) => {
   try {
     const { uid } = req.body;
     let user = await US.getUserByID(uid);
@@ -160,45 +160,6 @@ const handlePremiumUpload = async (req, res) => {
       status: "Uploaded",
     });
 
-    /*====================================
-    -  SUBIR COMPROBANTE DE DOMICILIO    -
-    ====================================*/
-    const handleAddressProofUpload = async (req, res) => {
-      try {
-        const { uid } = req.body;
-        const user = await US.getUserByID(uid);
-        console.log(user);
-
-        const addressProofFile = req.files["addressProof"][0];
-
-        console.log("Comprobante de domicilio:", addressProofFile);
-
-        // Asegúrate de que el array de documentos exista
-        if (!user.documents) {
-          user.documents = [];
-        }
-
-        // Actualiza el estado del comprobante de domicilio en el modelo del usuario
-        user.documents.push({
-          name: addressProofFile.originalname,
-          reference: path.join(
-            `/uploads/addressProof/${addressProofFile.filename}`
-          ),
-          status: "Uploaded",
-        });
-
-        await user.save();
-
-        res.status(202).send({
-          message: "Comprobante de domicilio subido exitosamente",
-          user,
-        });
-      } catch (error) {
-        console.error("Error al procesar la subida de archivos", error);
-        res.status(500).send("Error interno del servidor");
-      }
-    };
-
     await user.save();
 
     const script = `
@@ -215,6 +176,45 @@ const handlePremiumUpload = async (req, res) => {
   }
 };
 
+/*====================================
+    -  SUBIR COMPROBANTE DE DOMICILIO    -
+    ====================================*/
+const handleAddressProofUpload = async (req, res) => {
+  try {
+    const { uid } = req.body;
+    const user = await US.getUserByID(uid);
+    console.log(user);
+
+    const addressProofFile = req.files["addressProof"][0];
+
+    console.log("Comprobante de domicilio:", addressProofFile);
+
+    // Asegúrate de que el array de documentos exista
+    if (!user.documents) {
+      user.documents = [];
+    }
+
+    // Actualiza el estado del comprobante de domicilio en el modelo del usuario
+    user.documents.push({
+      name: addressProofFile.originalname,
+      reference: path.join(
+        `/uploads/addressProof/${addressProofFile.filename}`
+      ),
+      status: "Uploaded",
+    });
+
+    await user.save();
+
+    res.status(202).send({
+      message: "Comprobante de domicilio subido exitosamente",
+      user,
+    });
+  } catch (error) {
+    console.error("Error al procesar la subida de archivos", error);
+    res.status(500).send("Error interno del servidor");
+  }
+};
+
 export default {
   leerUsuarios,
   ControlgetUsersById,
@@ -222,5 +222,6 @@ export default {
   updateUser,
   resetPassword,
   nuevaPassword,
-  handlePremiumUpload,
+  handleProfileUpload,
+  handleAddressProofUpload,
 };

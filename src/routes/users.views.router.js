@@ -43,7 +43,7 @@ userRouter.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const user = req.user;
-    if (user.role === "user") {
+    if (user.role === "user" || user.role === "premium") {
       res.render("uploads", { user });
     } else {
       res.render("error");
@@ -51,6 +51,18 @@ userRouter.get(
   }
 );
 
+userRouter.get(
+  "/premium",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const user = req.user;
+    if (user.role === "user") {
+      res.render("premium", { user });
+    } else {
+      res.render("error");
+    }
+  }
+);
 userRouter.get(
   "/",
   passport.authenticate("jwt", { session: false }),

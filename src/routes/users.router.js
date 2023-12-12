@@ -18,18 +18,18 @@ UserRouter.post(
     { name: "profiles", maxCount: 1 },
     { name: "document", maxCount: 1 },
   ]),
-  UserController.handlePremiumUpload
+  UserController.handleProfileUpload
 );
 
-// UserRouter.post(
-//   "/:uid/premium-documents",
-//   uploader.fields([
-//     { name: "identificationDocument", maxCount: 1 },
-//     { name: "domicileProofDocument", maxCount: 1 },
-//     { name: "accountStatementDocument", maxCount: 1 },
-//   ]),
-//   userController.uploadPremiumDocuments
-// );
+UserRouter.post(
+  "/premium/:uid",
+  uploader.fields([
+    { name: "identificationDocument", maxCount: 1 },
+    { name: "domicileProofDocument", maxCount: 1 },
+    { name: "accountStatementDocument", maxCount: 1 },
+  ]),
+  UserController.handleAddressProofUpload
+);
 
 // //AGREGAR AL CARRITO
 UserRouter.post("/:uid/products/:pid", UserController.agregaralCarritoUser);
