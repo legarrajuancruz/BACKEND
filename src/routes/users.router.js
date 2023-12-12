@@ -12,6 +12,7 @@ UserRouter.get("/:id", UserController.ControlgetUsersById);
 // //ELIMINAR POR ID
 // UserRouter.delete("/:id", UserController.getUsersById);
 
+//SUBIR DOCUMENTOS
 UserRouter.post(
   "/:uid/documents",
   uploader.fields([
@@ -21,6 +22,7 @@ UserRouter.post(
   UserController.handleProfileUpload
 );
 
+//SER PREMIUM
 UserRouter.post(
   "/premium/:uid",
   uploader.fields([
