@@ -19,7 +19,7 @@ const storage = multer.diskStorage({
       case "identificationDocument":
         folder = path.join(__dirname + "/uploads/documents");
         break;
-      case "domicileProofDocument":
+      case "domicileDocument":
         folder = path.join(__dirname + "/uploads/documents");
         break;
       case "accountStatementDocument":

@@ -179,18 +179,18 @@ const handleProfileUpload = async (req, res) => {
 /*====================================
     -  SUBIR COMPROBANTE DE DOMICILIO    -
     ====================================*/
-const handleAddressProofUpload = async (req, res) => {
+const handlePremium = async (req, res) => {
   try {
     const { uid } = req.body;
     const user = await US.getUserByID(uid);
     console.log(user);
 
     const identificationDocument = req.files["identificationDocument"][0];
-    const domicileProofDocument = req.files["domicileProofDocument"][0];
+    const domicileDocument = req.files["domicileDocument"][0];
     const accountStatementDocument = req.files["accountStatementDocument"][0];
 
     console.log("Identificación:", identificationDocument);
-    console.log("Comprobante de domicilio:", domicileProofDocument);
+    console.log("Comprobante de domicilio:", domicileDocument);
     console.log("Comprobante de estado de cuenta:", accountStatementDocument);
 
     // Asegúrate de que el array de documentos exista
@@ -208,9 +208,9 @@ const handleAddressProofUpload = async (req, res) => {
     });
 
     user.documents.push({
-      name: domicileProofDocument.originalname,
+      name: domicileDocument.originalname,
       reference: path.join(
-        `/uploads/domicileProofDocuments/${domicileProofDocument.filename}`
+        `/uploads/domicileDocument/${domicileDocument.filename}`
       ),
       status: "Uploaded",
     });
@@ -223,12 +223,17 @@ const handleAddressProofUpload = async (req, res) => {
       status: "Uploaded",
     });
 
+    user.role = "premium";
     await user.save();
 
-    res.status(202).send({
-      message: "Documentos subidos exitosamente",
-      user,
-    });
+    const script = `
+    <script>
+      alert('Ahora ere user PREMIUM');
+      window.location.href = '/users/login'; 
+    </script>
+  `;
+
+    res.send(script);
   } catch (error) {
     console.error("Error al procesar la subida de documentos", error);
     res.status(500).send("Error interno del servidor");
@@ -242,5 +247,5 @@ export default {
   resetPassword,
   nuevaPassword,
   handleProfileUpload,
-  handleAddressProofUpload,
+  handlePremium,
 };

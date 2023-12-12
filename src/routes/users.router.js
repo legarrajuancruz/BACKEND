@@ -27,10 +27,10 @@ UserRouter.post(
   "/premium/:uid",
   uploader.fields([
     { name: "identificationDocument", maxCount: 1 },
-    { name: "domicileProofDocument", maxCount: 1 },
+    { name: "domicileDocument", maxCount: 1 },
     { name: "accountStatementDocument", maxCount: 1 },
   ]),
-  UserController.handleAddressProofUpload
+  UserController.handlePremium
 );
 
 // //AGREGAR AL CARRITO
