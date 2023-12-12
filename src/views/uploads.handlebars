@@ -1,92 +1,37 @@
 <div class="container">
   <div class="row">
     <div class="col-md-8 mx-auto">
-      <form
-        action="/api/users/{{userId}}/documents"
-        id="uploadForm"
-        target="_blank"
-        method="post"
-        enctype="multipart/form-data"
-      >
-        <h3 class="mb-4">UPLOADS USERS</h3>
-        <div>
+      <h1 class="mb-4">PREMIUM</h1>
+      <div>
+        <form
+          action="/api/users/{{user._id}}/documents"
+          method="post"
+          enctype="multipart/form-data"
+        >
+          <input type="hidden" name="uid" value="{{user._id}}" />
+          <h4>Subir archivos</h4>
           <div class="mb-3">
-            <label for="profileImage" class="form-label">Imagen de perfil:</label>
+            <label for="profileImage">Imagen de perfil:</label>
             <input
               type="file"
               name="profiles"
               id="profileImage"
               accept="image/*"
+              required
             />
           </div>
+
           <div class="mb-3">
-            <label for="productImage" class="form-label">Imagen de producto:</label>
-            <input
-              type="file"
-              name="products"
-              id="productImage"
-              accept="image/*"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="document" class="form-label">Documento:</label>
+            <label for="document">Documento:</label>
             <input
               type="file"
               name="document"
               id="document"
-              accept=".pdf,.doc,.docx"
+              accept=".pdf, .doc, .docx"
+              required
             />
           </div>
-          <button type="submit" class="btn btn-light m-4">Enviar</button>
-        </div>
-      </form>
-      <div id="uploadMessage"></div>
-      <form
-        action="/api/users/{{userId}}/premium-documents"
-        id="uploadPremiumForm"
-        method="post"
-        enctype="multipart/form-data"
-      >
-        <h3 class="mb-4">UPLOAD PREMIUM DATA</h3>
-        <div>
-          <div class="mb-3">
-            <label
-              for="identificationDocument"
-              class="form-label"
-            >Identificacion</label>
-            <input
-              type="file"
-              name="identificationDocument"
-              id="identificationDocument"
-              accept="image/*, .pdf"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="domicileProofDocument" class="form-label">Comprobante de
-              domicilio</label>
-            <input
-              type="file"
-              name="domicileProofDocument"
-              id="domicileProofDocument"
-              accept="image/*, .pdf"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="accountStatementDocument" class="form-label">Comprobante
-              de estado de cuenta</label>
-            <input
-              type="file"
-              name="accountStatementDocument"
-              id="accountStatementDocument"
-              accept="image/*, .pdf"
-            />
-          </div>
-          <button type="submit" class="btn btn-light m-4">Enviar</button>
-        </div>
-      </form>
-      <div id="uploadPremiumMessage">
-        <form action="/api/users/premium/{{userId}}" method="post">
-          <div><button class="btn btn-light m-3" type="submit">Hazte Premium</button></div>
+          <button type="submit" class="btn btn-primary m-4">Hazte Premium</button>
         </form>
       </div>
     </div>

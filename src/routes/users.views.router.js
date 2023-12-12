@@ -39,12 +39,12 @@ userRouter.get("/profile", (req, res) => {
 });
 
 userRouter.get(
-  "/premium",
+  "/uploads",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const user = req.user;
     if (user.role === "user") {
-      res.render("premium", { user });
+      res.render("uploads", { user });
     } else {
       res.render("error");
     }
