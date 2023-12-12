@@ -16,6 +16,15 @@ const storage = multer.diskStorage({
     // Determina el tipo de archivo y configura la carpeta correspondiente
     let folder;
     switch (file.fieldname) {
+      case "identificationDocument":
+        folder = path.join(__dirname + "/uploads/documents");
+        break;
+      case "domicileProofDocument":
+        folder = path.join(__dirname + "/uploads/documents");
+        break;
+      case "accountStatementDocument":
+        folder = path.join(__dirname + "/uploads/documents");
+        break;
       case "profiles":
         folder = path.join(__dirname + "/uploads/profiles");
         break;

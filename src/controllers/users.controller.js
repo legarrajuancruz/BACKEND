@@ -185,20 +185,40 @@ const handleAddressProofUpload = async (req, res) => {
     const user = await US.getUserByID(uid);
     console.log(user);
 
-    const addressProofFile = req.files["addressProof"][0];
+    const identificationDocument = req.files["identificationDocument"][0];
+    const domicileProofDocument = req.files["domicileProofDocument"][0];
+    const accountStatementDocument = req.files["accountStatementDocument"][0];
 
-    console.log("Comprobante de domicilio:", addressProofFile);
+    console.log("Identificación:", identificationDocument);
+    console.log("Comprobante de domicilio:", domicileProofDocument);
+    console.log("Comprobante de estado de cuenta:", accountStatementDocument);
 
     // Asegúrate de que el array de documentos exista
     if (!user.documents) {
       user.documents = [];
     }
 
-    // Actualiza el estado del comprobante de domicilio en el modelo del usuario
+    // Actualiza el estado de los documentos en el modelo del usuario
     user.documents.push({
-      name: addressProofFile.originalname,
+      name: identificationDocument.originalname,
       reference: path.join(
-        `/uploads/addressProof/${addressProofFile.filename}`
+        `/uploads/identificationDocuments/${identificationDocument.filename}`
+      ),
+      status: "Uploaded",
+    });
+
+    user.documents.push({
+      name: domicileProofDocument.originalname,
+      reference: path.join(
+        `/uploads/domicileProofDocuments/${domicileProofDocument.filename}`
+      ),
+      status: "Uploaded",
+    });
+
+    user.documents.push({
+      name: accountStatementDocument.originalname,
+      reference: path.join(
+        `/uploads/accountStatementDocuments/${accountStatementDocument.filename}`
       ),
       status: "Uploaded",
     });
@@ -206,15 +226,14 @@ const handleAddressProofUpload = async (req, res) => {
     await user.save();
 
     res.status(202).send({
-      message: "Comprobante de domicilio subido exitosamente",
+      message: "Documentos subidos exitosamente",
       user,
     });
   } catch (error) {
-    console.error("Error al procesar la subida de archivos", error);
+    console.error("Error al procesar la subida de documentos", error);
     res.status(500).send("Error interno del servidor");
   }
 };
-
 export default {
   leerUsuarios,
   ControlgetUsersById,
