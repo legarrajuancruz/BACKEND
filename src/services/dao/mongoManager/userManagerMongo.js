@@ -81,18 +81,12 @@ export default class UserService {
   addProductToCart = async (uid, obj) => {
     try {
       const { _id, quantity } = obj;
-      console.log("OBJ");
-      console.log(obj);
       const filter = { _id: uid, "products._id": _id };
       const userCart = await userModel.findById(uid);
-      console.log("CARRITO USUARIO");
-      console.log(userCart);
 
       const findProduct = userCart.products.some(
         (product) => product._id.toString() === _id.toString()
       );
-      console.log("SOME");
-      console.log(findProduct);
 
       if (findProduct) {
         console.log("ENCONTRO PRODUCTO");
@@ -100,6 +94,7 @@ export default class UserService {
         const update = { $inc: { "products.$.quantity": quantity } };
         await userModel.updateOne(filter, update);
       } else {
+        console.log("NO ENCONTRO PRODUCTO");
         const update = {
           $push: { products: { _id: obj._id, quantity: quantity } },
         };
