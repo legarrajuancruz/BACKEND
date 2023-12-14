@@ -57,10 +57,8 @@ const agregaralCarritoUser = async (req, res) => {
 
     const quantity = 1;
 
-    let producto = await PS.getProductbyId(pid);
-
-    let modificado = await US.addProductToCart(uid.toString(), {
-      _id: producto,
+    let modificado = await US.addProductToCart(uid, {
+      _id: pid,
       quantity: quantity,
     });
 
