@@ -47,14 +47,9 @@ const ControlgetUsersById = async (req, res) => {
   ==========================*/
 const agregaralCarritoUser = async (req, res) => {
   try {
-    let agregar = req.body;
+    let agregarProducto = req.body;
 
-    let { uid, pid } = agregar;
-
-    console.log("DENTRO DE CONTROLADOR");
-    console.log(uid);
-    console.log(pid);
-
+    let { uid, pid } = agregarProducto;
     const quantity = 1;
 
     let modificado = await US.addProductToCart(uid, {
