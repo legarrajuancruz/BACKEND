@@ -113,13 +113,18 @@ export default class UserService {
     try {
       console.log("VACIANDO CARRITO");
       console.log(_id);
-      const user = await userModel.updateOne({ _id: _id, products: [] });
 
-      console.log(user.products);
+      const user = await userModel.updateOne(
+        { _id: _id },
+        { $set: { products: [] } }
+      );
+
+      console.log(user);
 
       return user;
     } catch (error) {
       console.error("No se pudo vaciar el carrito", error);
+      throw error;
     }
   };
 

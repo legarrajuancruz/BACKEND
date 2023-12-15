@@ -66,7 +66,7 @@ const agregaralCarritoUser = async (req, res) => {
       "No se pudo actualizar carrito usuario con mongoose:" + error
     );
     res.status(500).send({
-      error: "No se pudo actualizar el carrito usuario con mongoose",
+      error: "Error en el servidor",
       message: error,
     });
   }
