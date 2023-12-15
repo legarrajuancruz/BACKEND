@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 const collectionName = "Carts";
 
 const cartsSchema = new mongoose.Schema({
+  usuario: String,
   products: [
     {
       product: {

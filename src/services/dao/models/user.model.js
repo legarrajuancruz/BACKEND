@@ -48,7 +48,7 @@ const userSchema = new mongoose.Schema({
       status: { type: String, default: "Pending" },
     },
   ],
-  carritoUsuario: {
+  cart: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Carts",
   },
@@ -60,10 +60,6 @@ userSchema.pre("findOne", function () {
 
 userSchema.pre("findOne", function () {
   this.populate("orders.ticket");
-});
-
-userSchema.pre("findOne", function () {
-  this.populate("carritoUsuario.Carts");
 });
 
 const userModel = mongoose.model(collection, userSchema);

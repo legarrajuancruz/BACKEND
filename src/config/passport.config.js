@@ -150,11 +150,14 @@ const initializedPassport = () => {
             const usuarioCreado = await US.crearUsuario(usuarioNuevo);
 
             // Crear un nuevo carrito asociado al usuario
-            const carritoUsuario = await CartsModel.create({ products: [] });
+            const cart = await CartsModel.create({
+              usuario: usuarioNuevo.email,
+              products: [],
+            });
 
             // Asignar el ID del carrito al usuario
             await userModel.findByIdAndUpdate(usuarioCreado._id, {
-              cart: carritoUsuario._id,
+              cart: cart._id,
             });
 
             return done(null, usuarioCreado);
@@ -164,11 +167,14 @@ const initializedPassport = () => {
           const usuarioCreado = await US.crearUsuario(usuarioNuevo);
 
           // Crear un nuevo carrito asociado al usuario
-          const carritoUsuario = await CartsModel.create({ products: [] });
+          const cart = await CartsModel.create({
+            usuario: usuarioNuevo.email,
+            products: [],
+          });
 
           // Asignar el ID del carrito al usuario
           await userModel.findByIdAndUpdate(usuarioCreado._id, {
-            carritoUsuario: carritoUsuario._id,
+            cart: cart._id,
           });
 
           return done(null, usuarioCreado);
