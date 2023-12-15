@@ -1,12 +1,12 @@
 import passport from "passport";
 import passportLocal from "passport-local";
-//import userModel from "../services/dao/models/user.model.js";
+import userModel from "../services/dao/models/user.model.js";
+import { CartsModel } from "../services/dao/models/carts.model.js";
 import GitHubStrategy from "passport-github2";
 import { createHash, isValidPassword } from "../utils.js";
 import jwtStrategy from "passport-jwt";
 import { PRIVATE_KEY } from "../utils.js";
 import UserService from "../services/dao/mongoManager/userManagerMongo.js";
-import { cartService } from "../services/factory.js";
 
 const US = new UserService();
 
@@ -116,7 +116,7 @@ const initializedPassport = () => {
     )
   );
 
-  //REGISTER
+  // REGISTER
   passport.use(
     "register",
     new localStrategy(
@@ -141,30 +141,44 @@ const initializedPassport = () => {
             password,
           };
 
-          if (usuarioNuevo.password === "adminCod3r123") {
+          if (
+            usuarioNuevo.password === "adminCod3r123" ||
+            usuarioNuevo.password === "premium"
+          ) {
             usuarioNuevo.password = createHash(password);
 
-            const result = await US.crearUsuario(usuarioNuevo);
-            return done(null, result);
-          }
-          if (usuarioNuevo.password === "premium") {
-            usuarioNuevo.password = createHash(password);
+            const usuarioCreado = await US.crearUsuario(usuarioNuevo);
 
-            const result = await US.crearUsuario(usuarioNuevo);
-            return done(null, result);
+            // Crear un nuevo carrito asociado al usuario
+            const carritoUsuario = await CartsModel.create({ products: [] });
+
+            // Asignar el ID del carrito al usuario
+            await userModel.findByIdAndUpdate(usuarioCreado._id, {
+              cart: carritoUsuario._id,
+            });
+
+            return done(null, usuarioCreado);
           }
+
           usuarioNuevo.password = createHash(password);
-          const result = await US.crearUsuario(usuarioNuevo);
+          const usuarioCreado = await US.crearUsuario(usuarioNuevo);
 
-          return done(null, result);
+          // Crear un nuevo carrito asociado al usuario
+          const carritoUsuario = await CartsModel.create({ products: [] });
+
+          // Asignar el ID del carrito al usuario
+          await userModel.findByIdAndUpdate(usuarioCreado._id, {
+            cart: carritoUsuario._id,
+          });
+
+          return done(null, usuarioCreado);
         } catch (error) {
-          return;
+          console.error("Error registrando al usuario", error);
           done("Error registrando al usuario" + error);
         }
       }
     )
   );
-
   /*=====================================
   |    Serializacion y Dessealizacion    |
   ======================================*/
