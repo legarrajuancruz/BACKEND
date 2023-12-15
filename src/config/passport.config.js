@@ -168,7 +168,7 @@ const initializedPassport = () => {
 
           // Asignar el ID del carrito al usuario
           await userModel.findByIdAndUpdate(usuarioCreado._id, {
-            cart: carritoUsuario._id,
+            carritoUsuario: carritoUsuario._id,
           });
 
           return done(null, usuarioCreado);
