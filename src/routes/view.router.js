@@ -5,6 +5,8 @@ import ProductManager from "../services/dao/mongoManager/productManagerMongo.js"
 import CartService from "../services/dao/mongoManager/cartManagerMongo.js";
 import UserService from "../services/dao/mongoManager/userManagerMongo.js";
 
+import { CartsModel } from "../services/dao/models/carts.model.js";
+
 const router = express.Router();
 
 const products = new ProductManager();
@@ -60,6 +62,7 @@ router.get(
   async (req, res) => {
     const _id = req.user.cart;
     let userCart = await carts.getCartsById(_id);
+    console.log("USER CART");
     console.log(userCart);
     res.render("carts", { userCart });
   }

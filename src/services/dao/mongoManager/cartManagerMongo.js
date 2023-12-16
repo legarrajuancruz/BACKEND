@@ -29,6 +29,26 @@ class CartService {
   ==================*/
   getCartsById = async (id) => {
     const cart = await CartsModel.findById(id);
+    if (cart) {
+      const productsDetails = await Promise.all(
+        cart.products.map(async (product) => {
+          const productDetails = await PS.getProductbyId(product._id);
+          return {
+            _id: productDetails._id,
+            quantity: product.quantity,
+            product: {
+              title: productDetails.title,
+              price: productDetails.price,
+              category: productDetails.category,
+              img: productDetails.img,
+            },
+          };
+        })
+      );
+
+      cart.products = productsDetails;
+    }
+
     return cart;
   };
 

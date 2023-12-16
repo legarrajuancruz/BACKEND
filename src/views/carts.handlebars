@@ -12,16 +12,9 @@
             <div class="card mb-4">
               <div class="card-body">
                 <h5 class="card-title">Producto: <span>{{this._id}}</span></h5>
-                <img
-                  src={{this.product.img}}
-                  alt="Producto"
-                  style="width: 90%;"
-                />
+                <img src={{product.img}} alt="Producto" style="width: 20%;" />
                 <h6 class="card-subtitle mb-2 text-muted">Cantidad:
                   {{this.quantity}}</h6>
-                <h6
-                  class="card-subtitle mb-2 text-muted"
-                >Price:{{this.price}}</h6>
                 <button
                   onclick="eliminar(this)"
                   data-id="{{this.id}}"

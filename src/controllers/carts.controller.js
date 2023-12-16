@@ -69,26 +69,10 @@ const getCartsById = async (req, res) => {
     console.log(_id);
 
     let carritoId = await cartService.getCartsById({ _id });
-
-    //-->
-    carritoId.products = await Promise.all(
-      carritoId.products.map(async (product) => {
-        const productDetails = await productService.getProductbyId(product._id);
-        return {
-          _id: productDetails._id,
-          quantity: product.quantity,
-          title: productDetails.title,
-          price: productDetails.price,
-          category: productDetails.category,
-          img: productDetails.img,
-        };
-      })
-    );
     console.log(carritoId);
-
     res.status(202).send({
       result: "Carrito obtenido con exito",
-      carrito: carritoId,
+      carrito: [carritoId],
     });
   } catch (error) {
     console.error("No se pudo obtener carrito con mongoose:" + error);
