@@ -17,35 +17,30 @@ const addCart = async (req, res) => {
       .send({ error: error, message: "No se pudo guardar el Carrito." });
   }
 };
-/*========================
-  -   GET Carts details  -
-  =======================*/
-const getProductsDetails = async (products) => {
-  return Promise.all(
-    products.map(async (product) => {
-      const productDetails = await productService.getProductbyId(product._id);
-      return {
-        _id: productDetails._id,
-        quantity: product.quantity,
-        title: productDetails.title,
-        price: productDetails.price,
-        category: productDetails.category,
-        img: productDetails.img,
-      };
-    })
-  );
-};
-
 /*==============
   -   GET Carts  -
   ===============*/
 const getCarts = async (req, res) => {
   try {
-    const allCarts = await cartService.getCarts();
+    let allCarts = await cartService.getCarts();
 
     const response = await Promise.all(
       allCarts.map(async (carrito) => {
-        const productsDetails = await getProductsDetails(carrito.products);
+        const productsDetails = await Promise.all(
+          carrito.products.map(async (product) => {
+            const productDetails = await productService.getProductbyId(
+              product._id
+            );
+            return {
+              _id: productDetails._id,
+              quantity: product.quantity,
+              title: productDetails.title,
+              price: productDetails.price,
+              category: productDetails.category,
+              img: productDetails.img,
+            };
+          })
+        );
         return {
           _id: carrito._id,
           usuario: carrito.usuario,
@@ -53,7 +48,6 @@ const getCarts = async (req, res) => {
         };
       })
     );
-
     res.status(202).send({
       result: "Carrito obtenido con exito",
       Carritos: response,
