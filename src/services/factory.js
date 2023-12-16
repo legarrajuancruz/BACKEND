@@ -14,18 +14,22 @@ async function initMongoDB() {
     );
     productService = new productMONGO();
     console.log("Servicio de persistencia de productos en MongoDB");
+
     ////////////////////
+
     const { default: cartMONGO } = await import(
       "./dao/mongoManager/cartManagerMongo.js"
     );
     cartService = new cartMONGO();
     console.log("Servicio de persistencia de productos en MongoDB");
+
     ////////////////////
+
     const { default: userMONGO } = await import(
       "./dao/mongoManager/userManagerMongo.js"
     );
     userService = new userMONGO();
-    console.log("Servicio de persistencia de productos en MongoDB");
+    console.log("Servicio de persistencia de usuarios en MongoDB");
   } catch (error) {
     console.error("Error al iniciar mongoDB", error);
     process.exit(1);
@@ -49,7 +53,7 @@ switch (config.persistence) {
     console.log("Servicio de persistencia de productos en FileSystem");
 
     const { default: userFS } = await import("./dao/fileSystem/userManager.js");
-    cartService = new userFS();
+    userService = new userFS();
     console.log("Servicio de persistencia de usuarios en FileSystem");
 
     break;
