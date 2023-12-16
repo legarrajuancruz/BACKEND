@@ -42,36 +42,6 @@ const ControlgetUsersById = async (req, res) => {
   }
 };
 
-/*==========================
-  -   ADD Products to Cart   -
-  ==========================*/
-const agregaralCarritoUser = async (req, res) => {
-  try {
-    let agregarProducto = req.body;
-
-    let { uid, pid } = agregarProducto;
-    const quantity = 1;
-
-    let modificado = await US.addProductToCart(uid, {
-      _id: pid,
-      quantity: quantity,
-    });
-
-    res.status(202).send({
-      result: "Carrito Usuario modificado con exito",
-      usuario: modificado,
-    });
-  } catch (error) {
-    console.error(
-      "No se pudo actualizar carrito usuario con mongoose:" + error
-    );
-    res.status(500).send({
-      error: "Error en el servidor",
-      message: error,
-    });
-  }
-};
-
 const updateUser = async (filter, value) => {
   let result = await UserService.updateOne(filter, value);
   return result;
@@ -241,7 +211,6 @@ const handlePremium = async (req, res) => {
 export default {
   leerUsuarios,
   ControlgetUsersById,
-  agregaralCarritoUser,
   updateUser,
   resetPassword,
   nuevaPassword,

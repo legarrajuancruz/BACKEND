@@ -33,9 +33,6 @@ UserRouter.post(
   UserController.handlePremium
 );
 
-// //AGREGAR AL CARRITO
-UserRouter.post("/:uid/products/:pid", UserController.agregaralCarritoUser);
-
 UserRouter.post("/cambiarPassword", UserController.resetPassword);
 UserRouter.post("/nuevaPassord", UserController.nuevaPassword);
 

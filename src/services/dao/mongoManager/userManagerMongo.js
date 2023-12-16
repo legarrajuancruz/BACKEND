@@ -75,38 +75,6 @@ class UserService {
   };
 
   /*==========================
-  -   ADD Products to Cart   -
-  ==========================*/
-
-  addProductToCart = async (uid, obj) => {
-    try {
-      const { _id, quantity } = obj;
-      const filter = { _id: uid, "products._id": _id };
-      const userCart = await userModel.findById(uid);
-
-      const findProduct = userCart.products.some(
-        (product) => product._id.toString() === _id.toString()
-      );
-
-      if (findProduct) {
-        console.log("ENCONTRO PRODUCTO");
-        quantity + 1;
-        const update = { $inc: { "products.$.quantity": quantity } };
-        await userModel.updateOne(filter, update);
-      } else {
-        console.log("NO ENCONTRO PRODUCTO");
-        const update = {
-          $push: { products: { _id: obj._id, quantity: quantity } },
-        };
-        await userModel.updateOne({ _id: uid }, update);
-      }
-      return await userModel.findById(uid);
-    } catch (error) {
-      console.error(`Error al agregar  el producto al carrito`, error.nessage);
-    }
-  };
-
-  /*==========================
   -      VACIAR CARRITO      -
   ==========================*/
   vaciarCarrito = async (_id) => {
