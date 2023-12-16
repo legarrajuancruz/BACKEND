@@ -1,4 +1,8 @@
-import { productService, cartService } from "../services/factory.js";
+import {
+  productService,
+  cartService,
+  userService,
+} from "../services/factory.js";
 
 /*===============
   -   ADD Carts   -
@@ -86,10 +90,11 @@ const deleteCartById = async (req, res) => {
   ==========================*/
 const addProductsToCart = async (req, res) => {
   try {
-    let cid = req.params.cid;
-    const { quantity } = req.body;
+    //let cid = req.params.cid;
+    //const pid = req.params.pid;
+    const { uid, pid, quantity } = req.body;
 
-    const pid = req.params.pid;
+    let cid = await userService.getUserByID;
 
     let producto = await productService.getProductbyId(pid);
 

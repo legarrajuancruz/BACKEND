@@ -3,6 +3,7 @@ import singleton from "../config/singleton.js";
 
 let productService;
 let cartService;
+let userService;
 
 async function initMongoDB() {
   try {
@@ -18,6 +19,12 @@ async function initMongoDB() {
       "./dao/mongoManager/cartManagerMongo.js"
     );
     cartService = new cartMONGO();
+    console.log("Servicio de persistencia de productos en MongoDB");
+    ////////////////////
+    const { default: userMONGO } = await import(
+      "./dao/mongoManager/userManagerMongo.js"
+    );
+    userService = new userMONGO();
     console.log("Servicio de persistencia de productos en MongoDB");
   } catch (error) {
     console.error("Error al iniciar mongoDB", error);
@@ -41,6 +48,10 @@ switch (config.persistence) {
     cartService = new cartFS();
     console.log("Servicio de persistencia de productos en FileSystem");
 
+    const { default: userFS } = await import("./dao/fileSystem/userManager.js");
+    cartService = new userFS();
+    console.log("Servicio de persistencia de usuarios en FileSystem");
+
     break;
 
   default:
@@ -48,4 +59,4 @@ switch (config.persistence) {
     process.exit(1);
 }
 
-export { productService, cartService };
+export { productService, cartService, userService };
