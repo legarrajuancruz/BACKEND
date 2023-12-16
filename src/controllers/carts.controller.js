@@ -86,9 +86,9 @@ const deleteCartById = async (req, res) => {
   ==========================*/
 const addProductsToCart = async (req, res) => {
   try {
-    let cid = req.params.cid || req.body.cid;
+    let cid = req.params.cid;
+    const pid = req.params.pid;
     const { quantity } = req.body;
-    const pid = req.params.pid || req.body.cid;
 
     let producto = await productService.getProductbyId(pid);
 

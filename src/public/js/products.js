@@ -2,9 +2,6 @@ function agregar(button) {
   const cid = document.getElementById("userID").textContent;
   const pid = button.getAttribute("data-id");
 
-  console.log(cid);
-  console.log(pid);
-
   const queryParams = `?cid=${cid}&pid=${pid}`;
   const requestBody = { quantity: 1 };
 
