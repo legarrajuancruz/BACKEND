@@ -9,7 +9,7 @@ import config from "../../../config/config.js";
 import nodemailer from "nodemailer";
 import crypto from "crypto";
 
-export default class UserService {
+class UserService {
   constructor() {
     console.log("Users with Database persistence in mongodb");
   }
@@ -234,3 +234,5 @@ export default class UserService {
     }
   };
 }
+
+export default UserService;

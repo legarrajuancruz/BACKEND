@@ -32,6 +32,7 @@ const JWT = async (req, res) => {
       email: user.email,
       age: user.age,
       role: user.role,
+      cart: user.cart,
       last_connection: user.last_connection,
     };
     const access_Token = generateJWToken(tokenUser);

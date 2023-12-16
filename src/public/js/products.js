@@ -1,19 +1,19 @@
 function agregar(button) {
-  const uid = document.getElementById("userID").textContent;
+  const cid = document.getElementById("userID").textContent;
   const pid = button.getAttribute("data-id");
 
-  console.log(uid);
+  console.log(cid);
   console.log(pid);
 
-  const agregar = { uid, pid };
-  console.log(agregar);
+  const queryParams = `?cid=${cid}&pid=${pid}`;
+  const requestBody = { quantity: 1 };
 
-  fetch(`/api/users/${uid}/products/${pid}`, {
+  fetch(`/api/carts/${cid}/products/${pid}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(agregar),
+    body: JSON.stringify(requestBody),
   })
     .then((response) => {
       if (!response.ok) {
