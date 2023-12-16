@@ -3,7 +3,6 @@ import passport from "passport";
 
 import ProductManager from "../services/dao/mongoManager/productManagerMongo.js";
 import CartService from "../services/dao/mongoManager/cartManagerMongo.js";
-import userService from "../services/dao/mongoManager/userManagerMongo.js";
 import UserService from "../services/dao/mongoManager/userManagerMongo.js";
 
 const router = express.Router();
@@ -61,6 +60,7 @@ router.get(
   async (req, res) => {
     const _id = req.user.cart;
     let userCart = await carts.getCartsById(_id);
+    console.log(userCart);
     res.render("carts", { userCart });
   }
 );
