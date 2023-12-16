@@ -59,8 +59,8 @@ router.get(
   "/carts",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    const _id = req.user._id;
-    let userCart = await user.getUserByID(_id);
+    const _id = req.user.cart;
+    let userCart = await carts.getCartsById(_id);
     res.render("carts", { userCart });
   }
 );

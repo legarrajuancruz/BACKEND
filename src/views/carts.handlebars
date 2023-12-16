@@ -2,23 +2,44 @@
   <div class="productos">
 
     <h2>Carrito de compras</h2>
-    
-    <div class="column">      
-        <div id="listadoCarritos">          
-          <h3 id="userID">{{userCart._id}}</h3>         
-          </br>
-            <div >
-                {{#each userCart.products}}
-                <h5>Producto: <span>{{this._id}}</span><h5/>                           
-                <h5>Cantidad: {{this.quantity}}<h5/>
-                </br>
-                {{/each}}
-            </div>        
-                  <button onclick="agregar(this)"  class="btn btn-primary"
-          id="btnLogin">TERMINAR COMPRA</button>
+
+    <div class="column">
+      <div id="listadoCarritos">
+        <h3 style="display:" hidden="userID">{{userCart._id}}</h3>
+        <br />
+        <div>
+          {{#each userCart.products}}
+            <div class="card mb-4">
+              <div class="card-body">
+                <h5 class="card-title">Producto: <span>{{this._id}}</span></h5>
+                <img
+                  src={{this.product.img}}
+                  alt="Producto"
+                  style="width: 80%;"
+                />
+                <h6 class="card-subtitle mb-2 text-muted">Cantidad:
+                  {{this.quantity}}</h6>
+                <h6
+                  class="card-subtitle mb-2 text-muted"
+                >Price:{{this.product.price}}</h6>
+                <button
+                  onclick="eliminar(this)"
+                  data-id="{{this.id}}"
+                  class="btn btn-danger"
+                >Eliminar</button>
+              </div>
+            </div>
+          {{/each}}
         </div>
-      
+        <button
+          onclick="terminarCompra()"
+          class="btn btn-primary"
+          id="btnTerminarCompra"
+        >TERMINAR COMPRA</button>
+      </div>
+
       <br />
     </div>
   </div>
-  <script src="/js/comprar.js"></script>
+</div>
+<script src="/js/comprar.js"></script>
