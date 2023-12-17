@@ -62,8 +62,6 @@ router.get(
   async (req, res) => {
     const _id = req.user.cart;
     let userCart = await carts.getCartsById(_id);
-    console.log("USER CART");
-    console.log(userCart);
     res.render("carts", { userCart });
   }
 );

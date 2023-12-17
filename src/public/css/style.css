@@ -38,20 +38,17 @@ span {
   margin-bottom: 2%;
   margin-left: 2%;
   border: 2px dotted grey;
-  object-fit: cover;
 }
 
 #listadoCarritos {
   font-size: 12px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   width: 650px;
   height: auto;
-  margin-top: 2%;
-  margin-bottom: 2%;
-  margin-left: 2%;
+  padding: 0 20 20 20;
   border: 2px dotted grey;
 }
 

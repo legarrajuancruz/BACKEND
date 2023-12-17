@@ -1,38 +1,40 @@
 <div class="container">
   <div class="productos">
 
-    <h2>Carrito de compras</h2>
+    <h2 class="mb-4">Carrito de compras</h2>
 
-    <div class="column">
-      <div id="listadoCarritos">
-        <h3 style="display:" hidden="userID">{{userCart._id}}</h3>
-        <br />
-        <div>
-          {{#each userCart.products}}
-            <div class="card mb-4">
-              <div class="card-body">
-                <h5 class="card-title">Producto: <span>{{this._id}}</span></h5>
-                <img src={{product.img}} alt="Producto" style="width: 20%;" />
-                <h6 class="card-subtitle mb-2 text-muted">Cantidad:
-                  {{this.quantity}}</h6>
+    <div id="listadoCarritos" class="mb-4">
+      <h3 style="display:" hidden="userID">{{userCart._id}}</h3>
+      <br />
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {{#each userCart.products}}
+          <div class="col mb-4">
+            <div class="card h-100">
+              <img src="{{product.img}}" class="card-img-top" alt="Producto" />
+              <div
+                class="card-body text-center d-flex flex-column justify-content-between p-3"
+              >
+                <div>
+                  <h5 class="card-title">{{product.title}}</h5>
+                  <p class="card-text">Cantidad: {{this.quantity}}</p>
+                </div>
                 <button
                   onclick="eliminar(this)"
                   data-id="{{this.id}}"
-                  class="btn btn-danger"
+                  class="btn btn-danger mt-2"
                 >Eliminar</button>
               </div>
             </div>
-          {{/each}}
-        </div>
-        <button
-          onclick="terminarCompra()"
-          class="btn btn-primary"
-          id="btnTerminarCompra"
-        >TERMINAR COMPRA</button>
+          </div>
+        {{/each}}
       </div>
-
-      <br />
+      <button
+        onclick="terminarCompra()"
+        class="btn btn-primary mt-4"
+        id="btnTerminarCompra"
+      >TERMINAR COMPRA</button>
     </div>
+
   </div>
 </div>
 <script src="/js/comprar.js"></script>
