@@ -4,7 +4,6 @@
     <h2 class="mb-4">Carrito de compras</h2>
 
     <div id="listadoCarritos" class="mb-4">
-      <h3 style="display:" hidden="userID">{{userCart._id}}</h3>
       <br />
       <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         {{#each userCart.products}}
@@ -28,11 +27,9 @@
           </div>
         {{/each}}
       </div>
-      <button
-        onclick="agregar('{{userCart._id}}')"
-        class="btn btn-primary mt-4"
-        id="btnTerminarCompra"
-      >TERMINAR COMPRA</button>
+      <input type="text" id="cartID" value="{{userCart._id}}" hidden />
+      <button class="btn btn-primary mt-4" id="btnTerminarCompra">TERMINAR
+        COMPRA</button>
     </div>
 
   </div>

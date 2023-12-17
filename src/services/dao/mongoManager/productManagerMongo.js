@@ -61,7 +61,10 @@ export default class ProductService {
   };
 
   getProductbyId = async (id) => {
-    return await ProductsModel.findById(id);
+    console.log("ID ENVIAOD");
+    console.log(id);
+    const product = await ProductsModel.findById(id);
+    return product;
   };
 
   borrarProducto = async (id) => {
