@@ -22,6 +22,8 @@ class UserService {
     console.log("GET USER BY ID");
     console.log(id);
     let usuarioEncontrado = await userModel.findById(id);
+    console.log("USUARIO ENCONTRADO EN getUserByID");
+    console.log(usuarioEncontrado);
     return usuarioEncontrado;
   };
 

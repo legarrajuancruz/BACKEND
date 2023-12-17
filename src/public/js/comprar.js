@@ -1,5 +1,4 @@
-function agregar(button) {
-  const uid = document.getElementById("userID").textContent;
+function agregar(uid) {
   console.log(uid);
 
   fetch(`/api/ticket/${uid}`, {
@@ -13,5 +12,5 @@ function agregar(button) {
     .catch((error) => {
       console.error("Error en la solicitud:", error);
     });
-  location.href = "/products";
+  // location.href = "/products";
 }

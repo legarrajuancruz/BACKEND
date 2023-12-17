@@ -1,8 +1,10 @@
 import TicketService from "../services/dao/mongoManager/ticketManagerMongo.js";
 import UserService from "../services/dao/mongoManager/userManagerMongo.js";
 import ProductService from "../services/dao/mongoManager/productManagerMongo.js";
+import CartService from "../services/dao/mongoManager/cartManagerMongo.js";
 
 const ticketService = new TicketService();
+const CS = new CartService();
 const US = new UserService();
 const PS = new ProductService();
 
@@ -26,9 +28,9 @@ export const getTicketById = async (req, res, next) => {
 };
 export const createTicket = async (req, res) => {
   try {
-    const _id = req.params.uid;
+    const _id = req.params.id;
 
-    const resultUser = await US.getUserByID({ _id });
+    const resultUser = await US.getUserByID(_id);
     console.log(" USUARIO ENCONTRADO");
     console.log(resultUser);
 
