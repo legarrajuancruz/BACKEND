@@ -9,9 +9,12 @@
       <h2>TODOS LOS PRODUCTOS</h2>
       <div class="row">
         {{#each Products.payload}}
-          <div class="col-md-4 mb-4">
-            <div class="card">
-              <img src="{{this.img}}" alt="Producto" style="width: 80%;" />
+          <div class="col-md-3 mb-4">
+            <div
+              class="card h-80 w-auto d-flex align-items-center justify-content-center"
+            >
+
+              <img src="{{this.img}}" alt="Producto" style="width: 50%;" />
               <div class="card-body">
                 <h3 class="card-title">{{this.title}}</h3>
                 <h4
@@ -21,8 +24,11 @@
                 <p>Precio: {{this.product.price}}</p>
                 <p>ID: {{this.id}}</p>
                 <p>Stock: {{this.stock}}</p>
-                <button onclick="agregar(this)" data-id="{{this.id}}">Agregar al
-                  carrito</button>
+                <button
+                  class="btn btn-primary"
+                  onclick="agregar(this)"
+                  data-id="{{this.id}}"
+                >Agregar al carrito</button>
               </div>
             </div>
           </div>
