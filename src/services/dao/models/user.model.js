@@ -20,15 +20,10 @@ const userSchema = new mongoose.Schema({
     default: "user",
     enum: ["user", "admin", "premium"],
   },
-  products: [
-    {
-      product: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "product",
-      },
-      quantity: { type: Number, default: 1 },
-    },
-  ],
+  cart: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Carts",
+  },
   orders: [
     {
       ticket: {
@@ -48,10 +43,6 @@ const userSchema = new mongoose.Schema({
       status: { type: String, default: "Pending" },
     },
   ],
-  cart: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Carts",
-  },
 });
 
 userSchema.pre("findOne", function () {
