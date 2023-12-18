@@ -12,7 +12,7 @@ const comprarItems = async () => {
     .catch((error) => {
       console.error("Error en la solicitud:", error);
     });
-  // location.href = "/products";
+  location.href = "/products";
 };
 
 document.getElementById("btnTerminarCompra").onclick = comprarItems;

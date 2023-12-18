@@ -72,28 +72,6 @@ class UserService {
     return user;
   };
 
-  /*==========================
-  -      VACIAR CARRITO      -
-  ==========================*/
-  vaciarCarrito = async (_id) => {
-    try {
-      console.log("VACIANDO CARRITO");
-      console.log(_id);
-
-      const user = await userModel.updateOne(
-        { _id: _id },
-        { $set: { products: [] } }
-      );
-
-      console.log(user);
-
-      return user;
-    } catch (error) {
-      console.error("No se pudo vaciar el carrito", error);
-      throw error;
-    }
-  };
-
   /*================================
   -   ENVIAR EMAIL RESET PASSWORD  -
   ================================*/
