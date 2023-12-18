@@ -139,6 +139,26 @@ class CartService {
       console.error(`Error al borrar  el producto del carrito`, error.nessage);
     }
   };
+
+  /*==========================
+  -      VACIAR CARRITO      -
+  ==========================*/
+  vaciarCarrito = async (_id) => {
+    try {
+      console.log("VACIANDO CARRITO");
+      console.log(_id);
+
+      const user = await CartsModel.updateOne(
+        { _id: _id },
+        { $set: { products: [] } }
+      );
+
+      return user;
+    } catch (error) {
+      console.error("No se pudo vaciar el carrito", error);
+      throw error;
+    }
+  };
 }
 
 export default CartService;

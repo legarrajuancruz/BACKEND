@@ -1,11 +1,11 @@
 const comprarItems = async () => {
-  let _id = document.getElementById("cartID").value;
-  console.log(_id);
+  let uid = document.getElementById("userID").value;
+  let cid = document.getElementById("cartID").value;
 
-  const response = await fetch(`/api/ticket/${_id}`, {
+  const response = await fetch(`/api/ticket/${uid}`, {
     method: "POST",
     headers: { "Content-type": "application/json; charset=UTF-8" },
-    body: JSON.stringify({ _id }),
+    body: JSON.stringify({ uid, cid }),
   })
     .then((response) => response.json())
     .then((data) => {})

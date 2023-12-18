@@ -61,8 +61,6 @@ export default class ProductService {
   };
 
   getProductbyId = async (id) => {
-    console.log("ID ENVIAOD");
-    console.log(id);
     const product = await ProductsModel.findById(id);
     return product;
   };
