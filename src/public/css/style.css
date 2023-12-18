@@ -25,6 +25,7 @@ span {
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
+  object-fit: cover;
 }
 
 #listadoProductos {
