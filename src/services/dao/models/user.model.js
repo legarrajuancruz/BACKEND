@@ -46,10 +46,6 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.pre("findOne", function () {
-  this.populate("products.product");
-});
-
-userSchema.pre("findOne", function () {
   this.populate("orders.ticket");
 });
 
