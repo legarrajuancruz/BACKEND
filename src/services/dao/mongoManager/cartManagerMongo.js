@@ -25,9 +25,9 @@ class CartService {
     return cart;
   };
 
-  /*================
-  -   GET Carts ID  -
-  ==================*/
+  /*====================
+  -   GET Carts by ID  -
+  ====================*/
   getCartsById = async (id) => {
     const cart = await CartsModel.findById(id);
     if (cart) {
@@ -53,9 +53,9 @@ class CartService {
     return cart;
   };
 
-  /*==================
-  -  DELETE CART ID  -
-  ==================*/
+  /*=====================
+  -  DELETE Cart by ID  -
+  =====================*/
   deleteCart = async (id) => {
     const result = await CartsModel.deleteOne(id);
     return result;
@@ -125,7 +125,6 @@ class CartService {
   /*=============================
   -   DELETE Products in Cart   -
   =============================*/
-
   deleteProductToCart = async (cid, pid) => {
     try {
       const cart = await CartsModel.findByIdAndUpdate(cid, {
