@@ -64,7 +64,6 @@ class CartService {
   /*==========================
   -   ADD Products to Cart   -
   ==========================*/
-
   addProductToCart = async (cid, obj) => {
     try {
       const { _id, quantity } = obj;
@@ -95,7 +94,6 @@ class CartService {
   /*===============================
   -   MODIFICAR Products en Cart  -
   ================================*/
-
   modificarProductInCart = async (cid, body) => {
     try {
       console.log(body);
