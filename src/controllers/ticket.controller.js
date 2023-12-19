@@ -33,12 +33,7 @@ export const createTicket = async (req, res) => {
     cid.toString();
 
     const resultUser = await US.getUserByID(uid);
-    console.log(" USARIO ENCONTRADO");
-    console.log(resultUser);
-
     const resultCart = await CS.getCartsById(cid);
-    console.log(" CARRITO ENCONTRADO");
-    console.log(resultCart.products);
 
     const outOfStock = [];
     const compraFinal = [];
@@ -55,7 +50,7 @@ export const createTicket = async (req, res) => {
       const idProduct = item.product._id;
       const productFinded = await PS.getProductbyId(item._id);
 
-      // SI NO HAY STOCK SE ALMACENA EN UN NUEVO ARRAY
+      //SI NO HAY STOCK SE ALMACENA EN UN NUEVO ARRAY
       if (item.quantity > productFinded.stock) {
         console.log("PRODUCTO SIN STOCK SUFICIENTE");
         console.log(productFinded);
@@ -72,11 +67,6 @@ export const createTicket = async (req, res) => {
       //SI HAY STOCK PASA A LA COMPRA FINAL
       compraFinal.push(productFinded);
     }
-    // console.log("COMPRA FINAL");
-    // console.log(compraFinal);
-
-    // console.log("SUB TOTAL");
-    // console.log(amount);
 
     //GENERAMOS ARRAY PARA CREAR
     let ticketNumber = Date.now() + Math.floor(Math.random() * 10000 + 1);
@@ -91,25 +81,24 @@ export const createTicket = async (req, res) => {
     console.log("TICKET");
     console.log(ticket);
 
-    // //SE AGREGA TICKET A COLECCION TICKETS
+    //SE AGREGA TICKET A COLECCION TICKETS
     const ticketResult = await ticketService.createTicket(ticket);
     const ticketId = ticketResult._id;
     const userId = resultUser._id;
 
-    // //SE AGREGA TICKET A ORDERS DE USER
+    //SE AGREGA TICKET A ORDERS DE USER
     const alta = await US.updateUser(userId, ticketId);
     console.log(alta);
 
-    // //SI SE TERMINO LA COMPRA VACIAR CARRITO
+    //SI SE TERMINO LA COMPRA VACIAR CARRITO
     const resetCart = await CS.vaciarCarrito(cid);
     console.log("SE VACIO EL CARRITO");
 
-    // //SI NO HAY STOCK DE UN PRODUCTO RETORNA AL CARRITO
+    //SI NO HAY STOCK DE UN PRODUCTO RETORNA AL CARRITO
     if (outOfStock.length > 0) {
       const alta = await CS.addProductToCart(resultCart, outOfStock);
       console.log(`Nohay stock suficiente de ${alta}`);
     }
-
     res.send({
       status: 200,
       payload: ticketResult,
