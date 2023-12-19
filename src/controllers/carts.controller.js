@@ -5,6 +5,8 @@ import { productService, cartService } from "../services/factory.js";
   ================*/
 const addCart = async (req, res) => {
   try {
+    const usuario = req.body;
+    console.log(usuario);
     let carritoNuevo = await cartService.addCarts();
     res.status(201).send({
       result: "Carrito creado con exito",

@@ -12,6 +12,7 @@ class CartService {
   -   ADD Carts   -
   ================*/
   addCarts = async (carritoNuevo) => {
+    console.log(carritoNuevo);
     let cart = await CartsModel.create(carritoNuevo);
     return cart;
   };

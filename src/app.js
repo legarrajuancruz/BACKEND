@@ -90,7 +90,7 @@ const swaggerOptions = {
   definition: {
     openapi: "3.0.1",
     info: {
-      title: "Documentancion API Adoptme",
+      title: "Documentancion API Supermarket",
       description: "Documentacion para uso de Swagger",
     },
   },
@@ -98,7 +98,6 @@ const swaggerOptions = {
 };
 
 const specs = swaggerJSDoc(swaggerOptions);
-app.use("/apidocs", swaggerUIExpress.serve, swaggerUIExpress.setup(specs));
 
 /*===============   
 |    SESSIONS   |
@@ -139,6 +138,7 @@ app.use("/github", githubLoginViewRouter);
 app.use("/api/jwt", jwtRouter);
 app.use("/api/email", emailRouter);
 app.use("/mockingproducts", ProductMockup);
+app.use("/apidocs", swaggerUIExpress.serve, swaggerUIExpress.setup(specs));
 app.use("/loggerTest", loggerRouter);
 
 /*================================

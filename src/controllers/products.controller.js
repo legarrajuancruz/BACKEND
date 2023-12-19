@@ -1,5 +1,5 @@
-import { productService } from "../services/factory.js";
-import userModel from "../services/dao/mongoManager/userManagerMongo.js";
+import { productService, userService } from "../services/factory.js";
+//import userService from "../services/dao/mongoManager/userManagerMongo.js";
 import { generateProducts } from "../utils.js";
 import mongoose from "mongoose";
 import EErrors from "../services/errors/errors-enum.js";
@@ -9,8 +9,6 @@ import {
   eliminateProductsErrorInfo,
   getProductByIdErrorInfo,
 } from "../services/errors/messages/products-creation-error.js";
-
-const US = new userModel();
 
 //CREAR
 const addProduct = async (req, res) => {
@@ -127,7 +125,7 @@ const deleteProduct = async (req, res) => {
     }
 
     let find = await productService.getProductbyId(_id);
-    let user = await US.getUserByID(uid);
+    let user = await userService.getUserByID(uid);
 
     console.log("ROL DE USUARIO");
     console.log(user.role);
