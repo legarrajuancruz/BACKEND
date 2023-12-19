@@ -105,12 +105,14 @@ export const createTicket = async (req, res) => {
     console.log("SE VACIO EL CARRITO");
 
     // //SI NO HAY STOCK DE UN PRODUCTO RETORNA AL CARRITO
-    // if (outOfStock.length > 0) {
-    //   const alta = await US.updateUser(userId, outOfStock);
-    // }
+    if (outOfStock.length > 0) {
+      const alta = await CS.addProductToCart(resultCart, outOfStock);
+      console.log(`Nohay stock suficiente de ${alta}`);
+    }
 
     res.send({
-      status: 200, //payload: ticketResult
+      status: 200,
+      payload: ticketResult,
     });
   } catch (error) {
     console.error(error);

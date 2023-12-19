@@ -20,6 +20,15 @@
     summary: Crea un nuevo carrito
     tags:
       - Cart
+    requestBody:
+      description: Datos del carrito a crear
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/definitions/CartInput"
+          example:
+            usuario: "Usuario Swagger"
     responses:
       "201":
         description: El carrito fue creado correctamente
@@ -31,7 +40,9 @@
                 _id:
                   type: string
                   description: ID autogenerado del carrito
-
+                usuario:
+                  type: string
+                  description: Nombre del titular del carrito
         "500":
           description: No se pudo guardar el Carrito
           content:
@@ -51,7 +62,7 @@
         description: ID del carrito
         schema:
           type: string
-          example: 655c2025b41ab710641a286f
+          example: 657bd35e1b953e67d7ee2dbd
     responses:
       "202":
         description: La operación fue exitosa! Retorna los detalles del carrito.
