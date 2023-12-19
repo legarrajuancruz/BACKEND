@@ -92,12 +92,11 @@ class CartService {
   };
 
   /*===============================
-  -   MODIFICAR Products en Cart  -
+  -   MODIFY Products in Cart  -
   ================================*/
   modificarProductInCart = async (cid, body) => {
     try {
       console.log(body);
-      //A partir de los datos, buscar por idx los productos para obtener su _id para generar el populate
       const arr = [];
       for (const item of body) {
         const object = await PS.getProductbyId(item._id);
@@ -123,9 +122,9 @@ class CartService {
     }
   };
 
-  /*==========================
-  -   DELETE Products to Cart   -
-  ==========================*/
+  /*=============================
+  -   DELETE Products in Cart   -
+  =============================*/
 
   deleteProductToCart = async (cid, pid) => {
     try {
@@ -139,8 +138,8 @@ class CartService {
     }
   };
 
-  /*==========================
-  -      VACIAR CARRITO      -
+  /*=========================
+  -    DROP ITEMS CART       -
   ==========================*/
   vaciarCarrito = async (_id) => {
     try {
