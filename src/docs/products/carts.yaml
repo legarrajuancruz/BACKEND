@@ -31,6 +31,7 @@
                 _id:
                   type: string
                   description: ID autogenerado del carrito
+
         "500":
           description: No se pudo guardar el Carrito
           content:
