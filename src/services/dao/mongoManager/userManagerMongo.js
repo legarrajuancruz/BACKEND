@@ -16,7 +16,7 @@ class UserService {
     console.log("Users with Database persistence in mongodb");
   }
   getUsers = async () => {
-    let users = await userModel.find();
+    let allUsers = await userModel.find();
     const simplifiedUsers = allUsers.map((user) => new usersDto(user));
     return simplifiedUsers;
   };
