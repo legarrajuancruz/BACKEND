@@ -1,18 +1,17 @@
 import path from "path";
-import UserService from "../services/dao/mongoManager/userManagerMongo.js";
-import CartService from "../services/dao/mongoManager/cartManagerMongo.js";
-import ProductService from "../services/dao/mongoManager/productManagerMongo.js";
 
-const US = new UserService();
-const PS = new ProductService();
-const CS = new CartService();
+import {
+  cartService,
+  productService,
+  userService,
+} from "../services/factory.js";
 
 /*===============
   -  GET USERS  -
   ==============*/
 const ControlgetUsers = async (req, res) => {
   try {
-    let users = await US.getUsers();
+    let users = await userService.getUsers();
 
     res.status(202).send({
       result: "Usuarios obtenidos con exito",
@@ -33,7 +32,7 @@ const ControlgetUsers = async (req, res) => {
 const ControlgetUsersById = async (req, res) => {
   try {
     const _id = req.params.id;
-    let user = await US.getUserByID(_id);
+    let user = await userService.getUserByID(_id);
 
     res.status(202).send({
       result: "Usuario obtenido con exito",
@@ -49,7 +48,7 @@ const ControlgetUsersById = async (req, res) => {
 };
 
 const updateUser = async (filter, value) => {
-  let result = await UserService.updateOne(filter, value);
+  let result = await userService.updateOne(filter, value);
   return result;
 };
 
@@ -60,7 +59,7 @@ const resetPassword = async (req, res) => {
   try {
     let userEmail = req.body;
 
-    await US.emailResetPassword(userEmail);
+    await userService.emailResetPassword(userEmail);
     res.status(201).send({ message: "email enviado con exito" });
   } catch (error) {
     console.error("No se pudo enviar el email con mongoose:" + error);
@@ -79,7 +78,7 @@ const nuevaPassword = async (req, res) => {
     let { nueva, confirmar, token } = req.body;
     console.log(req.body);
 
-    let modificado = await US.updatePassword(req.body, res);
+    let modificado = await userService.updatePassword(req.body, res);
 
     if (modificado.error) {
       return res.status(403).send({
@@ -108,7 +107,7 @@ const nuevaPassword = async (req, res) => {
 const handleProfileUpload = async (req, res) => {
   try {
     const { uid } = req.body;
-    let user = await US.getUserByID(uid);
+    let user = await userService.getUserByID(uid);
     console.log(user);
 
     const profileImage = req.files["profiles"][0];
@@ -157,7 +156,7 @@ const handleProfileUpload = async (req, res) => {
 const handlePremium = async (req, res) => {
   try {
     const { uid } = req.body;
-    const user = await US.getUserByID(uid);
+    const user = await userService.getUserByID(uid);
     console.log(user);
 
     const identificationDocument = req.files["identificationDocument"][0];
