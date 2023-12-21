@@ -7,7 +7,10 @@ const US = new UserService();
 const PS = new ProductService();
 const CS = new CartService();
 
-const getUsersController = async (req, res) => {
+/*===============
+  -  GET USERS  -
+  ==============*/
+const ControlgetUsers = async (req, res) => {
   try {
     let users = await US.getUsers();
 
@@ -24,6 +27,9 @@ const getUsersController = async (req, res) => {
   }
 };
 
+/*=====================
+  -  GET USERS by ID  -
+  ===================*/
 const ControlgetUsersById = async (req, res) => {
   try {
     const _id = req.params.id;
@@ -47,8 +53,8 @@ const updateUser = async (filter, value) => {
   return result;
 };
 
-/*==========================
-  -    ENVIAR EMAIL PASS   -
+/*===========================
+  -   SEND EMAIL RESET PASS  -
   ==========================*/
 const resetPassword = async (req, res) => {
   try {
@@ -65,9 +71,9 @@ const resetPassword = async (req, res) => {
   }
 };
 
-/*===========================
-  -      NUEVA PASSWORD     -
-  ==========================*/
+/*==========================
+  -      NEW PASSWORD      -
+  ========================*/
 const nuevaPassword = async (req, res) => {
   try {
     let { nueva, confirmar, token } = req.body;
@@ -162,12 +168,10 @@ const handlePremium = async (req, res) => {
     console.log("Comprobante de domicilio:", domicileDocument);
     console.log("Comprobante de estado de cuenta:", accountStatementDocument);
 
-    // Asegúrate de que el array de documentos exista
     if (!user.documents) {
       user.documents = [];
     }
 
-    // Actualiza el estado de los documentos en el modelo del usuario
     user.documents.push({
       name: identificationDocument.originalname,
       reference: path.join(
@@ -209,7 +213,7 @@ const handlePremium = async (req, res) => {
   }
 };
 export default {
-  getUsersController,
+  ControlgetUsers,
   ControlgetUsersById,
   updateUser,
   resetPassword,
