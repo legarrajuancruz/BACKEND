@@ -5,6 +5,8 @@ import {
   comparePasswords,
 } from "../../../utils.js";
 
+import usersDto from "../../dto/users.dto.js";
+
 import config from "../../../config/config.js";
 import nodemailer from "nodemailer";
 import crypto from "crypto";
@@ -15,7 +17,8 @@ class UserService {
   }
   getUsers = async () => {
     let users = await userModel.find();
-    return users;
+    const simplifiedUsers = allUsers.map((user) => new usersDto(user));
+    return simplifiedUsers;
   };
 
   getUserByID = async (id) => {

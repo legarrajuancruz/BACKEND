@@ -4,7 +4,7 @@ import UserController from "../controllers/users.controller.js";
 const UserRouter = Router();
 
 //LEER USUARIOS
-UserRouter.get("/", UserController.leerUsuarios);
+UserRouter.get("/", UserController.getUsersController);
 
 //LEER USUARIOS POR ID
 UserRouter.get("/:id", UserController.ControlgetUsersById);

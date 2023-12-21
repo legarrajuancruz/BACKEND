@@ -7,9 +7,9 @@ const US = new UserService();
 const PS = new ProductService();
 const CS = new CartService();
 
-const leerUsuarios = async (req, res) => {
+const getUsersController = async (req, res) => {
   try {
-    let users = await US.getUsers(req.query);
+    let users = await US.getUsers();
 
     res.status(202).send({
       result: "Usuarios obtenidos con exito",
@@ -209,7 +209,7 @@ const handlePremium = async (req, res) => {
   }
 };
 export default {
-  leerUsuarios,
+  getUsersController,
   ControlgetUsersById,
   updateUser,
   resetPassword,
