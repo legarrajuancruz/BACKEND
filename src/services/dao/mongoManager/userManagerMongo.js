@@ -203,39 +203,39 @@ deleteInactiveUsers = async (inactiveUsers) => {
     _id: { $in: inactiveUsers.map((user) => user._id) },
   });
   return deletedUsers;
+};
 
-  /*=======================================
+/*=======================================
     -  ENVIAR EMAIL USUARIO ELIMINADO   -
     ====================================*/
-  sendInactiveUsersEmails = async (inactiveUsers) => {
-    const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 587,
-      secure: false,
-      auth: {
-        user: config.emailAccount,
-        pass: config.gmailAppPassword,
-      },
-      tls: {
-        rejectUnauthorized: false,
-      },
-    });
+sendNotificationEmails = async (inactiveUsers) => {
+  const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false,
+    auth: {
+      user: config.emailAccount,
+      pass: config.gmailAppPassword,
+    },
+    tls: {
+      rejectUnauthorized: false,
+    },
+  });
 
-    for (const user of inactiveUsers) {
-      const userEmail = user.email;
-      // Lógica para enviar el correo de notificación
-      // Puedes personalizar el contenido del correo según tus necesidades
-      const mailOptionsInactive = {
-        from: config.emailAccount,
-        to: userEmail,
-        subject: "Eliminación de cuenta por inactividad",
-        text: "Tu cuenta ha sido eliminada debido a la inactividad durante los últimos 2 días.",
-        // HTML: Puedes personalizar el contenido HTML del correo si es necesario.
-      };
+  for (const user of inactiveUsers) {
+    const userEmail = user.email;
+    // Lógica para enviar el correo de notificación
+    // Puedes personalizar el contenido del correo según tus necesidades
+    const mailOptionsInactive = {
+      from: config.emailAccount,
+      to: userEmail,
+      subject: "Eliminación de cuenta por inactividad",
+      text: "Tu cuenta ha sido eliminada debido a la inactividad durante los últimos 2 días.",
+      // HTML: Puedes personalizar el contenido HTML del correo si es necesario.
+    };
 
-      await transporter.sendMail(mailOptionsInactive);
-    }
-  };
+    await transporter.sendMail(mailOptionsInactive);
+  }
 };
 
 export default UserService;
