@@ -181,8 +181,9 @@ const modProductsInCart = async (req, res) => {
 
 const borrarProductoEnCarrito = async (req, res) => {
   try {
-    let cid = req.params;
-    let pid = req.params;
+    let cid = req.params.cid;
+    let pid = req.params.pid;
+    console.log(cid, pid);
 
     const cart = await cartService.deleteProductInCart(cid, pid);
 

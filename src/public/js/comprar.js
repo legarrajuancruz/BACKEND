@@ -16,3 +16,30 @@ const comprarItems = async () => {
 };
 
 document.getElementById("btnTerminarCompra").onclick = comprarItems;
+
+////////////////////////////////
+
+function eliminar(button) {
+  const cid = document.getElementById("cartID").value;
+  const pid = button.getAttribute("data-id");
+
+  fetch(`/api/carts/${cid}/products/${pid}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`Error de red: ${response.statusText}`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log("Producto eliminado con éxito", data);
+      window.location.href = "/carts";
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}

@@ -28,7 +28,6 @@ router.get("/", async (request, response) => {
 });
 
 //PRODUCTS
-
 router.get(
   "/products",
   passport.authenticate("jwt", { session: false }),
@@ -36,7 +35,7 @@ router.get(
     const Products = await productService.leerProductos(req.query);
 
     const user = req.user;
-    if (user.role === "user") {
+    if (user.role != "admin") {
       res.render("products", { Products, user });
     } else {
       res.render("error");
@@ -94,6 +93,7 @@ router.get(
   }
 );
 
+//PROFILE DESDE SESSION
 router.get("/profile", (req, res) => {
   res.render("profile", {
     user: req.session.user,
