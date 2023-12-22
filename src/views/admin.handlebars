@@ -10,6 +10,7 @@
         <th scope="col">Last Name</th>
         <th scope="col">Email</th>
         <th scope="col">Role</th>
+        <th scope="col">New Role</th>
         <th scope="col">Actions</th>
       </tr>
     </thead>
@@ -22,8 +23,18 @@
           <td>{{this.email}}</td>
           <td>{{this.role}}</td>
           <td>
+            <select class="form-select" id="roleSelect">
+              <option value="user">User</option>
+              <option value="premium">Premium</option>
+            </select>
+          </td>
+          <td>
+            <a
+              href="#"
+              class="btn btn-warning btn-sm"
+              onclick="guardarNuevoRol('{{this._id}}')"
+            >Save Role</a>
             <a href="#" class="btn btn-primary btn-sm">View</a>
-            <a href="#" class="btn btn-warning btn-sm">Edit Role</a>
             <a href="#" class="btn btn-danger btn-sm">Delete</a>
           </td>
         </tr>
