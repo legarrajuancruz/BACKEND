@@ -1,11 +1,12 @@
 import TicketService from "../services/dao/mongoManager/ticketManagerMongo.js";
-import {
-  cartService,
-  productService,
-  userService,
-} from "../services/factory.js";
+import UserService from "../services/dao/mongoManager/userManagerMongo.js";
+import ProductService from "../services/dao/mongoManager/productManagerMongo.js";
+import CartService from "../services/dao/mongoManager/cartManagerMongo.js";
 
 const ticketService = new TicketService();
+const CS = new CartService();
+const US = new UserService();
+const PS = new ProductService();
 
 export const getTickets = async (req, res, next) => {
   try {
@@ -31,8 +32,8 @@ export const createTicket = async (req, res) => {
     uid.toString();
     cid.toString();
 
-    const resultUser = await cartService.getUserByID(uid);
-    const resultCart = await userService.getCartsById(cid);
+    const resultUser = await US.getUserByID(uid);
+    const resultCart = await CS.getCartsById(cid);
 
     const outOfStock = [];
     const compraFinal = [];
@@ -47,7 +48,7 @@ export const createTicket = async (req, res) => {
       amount += subtotal;
 
       const idProduct = item.product._id;
-      const productFinded = await productService.getProductbyId(item._id);
+      const productFinded = await PS.getProductbyId(item._id);
 
       //SI NO HAY STOCK SE ALMACENA EN UN NUEVO ARRAY
       if (item.quantity > productFinded.stock) {
@@ -61,7 +62,7 @@ export const createTicket = async (req, res) => {
       let restarStock = {
         stock: restado,
       };
-      await productService.actualizarProducto(productFinded._id, restarStock);
+      await PS.actualizarProducto(productFinded._id, restarStock);
 
       //SI HAY STOCK PASA A LA COMPRA FINAL
       compraFinal.push(productFinded);
@@ -86,16 +87,16 @@ export const createTicket = async (req, res) => {
     const userId = resultUser._id;
 
     //SE AGREGA TICKET A ORDERS DE USER
-    const alta = await userService.updateUser(userId, ticketId);
+    const alta = await US.updateUser(userId, ticketId);
     console.log(alta);
 
     //SI SE TERMINO LA COMPRA VACIAR CARRITO
-    const resetCart = await cartService.vaciarCarrito(cid);
+    const resetCart = await CS.vaciarCarrito(cid);
     console.log("SE VACIO EL CARRITO");
 
     //SI NO HAY STOCK DE UN PRODUCTO RETORNA AL CARRITO
     if (outOfStock.length > 0) {
-      const alta = await cartService.addProductToCart(resultCart, outOfStock);
+      const alta = await CS.addProductToCart(resultCart, outOfStock);
       console.log(`Nohay stock suficiente de ${alta}`);
     }
     res.send({
