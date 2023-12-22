@@ -214,7 +214,7 @@ const handlePremium = async (req, res) => {
   /*========================================
     - BORRAR USUARIOS INACTIVOS 2 DIAS     -
     =======================================*/
-  const deleteInactiveController = async (req, res) => {
+  const deleteInactive = async (req, res) => {
     try {
       const inactiveUsers = await userService.findInactiveUsers();
 
@@ -244,5 +244,5 @@ export default {
   nuevaPassword,
   handleProfileUpload,
   handlePremium,
-  deleteInactiveController,
+  deleteInactive,
 };

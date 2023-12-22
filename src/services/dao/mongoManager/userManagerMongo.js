@@ -180,6 +180,7 @@ class UserService {
       throw error;
     }
   };
+
   /*=====================================
     -     BUSCAR USUARIOS INACTIVOS      -
     ====================================*/
