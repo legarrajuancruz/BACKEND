@@ -107,7 +107,7 @@ router.get(
   async (req, res) => {
     const allUsers = await userService.getUsers(req.query);
     const user = req.user;
-    if (user.role === "admin" || user.role === "user") {
+    if (user.role === "admin") {
       res.render("admin", { user, allUsers });
     } else {
       res.render("error");
