@@ -210,30 +210,29 @@ const handlePremium = async (req, res) => {
     console.error("Error al procesar la subida de documentos", error);
     res.status(500).send("Error interno del servidor");
   }
-
-  /*========================================
+};
+/*========================================
     - BORRAR USUARIOS INACTIVOS 2 DIAS     -
     =======================================*/
-  const deleteInactive = async (req, res) => {
-    try {
-      const inactiveUsers = await userService.findInactiveUsers();
+const deleteInactive = async (req, res) => {
+  try {
+    const inactiveUsers = await userService.findInactiveUsers();
 
-      if (inactiveUsers.length > 0) {
-        await userService.deleteInactiveUsers(inactiveUsers);
-        await userService.sendNotificationEmails(inactiveUsers);
-      }
-
-      res.status(200).send({
-        result: "Usuarios inactivos eliminados y notificados correctamente",
-      });
-    } catch (error) {
-      console.error("Error al eliminar usuarios inactivos:", error);
-      res.status(500).send({
-        error: "Error al eliminar usuarios inactivos",
-        message: error.message,
-      });
+    if (inactiveUsers.length > 0) {
+      await userService.deleteInactiveUsers(inactiveUsers);
+      await userService.sendNotificationEmails(inactiveUsers);
     }
-  };
+
+    res.status(200).send({
+      result: "Usuarios inactivos eliminados y notificados correctamente",
+    });
+  } catch (error) {
+    console.error("Error al eliminar usuarios inactivos:", error);
+    res.status(500).send({
+      error: "Error al eliminar usuarios inactivos",
+      message: error.message,
+    });
+  }
 };
 
 export default {
