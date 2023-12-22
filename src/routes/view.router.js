@@ -100,13 +100,12 @@ router.get("/profile", (req, res) => {
   });
 });
 
-//ADMIN
+//ADMIN OCULTO
 router.get(
   "/admin",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     const allUsers = await userService.getUsers(req.query);
-    console.log(allUsers);
     const user = req.user;
     if (user.role === "admin" || user.role === "user") {
       res.render("admin", { user, allUsers });
