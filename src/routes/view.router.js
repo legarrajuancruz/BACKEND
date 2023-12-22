@@ -5,7 +5,11 @@ import ProductManager from "../services/dao/mongoManager/productManagerMongo.js"
 import CartService from "../services/dao/mongoManager/cartManagerMongo.js";
 import UserService from "../services/dao/mongoManager/userManagerMongo.js";
 
-import { CartsModel } from "../services/dao/models/carts.model.js";
+import {
+  productService,
+  userService,
+  cartService,
+} from "../services/factory.js";
 
 const router = express.Router();
 
@@ -16,7 +20,7 @@ const user = new UserService();
 //HOME
 router.get("/", async (request, response) => {
   try {
-    const getProducts = await products.getProducts();
+    const getProducts = await productService.getProducts();
     response.render("home", { getProducts });
   } catch (error) {
     response.status(500).send({ error: error.message });
@@ -29,7 +33,7 @@ router.get(
   "/products",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    const Products = await products.leerProductos(req.query);
+    const Products = await productService.leerProductos(req.query);
 
     const user = req.user;
     if (user.role === "user") {
@@ -45,7 +49,7 @@ router.get(
   "/realtimeproducts",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    const allProducts = await products.leerProductos(req.query);
+    const allProducts = await productService.leerProductos(req.query);
     const user = req.user;
     if (user.role !== "user") {
       res.render("realtimeproducts", { allProducts, user });
@@ -62,7 +66,7 @@ router.get(
   async (req, res) => {
     const userID = req.user;
     const _id = req.user.cart;
-    let userCart = await carts.getCartsById(_id);
+    let userCart = await cartService.getCartsById(_id);
     res.render("carts", { userCart, userID });
   }
 );
@@ -95,5 +99,21 @@ router.get("/profile", (req, res) => {
     user: req.session.user,
   });
 });
+
+//ADMIN
+router.get(
+  "/admin",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    const allUsers = await userService.getUsers(req.query);
+    console.log(allUsers);
+    const user = req.user;
+    if (user.role === "admin" || user.role === "user") {
+      res.render("admin", { user, allUsers });
+    } else {
+      res.render("error");
+    }
+  }
+);
 
 export default router;
