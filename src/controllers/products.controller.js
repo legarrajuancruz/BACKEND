@@ -1,5 +1,4 @@
 import { productService, userService } from "../services/factory.js";
-//import userService from "../services/dao/mongoManager/userManagerMongo.js";
 import { generateProducts } from "../utils.js";
 import mongoose from "mongoose";
 import EErrors from "../services/errors/errors-enum.js";
