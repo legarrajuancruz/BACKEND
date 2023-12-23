@@ -142,6 +142,16 @@ const deleteProduct = async (req, res) => {
         payload: find,
       });
     } else if (user.role === "admin") {
+      if (find.owner.role === "premium") {
+        const response = await userService.sendNotificationProductErased(
+          user.email
+        );
+        if (response === "true") {
+          console.log("EMAIL ENVIADO");
+        } else {
+          console.log("EMAIL NO ENVIADO");
+        }
+      }
       await productService.borrarProducto(find._id);
 
       res.status(203).send({
