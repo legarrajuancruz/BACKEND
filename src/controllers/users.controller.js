@@ -71,11 +71,20 @@ const ControlDeleteUserID = async (req, res) => {
     });
   }
 };
+
 const ControlchangeRol = async (req, res) => {
   try {
     const { id } = req.params;
+    const itsAdmin = await userService.getUserByID(id);
+    console.log("Rol de Usuario");
+    console.log(itsAdmin.role);
+    if (itsAdmin.role === "admin") {
+      res.status(400).send({
+        result: "Rol no fue actualizado",
+      });
+      return;
+    }
     const { newRole } = req.body;
-
     const result = await userService.changeRol(id, newRole);
 
     res.status(200).send({

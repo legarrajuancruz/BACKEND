@@ -36,18 +36,14 @@ function guardarNuevoRol(id) {
       "Content-Type": "application/json; charset=UTF-8",
     },
     body: JSON.stringify(requestBody),
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`Error de red: ${response.statusText}`);
-      }
-      return response.json();
-    })
-    .then((data) => {
+  }).then((result) => {
+    if (result.status === 201) {
       alert("Rol actualizado con éxito");
       location.href = "/admin";
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
+    }
+    if (result.status === 400) {
+      alert("No puede cambiar este role");
+      location.href = "/admin";
+    }
+  });
 }
