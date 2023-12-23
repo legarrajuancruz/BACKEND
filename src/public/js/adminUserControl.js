@@ -1,7 +1,8 @@
 function eliminarUsuario(id) {
   console.log(id);
-  fetch(`/ruta/del/usuario/${id}`, {
+  fetch(`/api/users/${id}`, {
     method: "DELETE",
+    headers: { "Content-type": "application/json; charset=UTF-8" },
   })
     .then((response) => {
       if (!response.ok) {
