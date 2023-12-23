@@ -47,6 +47,7 @@ let userId = document.getElementById("owner").textContent;
 const borrarProductoID = async () => {
   try {
     let id = document.getElementById("id").value;
+    console.log(id);
 
     const producto = { _id: id, uid: userId };
     const response = await fetch(`/api/products/${id}`, {
@@ -75,9 +76,9 @@ const borrarProductoID = async () => {
     alert("Hubo un problema al eliminar el producto");
   }
 };
+document.getElementById("btn-ID").onclick = borrarProductoID;
 
 //BORRAR DESDE BOTON EN EL PRODUCTO --> ELIMINAR PRODUCTO
-
 const deleteProductButton = async (id) => {
   try {
     console.log(id);
