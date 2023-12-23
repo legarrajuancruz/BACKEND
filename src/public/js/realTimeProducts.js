@@ -43,9 +43,9 @@ createProduct();
 
 let userId = document.getElementById("owner").textContent;
 
-//==============================================
-//  BORRAR DESDE INPUT ID --> ELIMINAR PRODUCTO
-//==============================================
+/*==============================================
+|  BORRAR DESDE INPUT ID --> ELIMINAR PRODUCTO  |
+===============================================*/
 const borrarProductoID = async () => {
   try {
     let id = document.getElementById("id").value;
@@ -80,9 +80,9 @@ const borrarProductoID = async () => {
 };
 document.getElementById("btn-ID").onclick = borrarProductoID;
 
-//=======================================================
-//BORRAR DESDE BOTON EN EL PRODUCTO --> ELIMINAR PRODUCTO
-//=======================================================
+/*========================================================
+| BORRAR DESDE BOTON EN EL PRODUCTO --> ELIMINAR PRODUCTO |
+=========================================================*/
 
 const deleteProductButton = async (id) => {
   try {
