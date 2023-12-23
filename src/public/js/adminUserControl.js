@@ -11,7 +11,8 @@ function eliminarUsuario(id) {
       return response.json();
     })
     .then((data) => {
-      console.log("Usuario eliminado con éxito", data);
+      alert("Usuario eliminado con éxito", data);
+      location.href = "/admin";
     })
     .catch((error) => {
       console.error("Error:", error);
