@@ -281,6 +281,9 @@ const deleteInactive = async (req, res) => {
   }
 };
 
+/*===================================
+    - VISTA DE USUARIOS DE ADMIN     -
+    ================================*/
 const ControlViewUserById = async (req, res) => {
   try {
     const { id } = req.params;

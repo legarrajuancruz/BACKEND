@@ -91,6 +91,9 @@ class UserService {
     return users;
   };
 
+  /*==============================
+  -   CARGAR TIVKETS EN USUARIO   -
+  ===============================*/
   updateUser = async (userId, ticketId) => {
     const user = await userModel.findById(userId);
     if (user) {
@@ -249,7 +252,6 @@ class UserService {
 
     for (const user of inactiveUsers) {
       const userEmail = user.email;
-      // Lógica para enviar el correo de notificación
       const mailOptionsInactive = {
         from: config.emailAccount,
         to: userEmail,
