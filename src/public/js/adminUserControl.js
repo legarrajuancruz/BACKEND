@@ -1,3 +1,6 @@
+/*==============================
+  -      BORRAR DESDE BOTON     -
+  =============================*/
 function eliminarUsuario(id) {
   console.log(id);
   fetch(`/api/users/${id}`, {
@@ -19,8 +22,9 @@ function eliminarUsuario(id) {
     });
 }
 
-////////////////////////////////////////////////
-
+/*==================================
+  -      NUEVO ROL DESDE BOTON     -
+  ================================*/
 function guardarNuevoRol(id) {
   const form = document.getElementById(`form_${id}`);
   const select = document.getElementById(`roleSelect_${id}`);
@@ -47,8 +51,10 @@ function guardarNuevoRol(id) {
     }
   });
 }
-///////////////////////////////////
 
+/*================================
+  -      VISTA PREVIA USUARIO     -
+  ===============================*/
 function verUsuario(id) {
   location.href = `/api/users/${id}/view`;
 }

@@ -5,16 +5,25 @@ export default class ProductService {
     console.log("Products with Database persistence in mongodb");
   }
 
+  /*==============================
+  -      CREAR NUEVO PRODUCTO    -
+  ==============================*/
   crearProducto = async (productoNuevo) => {
     let result = await ProductsModel.create(productoNuevo);
     return result;
   };
 
+  /*========================
+  -      LEER PRODUCTOS     -
+  ==========================*/
   getProducts = async () => {
     const productos = await ProductsModel.find();
     return productos;
   };
 
+  /*=====================================
+  -      LEER PRODUCTOS CON PAGINATE     -
+  ======================================*/
   leerProductos = async (obj) => {
     let { limit, page, query, sort } = obj;
 
@@ -60,11 +69,17 @@ export default class ProductService {
     return products;
   };
 
+  /*===============================
+  -      LEER PRODUCTOS POR ID     -
+  ================================*/
   getProductbyId = async (id) => {
     const product = await ProductsModel.findById(id);
     return product;
   };
 
+  /*========================
+  -      BORRAR PRODUCTO    -
+  ==========================*/
   borrarProducto = async (id) => {
     const product = await ProductsModel.findById(id);
     console.log(product.owner.role);
@@ -72,6 +87,9 @@ export default class ProductService {
     return productoBorrado;
   };
 
+  /*================================
+  -      ACTUALIZAR PRODUCTO     -
+  ==============================*/
   actualizarProducto = async (id, productUpdated) => {
     let productoActualizado = await ProductsModel.updateOne(
       { _id: id },
