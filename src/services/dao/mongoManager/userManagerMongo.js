@@ -261,5 +261,38 @@ class UserService {
       await transporter.sendMail(mailOptionsInactive);
     }
   };
+
+  /*=======================================
+    -  ENVIAR EMAIL PRODUCTO ELIMINADO   -
+    ====================================*/
+  sendNotificationProductErased = async (user) => {
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false,
+      auth: {
+        user: config.emailAccount,
+        pass: config.gmailAppPassword,
+      },
+      tls: {
+        rejectUnauthorized: false,
+      },
+    });
+
+    const mailOptionErased = {
+      from: config.emailAccount,
+      to: user,
+      subject: "Un producto suyo fue eliminado",
+      text: "Uno de sus productos fue eliminado del servidor.",
+    };
+    const emailSendeed = await transporter.sendMail(mailOptionErased);
+    if (emailSendeed) {
+      emailSendeed === "true";
+      return emailSendeed;
+    } else {
+      emailSendeed === "false";
+      return emailSendeed;
+    }
+  };
 }
 export default UserService;
