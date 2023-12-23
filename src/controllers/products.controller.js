@@ -141,7 +141,7 @@ const deleteProduct = async (req, res) => {
       res.status(202).send({
         result: "Producto eliminado con éxito",
         actionBy: "premiumUser",
-        payload: find, // Aquí puedes enviar el producto eliminado
+        payload: find,
       });
     } else if (user.role === "admin") {
       await productService.borrarProducto(find._id);
@@ -152,13 +152,7 @@ const deleteProduct = async (req, res) => {
       res.status(203).send({
         result: "Producto eliminado por ADMIN con éxito",
         actionBy: "admin",
-        payload: find, // Aquí puedes enviar el producto eliminado
-      });
-    } else {
-      console.log("Usuario no autorizado");
-      res.status(403).send({
-        error: "Unauthorized",
-        message: "Usuario no autorizado para realizar esta acción.",
+        payload: find,
       });
     }
   } catch (error) {
