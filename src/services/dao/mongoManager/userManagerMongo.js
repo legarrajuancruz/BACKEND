@@ -287,11 +287,9 @@ class UserService {
     };
     const emailSendeed = await transporter.sendMail(mailOptionErased);
     if (emailSendeed) {
-      emailSendeed === "true";
-      return emailSendeed;
+      return "true";
     } else {
-      emailSendeed === "false";
-      return emailSendeed;
+      return "false";
     }
   };
 }
