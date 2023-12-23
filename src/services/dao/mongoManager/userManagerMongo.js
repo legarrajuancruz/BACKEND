@@ -59,6 +59,18 @@ class UserService {
     }
   };
 
+  deleteUser = async (id) => {
+    try {
+      console.log("DELETE USER");
+      console.log(id);
+      const userDeleted = await userModel.findByIdAndRemove(id);
+      return userDeleted;
+    } catch (error) {
+      console.error(`Error al borrar el usuario`, error.message);
+      throw error;
+    }
+  };
+
   leerUsuarios = async ({ email }) => {
     console.log({ email });
     let users = await userModel.findOne({ email });

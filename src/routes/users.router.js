@@ -9,8 +9,11 @@ UserRouter.get("/", UserController.ControlgetUsers);
 //LEER USUARIOS POR ID
 UserRouter.get("/:id", UserController.ControlgetUsersById);
 
-// //ELIMINAR POR ID
-// UserRouter.delete("/:id", UserController.getUsersById);
+//CAMBIAR ROL
+//UserRouter.post("/:id", UserController.CambiarRol);
+
+//ELIMINAR POR ID
+UserRouter.delete("/:id", UserController.ControlDeleteUserID);
 
 //SUBIR DOCUMENTOS
 UserRouter.post(

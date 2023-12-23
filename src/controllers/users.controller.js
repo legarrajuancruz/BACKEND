@@ -53,6 +53,27 @@ const updateUser = async (filter, value) => {
 };
 
 /*===========================
+  -   DELETE USER By ID  -
+  ==========================*/
+
+const ControlDeleteUserID = async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log(id);
+    let result = await userService.deleteUser(id);
+    res.status(200).send({
+      result: "Usuario eliminado exitosamente",
+    });
+  } catch (error) {
+    console.error("No se pudo eliminar el usuario con mongoose" + error);
+    res.status(500).send({
+      error: "No se pudo eliminar el usuario, usuario no encontrado",
+      message: error,
+    });
+  }
+};
+
+/*===========================
   -   SEND EMAIL RESET PASS  -
   ==========================*/
 const resetPassword = async (req, res) => {
@@ -101,9 +122,9 @@ const nuevaPassword = async (req, res) => {
   }
 };
 
-/*==================================
-  - SUBIR ARCHIVOS PROFILE Y DNI    -
-  =================================*/
+/*=========================
+  - SEND FILES PROFILE    -
+  =======================*/
 const handleProfileUpload = async (req, res) => {
   try {
     const { uid } = req.body;
@@ -150,9 +171,9 @@ const handleProfileUpload = async (req, res) => {
   }
 };
 
-/*====================================
-    -  SUBIR COMPROBANTE DE DOMICILIO    -
-    ====================================*/
+/*=============================
+    -  SEND ADDRESS DOCUMENT   -
+    ==========================*/
 const handlePremium = async (req, res) => {
   try {
     const { uid } = req.body;
@@ -238,6 +259,7 @@ const deleteInactive = async (req, res) => {
 export default {
   ControlgetUsers,
   ControlgetUsersById,
+  ControlDeleteUserID,
   updateUser,
   resetPassword,
   nuevaPassword,
