@@ -1,23 +1,25 @@
 import { Router } from "express";
 import passport from "passport";
 import UserService from "../services/dao/mongoManager/userManagerMongo.js";
-
 const US = new UserService();
-
 const userRouter = Router();
 
+//VISTA LOGIN
 userRouter.get("/login", (req, res) => {
   res.render("login");
 });
 
+//VISTA REGISTRO
 userRouter.get("/register", (req, res) => {
   res.render("register");
 });
 
+//VISTA RECUPERAR USUARIO
 userRouter.get("/recuperar", (req, res) => {
   res.render("recuperar");
 });
 
+//VISTA PASSWORD TOKEN
 userRouter.get("/newPassword/:token", async (req, res) => {
   const { token } = req.params;
   console.log(token);
@@ -32,12 +34,7 @@ userRouter.get("/newPassword/:token", async (req, res) => {
   }
 });
 
-userRouter.get("/profile", (req, res) => {
-  res.render("profile", {
-    user: req.session.user,
-  });
-});
-
+//VISTA SUBIR ARCHIVOS PREMIUM
 userRouter.get(
   "/uploads",
   passport.authenticate("jwt", { session: false }),
@@ -51,6 +48,7 @@ userRouter.get(
   }
 );
 
+//VISTA SER PREMIUM
 userRouter.get(
   "/premium",
   passport.authenticate("jwt", { session: false }),
@@ -63,6 +61,14 @@ userRouter.get(
     }
   }
 );
+//VISTA PROFILE SESSION
+userRouter.get("/profile", (req, res) => {
+  res.render("profile", {
+    user: req.session.user,
+  });
+});
+
+//VISTA PROFILE JWT COOKIE
 userRouter.get(
   "/",
   passport.authenticate("jwt", { session: false }),

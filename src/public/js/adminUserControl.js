@@ -47,3 +47,8 @@ function guardarNuevoRol(id) {
     }
   });
 }
+///////////////////////////////////
+
+function verUsuario(id) {
+  location.href = `/api/users/${id}/view`;
+}

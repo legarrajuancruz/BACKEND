@@ -9,6 +9,9 @@ UserRouter.get("/", UserController.ControlgetUsers);
 //LEER USUARIOS POR ID
 UserRouter.get("/:id", UserController.ControlgetUsersById);
 
+//VISTA ADMIN DE USUARIO SELECCIONADO
+UserRouter.get("/:id/view", UserController.ControlViewUserById);
+
 //CAMBIAR ROL
 UserRouter.post("/:id", UserController.ControlchangeRol);
 

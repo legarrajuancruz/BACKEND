@@ -1,5 +1,4 @@
 import path from "path";
-
 import {
   cartService,
   productService,
@@ -282,6 +281,21 @@ const deleteInactive = async (req, res) => {
   }
 };
 
+const ControlViewUserById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await userService.getUserByID(id);
+    res.render("viewUser", { user });
+  } catch (error) {
+    console.error(
+      "Error al obtener información del usuario con mongoose" + error
+    );
+    res.status(500).send({
+      error: "No se pudo obtener información del usuario",
+      message: error,
+    });
+  }
+};
 export default {
   ControlgetUsers,
   ControlgetUsersById,
@@ -293,4 +307,5 @@ export default {
   handleProfileUpload,
   handlePremium,
   deleteInactive,
+  ControlViewUserById,
 };
