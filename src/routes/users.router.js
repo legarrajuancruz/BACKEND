@@ -10,7 +10,7 @@ UserRouter.get("/", UserController.ControlgetUsers);
 UserRouter.get("/:id", UserController.ControlgetUsersById);
 
 //CAMBIAR ROL
-//UserRouter.post("/:id", UserController.CambiarRol);
+UserRouter.post("/:id", UserController.ControlchangeRol);
 
 //ELIMINAR POR ID
 UserRouter.delete("/:id", UserController.ControlDeleteUserID);

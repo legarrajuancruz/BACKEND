@@ -59,10 +59,23 @@ class UserService {
     }
   };
 
+  changeRol = async (id, newRole) => {
+    try {
+      const userUpdated = await userModel.findByIdAndUpdate(
+        id,
+        { role: newRole },
+        { new: true }
+      );
+
+      return userUpdated;
+    } catch (error) {
+      console.error(`Error al actualizar el rol del usuario`, error.message);
+      throw error;
+    }
+  };
+
   deleteUser = async (id) => {
     try {
-      console.log("DELETE USER");
-      console.log(id);
       const userDeleted = await userModel.findByIdAndRemove(id);
       return userDeleted;
     } catch (error) {

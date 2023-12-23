@@ -55,7 +55,6 @@ const updateUser = async (filter, value) => {
 /*===========================
   -   DELETE USER By ID  -
   ==========================*/
-
 const ControlDeleteUserID = async (req, res) => {
   try {
     const { id } = req.params;
@@ -69,6 +68,24 @@ const ControlDeleteUserID = async (req, res) => {
     res.status(500).send({
       error: "No se pudo eliminar el usuario, usuario no encontrado",
       message: error,
+    });
+  }
+};
+const ControlchangeRol = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { newRole } = req.body;
+
+    const result = await userService.changeRol(id, newRole);
+
+    res.status(200).send({
+      result: "Rol actualizado exitosamente",
+    });
+  } catch (error) {
+    console.error("No se pudo actualizar el rol del usuario", error);
+    res.status(500).send({
+      error: "No se pudo actualizar el rol del usuario",
+      message: error.message,
     });
   }
 };
@@ -259,6 +276,7 @@ const deleteInactive = async (req, res) => {
 export default {
   ControlgetUsers,
   ControlgetUsersById,
+  ControlchangeRol,
   ControlDeleteUserID,
   updateUser,
   resetPassword,
