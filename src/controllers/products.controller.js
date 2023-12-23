@@ -113,11 +113,10 @@ const getProductById = async (req, res) => {
 const deleteProduct = async (req, res) => {
   try {
     let { _id, uid } = req.body;
-    console.log(req.body);
 
     if (!_id || !mongoose.Types.ObjectId.isValid(_id)) {
       throw CustomError.createError({
-        name: "Product eliminate error",
+        name: "Product elimination error",
         cause: eliminateProductsErrorInfo(_id),
         message: "Error al eliminar el producto",
         code: EErrors.INVALID_TYPES_ERROR,
@@ -127,30 +126,40 @@ const deleteProduct = async (req, res) => {
     let find = await productService.getProductbyId(_id);
     let user = await userService.getUserByID(uid);
 
-    console.log("ROL DE USUARIO");
+    console.log("USER ROLE");
     console.log(user.role);
 
-    if (user.role != "admin") {
-      const eliminado = await productService.borrarProducto(find._id);
+    console.log("PRODUCT TO DELETE");
+    console.log(find.owner.role);
 
-      res.status(202).send({
-        result: "Producto eliminado con exito",
-        payload: eliminado,
-      });
-    }
-    if (user.role === "admin") {
-      let eliminado = await productService.getProductbyId(_id);
-      await productService.borrarProducto(eliminado._id);
+    if (user.role === "premium" && find.owner.role === "premium") {
+      await productService.borrarProducto(find._id);
 
       console.log("PRODUCTO ELIMINADO");
-      console.log(eliminado);
+      console.log(find);
+
+      res.status(202).send({
+        result: "Producto eliminado con éxito",
+        actionBy: "premiumUser",
+        payload: find, // Aquí puedes enviar el producto eliminado
+      });
+    } else if (user.role === "admin") {
+      await productService.borrarProducto(find._id);
+
+      console.log("PRODUCTO ELIMINADO");
+      console.log(find);
 
       res.status(203).send({
-        result: "Producto eliminado por ADMIN con exito",
-        payload: eliminado,
+        result: "Producto eliminado por ADMIN con éxito",
+        actionBy: "admin",
+        payload: find, // Aquí puedes enviar el producto eliminado
       });
     } else {
       console.log("Usuario no autorizado");
+      res.status(403).send({
+        error: "Unauthorized",
+        message: "Usuario no autorizado para realizar esta acción.",
+      });
     }
   } catch (error) {
     console.error(error);

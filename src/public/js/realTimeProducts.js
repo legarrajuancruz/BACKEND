@@ -42,29 +42,40 @@ const createProduct = async () => {
 createProduct();
 
 let userId = document.getElementById("owner").textContent;
-
-//ELIMINAR POR ID DESDE EL BOX
+// ELIMINAR POR ID DESDE EL BOX
 const borrarProductoID = async () => {
-  let id = document.getElementById("id").value;
+  try {
+    let id = document.getElementById("id").value;
 
-  const producto = { _id: id, uid: userId };
-  await fetch(`/api/products/${id}`, {
-    method: "DELETE",
-    headers: { "Content-type": "application/json; charset=UTF-8" },
-    body: JSON.stringify(producto),
-  }).then((result) => {
-    if (result.status === 202) {
-      alert("Producto eliminado con éxito");
-      location.href = "/realtimeproducts";
+    const producto = { _id: id, uid: userId };
+    const response = await fetch(`/api/products/${id}`, {
+      method: "DELETE",
+      headers: { "Content-type": "application/json; charset=UTF-8" },
+      body: JSON.stringify(producto),
+    });
+
+    console.log(response);
+
+    if (response.status === 200) {
+      const data = await response.json();
+
+      console.log(data);
+
+      if (data.result === "Producto eliminado con éxito") {
+        alert("Producto eliminado con éxito");
+        location.href = "/realtimeproducts";
+      } else if (data.result === "Producto eliminado por ADMIN con éxito") {
+        alert("Producto eliminado por ADMIN con éxito");
+        location.href = "/realtimeproducts";
+      }
+    } else {
+      alert("Hubo un problema al eliminar el producto");
     }
-    if (result.status === 203) {
-      alert("Producto eliminado por ADMIN con éxito");
-    }
-  });
+  } catch (error) {
+    console.error(error);
+    alert("Hubo un problema al eliminar el producto");
+  }
 };
-
-document.getElementById("btn-ID").onclick = borrarProductoID;
-
 //BORRAR DESDE BOTON PRODUCTO
 
 const deleteProductButton = async (id) => {
@@ -82,8 +93,6 @@ const deleteProductButton = async (id) => {
     if (result.status === 203) {
       alert("Producto eliminado por ADMIN con éxito");
       location.href = "/realtimeproducts";
-    } else {
-      alert("Hubo un problema para eliminar el producto");
     }
   });
 };
