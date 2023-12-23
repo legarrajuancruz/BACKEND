@@ -4,9 +4,7 @@ import {
   isValidPassword,
   comparePasswords,
 } from "../../../utils.js";
-
 import usersDto from "../../dto/users.dto.js";
-
 import config from "../../../config/config.js";
 import nodemailer from "nodemailer";
 import crypto from "crypto";
@@ -15,17 +13,26 @@ class UserService {
   constructor() {
     console.log("Users with Database persistence in mongodb");
   }
+  /*===================
+  -      GET USERS     -
+  ====================*/
   getUsers = async () => {
     let allUsers = await userModel.find();
     const simplifiedUsers = allUsers.map((user) => new usersDto(user));
     return simplifiedUsers;
   };
 
+  /*========================
+  -      GET USER BY ID     -
+  ==========================*/
   getUserByID = async (id) => {
     let usuarioEncontrado = await userModel.findById(id);
     return usuarioEncontrado;
   };
 
+  /*========================
+  -      CREAR AUSUARIO     -
+  ==========================*/
   crearUsuario = async (usuarioNuevo) => {
     console.log(usuarioNuevo.email);
     if (usuarioNuevo.email === "adminCoder@coder.com") {
@@ -44,7 +51,9 @@ class UserService {
 
     return result;
   };
-
+  /*==========================
+  -    LOGIN DE USUARIO     -
+  ==========================*/
   login = async (email) => {
     try {
       console.log(email);
@@ -59,6 +68,9 @@ class UserService {
     }
   };
 
+  /*==========================
+  -    CAMBIAR ROL USUARIO    -
+  ===========================*/
   changeRol = async (id, newRole) => {
     try {
       const userUpdated = await userModel.findByIdAndUpdate(
@@ -73,7 +85,9 @@ class UserService {
       throw error;
     }
   };
-
+  /*===========================
+  -      BORRAR USUARIO     -
+  ==========================*/
   deleteUser = async (id) => {
     try {
       const userDeleted = await userModel.findByIdAndRemove(id);
@@ -84,6 +98,9 @@ class UserService {
     }
   };
 
+  /*========================
+  -      LEER USUARIOS     -
+  ==========================*/
   leerUsuarios = async ({ email }) => {
     console.log({ email });
     let users = await userModel.findOne({ email });
@@ -149,9 +166,9 @@ class UserService {
     return;
   };
 
-  /*========================
-  -      BUSCAR USUARIO     -
-  ==========================*/
+  /*=================================
+  -     BUSCAR USUARIO POR TOKEN    -
+  ==================================*/
   findByToken = async (token) => {
     const user = await userModel.findOne(token);
 
@@ -255,14 +272,14 @@ class UserService {
       const mailOptionsInactive = {
         from: config.emailAccount,
         to: userEmail,
-        subject: "Eliminación de cuenta por inactividad",
+        subject: "Eliminacion de cuenta por inactividad",
         text: "Tu cuenta ha sido eliminada debido a la inactividad durante los últimos 2 días.",
       };
       await transporter.sendMail(mailOptionsInactive);
     }
   };
 
-  /*=======================================
+  /*=====================================
     -  ENVIAR EMAIL PRODUCTO ELIMINADO   -
     ====================================*/
   sendNotificationProductErased = async (user) => {

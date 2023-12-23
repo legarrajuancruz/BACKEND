@@ -46,6 +46,9 @@ const ControlgetUsersById = async (req, res) => {
   }
 };
 
+/*=================
+  -  UPDATE USER  -
+  ===============*/
 const updateUser = async (filter, value) => {
   let result = await userService.updateOne(filter, value);
   return result;
@@ -71,6 +74,9 @@ const ControlDeleteUserID = async (req, res) => {
   }
 };
 
+/*=====================
+  -  CHANGE USER ROL  -
+  ===================*/
 const ControlchangeRol = async (req, res) => {
   try {
     const { id } = req.params;
