@@ -42,6 +42,7 @@ const createProduct = async () => {
 createProduct();
 
 let userId = document.getElementById("owner").textContent;
+
 // ELIMINAR POR ID DESDE EL BOX
 const borrarProductoID = async () => {
   try {
@@ -54,9 +55,7 @@ const borrarProductoID = async () => {
       body: JSON.stringify(producto),
     });
 
-    console.log(response);
-
-    if (response.status === 200) {
+    if (response.status === 202 || response.status === 203) {
       const data = await response.json();
 
       console.log(data);
@@ -69,30 +68,37 @@ const borrarProductoID = async () => {
         location.href = "/realtimeproducts";
       }
     } else {
-      alert("Hubo un problema al eliminar el producto");
+      throw new Error("Hubo un problema al eliminar el producto");
     }
   } catch (error) {
     console.error(error);
     alert("Hubo un problema al eliminar el producto");
   }
 };
-//BORRAR DESDE BOTON PRODUCTO
+
+//BORRAR DESDE BOTON EN EL PRODUCTO --> ELIMINAR PRODUCTO
 
 const deleteProductButton = async (id) => {
-  console.log(id);
+  try {
+    console.log(id);
 
-  await fetch(`/api/products/${id}`, {
-    method: "DELETE",
-    headers: { "Content-type": "application/json; charset=UTF-8" },
-    body: JSON.stringify({ _id: id, uid: userId }),
-  }).then((result) => {
-    if (result.status === 202) {
+    const response = await fetch(`/api/products/${id}`, {
+      method: "DELETE",
+      headers: { "Content-type": "application/json; charset=UTF-8" },
+      body: JSON.stringify({ _id: id, uid: userId }),
+    });
+
+    if (response.status === 202) {
       alert("Producto eliminado con éxito");
       location.href = "/realtimeproducts";
-    }
-    if (result.status === 203) {
+    } else if (response.status === 203) {
       alert("Producto eliminado por ADMIN con éxito");
       location.href = "/realtimeproducts";
+    } else {
+      throw new Error("Hubo un problema al eliminar el producto");
     }
-  });
+  } catch (error) {
+    console.error(error);
+    alert("Hubo un problema al eliminar el producto");
+  }
 };
