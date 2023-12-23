@@ -6,35 +6,42 @@
     <h2>TODOS LOS PRODUCTOS</h2>
     <div class="container py-5">
       <div class="row justify-content-start">
-        {{#each allProducts.payload}}
+        {{#each allProducts}}
           <div class="col-md-4 col-lg-3 col-xl-3 mb-4">
-            <div class="card h-100" style="border-radius: 15px; width: 80%;">
+            <div class="card h-100 border rounded" style="width: 95%;">
               <div
                 class="bg-image hover-overlay ripple ripple-surface ripple-surface-light"
-                data-mdb-ripple-color="light"
               >
                 <img
                   src={{this.img}}
-                  style="border-top-left-radius: 15px; border-top-right-radius: 15px; max-width: 100%; height: auto;"
-                  class="img-fluid w-100"
+                  class="card-img-top border-top rounded-top"
                   alt="product"
                 />
               </div>
               <div class="card-body pb-0">
                 <div class="d-flex justify-content-between">
                   <div>
-                    <p><a class="text-dark">{{this.title}}</a></p>
+                    <p class="text-dark font-weight-bold">{{this.title}}</p>
                     <p class="small text-muted">{{this.description}}</p>
                   </div>
-
                 </div>
               </div>
               <hr class="my-0" />
               <div class="card-body pb-0">
                 <div class="d-flex justify-content-between">
-                  <p><a class="text-dark">$ {{this.price}}</a></p>
+                  <p class="text-dark font-weight-bold"><span
+                      class="font-weight-bold"
+                    >PRECIO:</span>
+                    ${{this.price}}</p>
                 </div>
-                <p class="small text-muted">ID: {{this._id}}</p>
+                <p class="small text-muted"><span
+                    class="font-weight-bold"
+                  >ID:</span>
+                  {{this._id}}</p>
+                <p class="small text-muted"><span
+                    class="font-weight-bold"
+                  >OWNER:</span>
+                  {{this.owner}}</p>
               </div>
               <hr class="my-0" />
               <div class="card-body">
@@ -44,7 +51,7 @@
                   <button
                     type="button"
                     class="btn btn-danger"
-                    onclick="deleteProductButton(`{{this._id}}`)"
+                    onclick="deleteProductButton('{{this._id}}')"
                   >Eliminar</button>
                 </div>
               </div>

@@ -130,7 +130,7 @@ const deleteProduct = async (req, res) => {
     console.log("ROL DE USUARIO");
     console.log(user.role);
 
-    if (user.role === "premium") {
+    if (user.role != "admin") {
       const eliminado = await productService.borrarProducto(find._id);
 
       res.status(202).send({

@@ -34,6 +34,14 @@ const productSchema = new mongoose.Schema({
   },
 });
 
+productSchema.pre("findOne", function () {
+  this.populate({
+    path: "owner",
+    model: "users",
+    select: "_id role",
+  });
+});
+
 productSchema.plugin(mongoosePaginate);
 
 export const ProductsModel = mongoose.model(productCollection, productSchema);

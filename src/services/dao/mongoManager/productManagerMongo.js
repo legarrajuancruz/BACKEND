@@ -66,6 +66,8 @@ export default class ProductService {
   };
 
   borrarProducto = async (id) => {
+    const product = await ProductsModel.findById(id);
+    console.log(product.owner.role);
     let productoBorrado = await ProductsModel.deleteOne({ _id: id });
     return productoBorrado;
   };
