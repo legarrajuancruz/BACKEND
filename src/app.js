@@ -144,7 +144,6 @@ app.use("/loggerTest", loggerRouter);
 /*================================
 |   SOCKET SERVER CONECCTION      |
 =================================*/
-
 const socketServer = new Server(httpserver);
 
 //SE ABRE CANAL

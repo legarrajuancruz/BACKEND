@@ -109,7 +109,7 @@ class UserService {
   };
 
   /*==============================
-  -   CARGAR TIVKETS EN USUARIO   -
+  -   CARGAR TICKETS EN USUARIO   -
   ===============================*/
   updateUser = async (userId, ticketId) => {
     const user = await userModel.findById(userId);
@@ -124,9 +124,8 @@ class UserService {
   -   ENVIAR EMAIL RESET PASSWORD  -
   ================================*/
   emailResetPassword = async (userEmail) => {
-    console.log("ENTRASTE ACA");
-    console.log(userEmail);
-    const user = await userModel.findOne(userEmail);
+    const user = await userModel.findOne({ email: userEmail });
+    console.log(user);
 
     if (!user) {
       throw new Error("Usuario no encontrado!");

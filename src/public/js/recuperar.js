@@ -3,17 +3,17 @@
 ===========================*/
 
 const cambiarPassword = async () => {
-  let email = document.getElementById("email").value;
-  email.toString();
+  let userMail = document.getElementById("email").value;
 
-  const user = { email };
+  const enviarEmail = { email: userMail };
+
   console.log("ESTAS ACA");
-  console.log(user);
+  console.log(enviarEmail);
 
-  const response = await fetch("/api/users/cambiarPassword", {
+  await fetch("/api/users/resetPassword", {
     method: "POST",
     headers: { "Content-type": "application/json; charset=UTF-8" },
-    body: JSON.stringify(user),
+    body: JSON.stringify(enviarEmail),
   }).then((result) => {
     if (result.status === 201) {
       alert("Email Enviado con exito");

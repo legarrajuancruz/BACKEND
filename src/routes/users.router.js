@@ -40,7 +40,7 @@ UserRouter.post(
 );
 
 //ENVIAR EMAIL RECUPERAR PASSWORD
-UserRouter.post("/cambiarPassword", UserController.resetPassword);
+UserRouter.post("/resetPassword", UserController.resetPassword);
 
 //ASIGNAR NUEVA PASSWORD
 UserRouter.post("/nuevaPassord", UserController.nuevaPassword);
