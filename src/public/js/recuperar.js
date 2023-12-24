@@ -4,9 +4,10 @@
 
 const cambiarPassword = async () => {
   let email = document.getElementById("email").value;
+  email.toString();
 
   const user = { email };
-
+  console.log("ESTAS ACA");
   console.log(user);
 
   const response = await fetch("/api/users/cambiarPassword", {

@@ -39,7 +39,10 @@ UserRouter.post(
   UserController.handlePremium
 );
 
+//ENVIAR EMAIL RECUPERAR PASSWORD
 UserRouter.post("/cambiarPassword", UserController.resetPassword);
+
+//ASIGNAR NUEVA PASSWORD
 UserRouter.post("/nuevaPassord", UserController.nuevaPassword);
 
 export default UserRouter;

@@ -110,6 +110,8 @@ const ControlchangeRol = async (req, res) => {
 const resetPassword = async (req, res) => {
   try {
     let userEmail = req.body;
+    console.log("ESTA ACA");
+    console.log(userEmail);
 
     await userService.emailResetPassword(userEmail);
     res.status(201).send({ message: "email enviado con exito" });

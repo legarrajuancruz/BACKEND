@@ -1,7 +1,6 @@
 /*==========================
--    REAL TIME PRODUCTS    -
+-    CREAR NUEVO PRODUCTO   -
 ===========================*/
-//CREAR PRODUCTO
 const createProduct = async () => {
   document
     .getElementById("miFormulario")

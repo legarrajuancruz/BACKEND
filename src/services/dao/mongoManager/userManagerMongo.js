@@ -124,6 +124,8 @@ class UserService {
   -   ENVIAR EMAIL RESET PASSWORD  -
   ================================*/
   emailResetPassword = async (userEmail) => {
+    console.log("ENTRASTE ACA");
+    console.log(userEmail);
     const user = await userModel.findOne(userEmail);
 
     if (!user) {

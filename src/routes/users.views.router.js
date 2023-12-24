@@ -1,7 +1,8 @@
 import { Router } from "express";
 import passport from "passport";
-import UserService from "../services/dao/mongoManager/userManagerMongo.js";
-const US = new UserService();
+import { userService } from "../services/factory.js";
+// import UserService from "../services/dao/mongoManager/userManagerMongo.js";
+// const US = new UserService();
 const userRouter = Router();
 
 //VISTA LOGIN
@@ -25,7 +26,7 @@ userRouter.get("/newPassword/:token", async (req, res) => {
   console.log(token);
 
   const resetPasswordToken = token;
-  const password = await US.getEmailToken({ resetPasswordToken });
+  const password = await userService.getEmailToken({ resetPasswordToken });
 
   if (password != "mellon" || password === null) {
     return res.redirect("/users/recuperar");

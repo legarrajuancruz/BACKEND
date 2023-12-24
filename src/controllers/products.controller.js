@@ -190,6 +190,7 @@ const modProduct = async (req, res) => {
   }
 };
 
+//LEER PRODUCTOS MOCKEADOS
 const getProductMockup = async (req, res) => {
   try {
     let products = [];

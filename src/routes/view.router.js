@@ -1,10 +1,5 @@
 import express from "express";
 import passport from "passport";
-
-import ProductManager from "../services/dao/mongoManager/productManagerMongo.js";
-import CartService from "../services/dao/mongoManager/cartManagerMongo.js";
-import UserService from "../services/dao/mongoManager/userManagerMongo.js";
-
 import {
   productService,
   userService,
@@ -12,10 +7,6 @@ import {
 } from "../services/factory.js";
 
 const router = express.Router();
-
-const products = new ProductManager();
-const carts = new CartService();
-const user = new UserService();
 
 //HOME
 router.get("/", async (request, response) => {
