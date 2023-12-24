@@ -107,16 +107,17 @@ const ControlchangeRol = async (req, res) => {
 /*===========================
   -   SEND EMAIL RESET PASS  -
   ==========================*/
-const resetPassword = async (req, res) => {
+const ControlresetPassword = async (req, res) => {
   try {
-    const userEmail = req.body;
-    console.log("ESTA ACA -RESET CONTROLER");
-    console.log(userEmail);
+    const { email } = req.body;
+    console.log("ESTA ACA - RESET CONTROLLER");
+    console.log({ email });
 
-    await userService.emailResetPassword(userEmail);
-    res.status(201).send({ message: "email enviado con exito" });
+    const enviado = await userService.emailResetPassword({ email });
+    console.log(enviado);
+    res.status(201).send({ message: "email enviado con éxito" });
   } catch (error) {
-    console.error("No se pudo enviar el email con mongoose:" + error);
+    console.error("No se pudo enviar el email con mongoose:", error);
     res.status(500).send({
       error: "No se pudo enviar el correo, usuario no encontrado",
       message: error,
@@ -127,12 +128,12 @@ const resetPassword = async (req, res) => {
 /*==========================
   -      NEW PASSWORD      -
   ========================*/
-const nuevaPassword = async (req, res) => {
+const ControlnuevaPassword = async (req, res) => {
   try {
     let { nueva, confirmar, token } = req.body;
     console.log(req.body);
 
-    let modificado = await userService.updatePassword(req.body, res);
+    let modificado = await userService.updatePassword(req.body);
 
     if (modificado.error) {
       return res.status(403).send({
@@ -307,14 +308,15 @@ const ControlViewUserById = async (req, res) => {
     });
   }
 };
+
 export default {
   ControlgetUsers,
   ControlgetUsersById,
   ControlchangeRol,
   ControlDeleteUserID,
   updateUser,
-  resetPassword,
-  nuevaPassword,
+  ControlresetPassword,
+  ControlnuevaPassword,
   handleProfileUpload,
   handlePremium,
   deleteInactive,

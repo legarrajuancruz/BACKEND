@@ -85,6 +85,7 @@ class UserService {
       throw error;
     }
   };
+
   /*===========================
   -      BORRAR USUARIO     -
   ==========================*/
@@ -124,7 +125,10 @@ class UserService {
   -   ENVIAR EMAIL RESET PASSWORD  -
   ================================*/
   emailResetPassword = async (userEmail) => {
-    const user = await userModel.findOne({ email: userEmail });
+    console.log("DENTEO DEL SERVICIO");
+    console.log(userEmail);
+    const user = await userModel.findOne(userEmail);
+    console.log("USUARIO ENCONTRADO");
     console.log(user);
 
     if (!user) {

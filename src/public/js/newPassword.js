@@ -8,10 +8,9 @@ const actualizarPassword = async () => {
   let token = document.getElementById("token").textContent;
 
   const user = { nueva, confirmar, token };
-
   console.log(user);
 
-  const response = await fetch("/api/users/nuevaPassord", {
+  const response = await fetch("/api/users/nuevaPassord/nueva", {
     method: "POST",
     headers: { "Content-type": "application/json; charset=UTF-8" },
     body: JSON.stringify(user),

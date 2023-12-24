@@ -1,13 +1,15 @@
 import { Router } from "express";
+import mongoose from "mongoose";
 import { uploader } from "../utils.js";
 import UserController from "../controllers/users.controller.js";
+
 const UserRouter = Router();
 
 //LEER USUARIOS
 UserRouter.get("/", UserController.ControlgetUsers);
 
 //LEER USUARIOS POR ID
-UserRouter.get("/:id", UserController.ControlgetUsersById);
+UserRouter.get("/:id", UserController.ControlresetPassword);
 
 //VISTA ADMIN DE USUARIO SELECCIONADO
 UserRouter.get("/:id/view", UserController.ControlViewUserById);
@@ -40,9 +42,9 @@ UserRouter.post(
 );
 
 //ENVIAR EMAIL RECUPERAR PASSWORD
-UserRouter.post("/resetPassword", UserController.resetPassword);
+UserRouter.post("/resetPassword/:email", UserController.ControlresetPassword);
 
 //ASIGNAR NUEVA PASSWORD
-UserRouter.post("/nuevaPassord", UserController.nuevaPassword);
+UserRouter.post("/nuevaPassord/nueva", UserController.ControlnuevaPassword);
 
 export default UserRouter;

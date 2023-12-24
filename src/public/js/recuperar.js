@@ -7,10 +7,10 @@ const cambiarPassword = async () => {
 
   const enviarEmail = { email: userMail };
 
-  console.log("ESTAS ACA");
+  console.log("ESTAS ACA EN HTML");
   console.log(enviarEmail);
 
-  await fetch("/api/users/resetPassword", {
+  await fetch("/api/users/resetPassword/${userMail}", {
     method: "POST",
     headers: { "Content-type": "application/json; charset=UTF-8" },
     body: JSON.stringify(enviarEmail),
