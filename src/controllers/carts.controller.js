@@ -32,32 +32,43 @@ const getCarts = async (req, res) => {
             const productDetails = await productService.getProductbyId(
               product._id
             );
-            return {
-              _id: productDetails._id,
-              quantity: product.quantity,
-              title: productDetails.title,
-              price: productDetails.price,
-              category: productDetails.category,
-              img: productDetails.img,
-            };
+
+            if (productDetails && productDetails._id) {
+              return {
+                _id: productDetails._id,
+                quantity: product.quantity,
+                title: productDetails.title,
+                price: productDetails.price,
+                category: productDetails.category,
+                img: productDetails.img,
+              };
+            } else {
+              console.error(
+                "Detalles del producto no encontrados para product:",
+                product
+              );
+              return null;
+            }
           })
         );
+
         return {
           _id: carrito._id,
           usuario: carrito.usuario,
-          products: productsDetails,
+          products: productsDetails.filter((product) => product !== null),
         };
       })
     );
+
     res.status(202).send({
-      result: "Carrito obtenido con exito",
+      result: "Carrito obtenido con éxito",
       Carritos: response,
     });
   } catch (error) {
-    console.error("No se pudo obtener carrito con mongoose:" + error);
+    console.error("No se pudo obtener el carrito con mongoose:", error);
     res.status(500).send({
       error: "No se pudo obtener el carrito con mongoose",
-      message: error,
+      message: error.message || "Error desconocido",
     });
   }
 };

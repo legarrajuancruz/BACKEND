@@ -1,5 +1,4 @@
 import { Router } from "express";
-import mongoose from "mongoose";
 import { uploader } from "../utils.js";
 import UserController from "../controllers/users.controller.js";
 
