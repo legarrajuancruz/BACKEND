@@ -92,7 +92,7 @@ const ControlchangeRol = async (req, res) => {
     const { newRole } = req.body;
     const result = await userService.changeRol(id, newRole);
 
-    res.status(200).send({
+    res.status(201).send({
       result: "Rol actualizado exitosamente",
     });
   } catch (error) {
