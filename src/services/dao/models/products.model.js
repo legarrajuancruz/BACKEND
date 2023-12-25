@@ -37,7 +37,6 @@ const productSchema = new mongoose.Schema({
 productSchema.pre("findOne", function () {
   this.populate({
     path: "owner",
-    //   model: "users",
     select: "_id role",
   });
 });
