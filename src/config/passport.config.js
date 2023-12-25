@@ -6,9 +6,7 @@ import GitHubStrategy from "passport-github2";
 import { createHash, isValidPassword } from "../utils.js";
 import jwtStrategy from "passport-jwt";
 import { PRIVATE_KEY } from "../utils.js";
-import UserService from "../services/dao/mongoManager/userManagerMongo.js";
-
-const US = new UserService();
+import { userService } from "../services/factory.js";
 
 //ESTRATEGIA
 const localStrategy = passportLocal.Strategy;
@@ -58,7 +56,9 @@ const initializedPassport = () => {
         console.log(profile);
 
         try {
-          const user = await US.leerUsuarios({ email: profile._json.email });
+          const user = await userService.leerUsuarios({
+            email: profile._json.email,
+          });
           console.log("Usuario encontrado para login");
           console.log({ user });
 
@@ -75,7 +75,7 @@ const initializedPassport = () => {
               loggedBy: "Github",
               role: "user",
             };
-            const result = await US.crearUsuario(newUser);
+            const result = await userService.crearUsuario(newUser);
             done(null, result);
           } else {
             return done(null, user);
@@ -97,7 +97,7 @@ const initializedPassport = () => {
       { passReqToCallback: true, usernameField: "email" },
       async (req, username, password, done) => {
         try {
-          const user = await US.login(username);
+          const user = await userService.login(username);
           console.log("Usuario encontrado para login:");
           console.log(user);
           if (!user) {
@@ -124,7 +124,7 @@ const initializedPassport = () => {
       async (req, username, password, done) => {
         const { first_name, last_name, email, age } = req.body;
         try {
-          const exist = await US.login(email);
+          const exist = await userService.login(email);
 
           if (exist) {
             return done(null, false, {
@@ -147,7 +147,7 @@ const initializedPassport = () => {
           ) {
             usuarioNuevo.password = createHash(password);
 
-            const usuarioCreado = await US.crearUsuario(usuarioNuevo);
+            const usuarioCreado = await userService.crearUsuario(usuarioNuevo);
 
             // Crear un nuevo carrito asociado al usuario
             const cart = await CartsModel.create({
@@ -164,7 +164,7 @@ const initializedPassport = () => {
           }
 
           usuarioNuevo.password = createHash(password);
-          const usuarioCreado = await US.crearUsuario(usuarioNuevo);
+          const usuarioCreado = await userService.crearUsuario(usuarioNuevo);
 
           // Crear un nuevo carrito asociado al usuario
           const cart = await CartsModel.create({
@@ -195,7 +195,7 @@ const initializedPassport = () => {
 
   passport.deserializeUser(async (id, done) => {
     try {
-      let user = await US.login(id);
+      let user = await userService.login(id);
       done(null, user);
     } catch (error) {
       console.error("Error deserializando el usuario: " + error);

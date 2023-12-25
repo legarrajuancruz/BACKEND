@@ -16,10 +16,6 @@ const loginUser = async () => {
     if (result.status === 200) {
       result.json().then((json) => {
         location.href = "/users/";
-
-        //COOKIES
-        console.log("Cookies generadas");
-        console.log(document.cookie);
       });
     } else if (result.status === 401) {
       console.log(result);
