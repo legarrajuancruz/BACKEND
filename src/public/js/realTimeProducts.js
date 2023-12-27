@@ -94,7 +94,7 @@ const deleteProductButton = async (id) => {
     });
 
     if (response.status === 202) {
-      alert("Producto eliminado con éxito");
+      alert("Producto eliminado con exito");
       location.href = "/realtimeproducts";
     } else if (response.status === 203) {
       alert("Producto eliminado por ADMIN con éxito");
