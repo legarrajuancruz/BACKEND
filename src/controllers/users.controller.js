@@ -272,9 +272,11 @@ const handlePremium = async (req, res) => {
 const deleteInactive = async (req, res) => {
   try {
     const inactiveUsers = await userService.findInactiveUsers();
+    console.log(inactiveUsers);
 
     if (inactiveUsers.length > 0) {
-      await userService.deleteInactiveUsers(inactiveUsers);
+      //ACTIVAR PARA BORRAR LOS USUARIOS
+      // await userService.deleteInactiveUsers(inactiveUsers);
       await userService.sendNotificationEmails(inactiveUsers);
     }
 

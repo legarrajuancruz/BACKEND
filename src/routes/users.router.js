@@ -16,6 +16,9 @@ UserRouter.get("/:id/view", UserController.ControlViewUserById);
 //CAMBIAR ROL
 UserRouter.post("/:id", UserController.ControlchangeRol);
 
+//ELIMINAR USUARIOS INACTIVOS
+UserRouter.delete("/", UserController.deleteInactive);
+
 //ELIMINAR POR ID
 UserRouter.delete("/:id", UserController.ControlDeleteUserID);
 
