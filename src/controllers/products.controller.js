@@ -170,8 +170,15 @@ const deleteProduct = async (req, res) => {
 //MODIFICAR
 const modProduct = async (req, res) => {
   try {
-    let productUpdated = req.body;
-    console.log(productUpdated);
+    const productUpdated = {
+      title: req.body.title,
+      description: req.body.description,
+      price: Number(req.body.price),
+      stock: Number(req.body.stock),
+      category: req.body.category,
+      img: `/products/${req.file.filename}`,
+      owner: req.body.owner,
+    };
 
     let productoActualizado = await productService.actualizarProducto(
       req.params.id,

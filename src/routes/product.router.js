@@ -17,6 +17,6 @@ productRouter.post("/", uploader.single("img"), ProductController.addProduct);
 productRouter.delete("/:id", ProductController.deleteProduct);
 
 //MODIFICAR
-productRouter.put("/:id", ProductController.modProduct);
+productRouter.put("/:id", uploader.single("img"), ProductController.modProduct);
 
 export default productRouter;
