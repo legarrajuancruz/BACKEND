@@ -171,6 +171,7 @@ const deleteProduct = async (req, res) => {
 const modProduct = async (req, res) => {
   try {
     let productUpdated = req.body;
+    console.log(productUpdated);
 
     let productoActualizado = await productService.actualizarProducto(
       req.params.id,

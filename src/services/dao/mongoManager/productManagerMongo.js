@@ -91,6 +91,7 @@ export default class ProductService {
   -      ACTUALIZAR PRODUCTO     -
   ==============================*/
   actualizarProducto = async (id, productUpdated) => {
+    console.log(id, productUpdated);
     let productoActualizado = await ProductsModel.updateOne(
       { _id: id },
       productUpdated
