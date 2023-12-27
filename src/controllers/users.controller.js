@@ -277,12 +277,11 @@ const deleteInactive = async (req, res) => {
     if (inactiveUsers.length > 0) {
       //ACTIVAR PARA BORRAR LOS USUARIOS
       // await userService.deleteInactiveUsers(inactiveUsers);
-      result.push = await userService.sendNotificationEmails(inactiveUsers);
+      await userService.sendNotificationEmails(inactiveUsers);
     }
 
     res.status(200).send({
       result: "Usuarios inactivos eliminados y notificados correctamente",
-      payload: result,
     });
   } catch (error) {
     console.error("Error al eliminar usuarios inactivos:", error);
