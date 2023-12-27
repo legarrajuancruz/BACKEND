@@ -267,21 +267,22 @@ const handlePremium = async (req, res) => {
   }
 };
 /*========================================
-    - BORRAR USUARIOS INACTIVOS 2 DIAS     -
+    - BORRAR USUARIOS INACTIVOS 30 MIN     -
     =======================================*/
 const deleteInactive = async (req, res) => {
   try {
     const inactiveUsers = await userService.findInactiveUsers();
     console.log(inactiveUsers);
-
+    const result = [];
     if (inactiveUsers.length > 0) {
       //ACTIVAR PARA BORRAR LOS USUARIOS
       // await userService.deleteInactiveUsers(inactiveUsers);
-      await userService.sendNotificationEmails(inactiveUsers);
+      result.push = await userService.sendNotificationEmails(inactiveUsers);
     }
 
     res.status(200).send({
       result: "Usuarios inactivos eliminados y notificados correctamente",
+      payload: result,
     });
   } catch (error) {
     console.error("Error al eliminar usuarios inactivos:", error);

@@ -235,16 +235,14 @@ class UserService {
     -     BUSCAR USUARIOS INACTIVOS      -
     ====================================*/
   findInactiveUsers = async () => {
-    const twoDaysAgo = new Date();
-    twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
+    const thirtyMinutesAgo = new Date(Date.now() - 30 * 60 * 1000);
 
     const inactiveUsers = await userModel.find({
-      lastConnection: { $lt: twoDaysAgo },
+      lastConnection: { $lt: thirtyMinutesAgo.toISOString() },
     });
 
     return inactiveUsers;
   };
-
   /*=====================================
     -    ELIMINAR USUARIOS INACTIVOS     -
     ====================================*/
