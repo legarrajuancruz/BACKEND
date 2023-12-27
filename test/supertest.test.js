@@ -298,7 +298,7 @@ describe("Testing products Api", () => {
   // =======================*/
 
   describe("Testing Sessions API", () => {
-    // Prueba de inicio de sesión exitoso
+    // Test 01: Prueba de inicio de sesión exitoso
     it("Inicio de sesión exitoso y devuelve token", async () => {
       const response = await requester.post("/api/sessions/login").send({
         email: "adminCoder@coder.com",
@@ -309,7 +309,7 @@ describe("Testing products Api", () => {
       expect(response.body).to.have.property("access_token");
     });
 
-    // Prueba de inicio de sesión fallido (credenciales incorrectas)
+    // // Test 02: Prueba de inicio de sesión fallido (credenciales incorrectas)
     it("Inicio de sesión fallido para credenciales incorrectas y devuelve 401", async () => {
       const response = await requester.post("/api/sessions/login").send({
         email: "correo@incorrecto.com",
@@ -318,7 +318,7 @@ describe("Testing products Api", () => {
       expect(response.status).to.equal(401);
     });
 
-    // Prueba de registro exitoso
+    // // Test 03: Prueba de registro exitoso
     it("Registro exitoso y devuelve 201", async () => {
       const response = await requester.post("/api/sessions/register").send({
         first_name: "testing",
@@ -335,7 +335,7 @@ describe("Testing products Api", () => {
       });
     });
 
-    // Prueba de registro fallido (usuario ya existente)
+    // Test 04: Prueba de registro fallido (usuario ya existente)
     it("Registro fallido para usuario existente y devuelve 400", async () => {
       const response = await requester.post("/api/sessions/register").send({
         first_name: "testing",
