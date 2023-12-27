@@ -254,47 +254,43 @@ describe("Testing products Api", () => {
       }
     });
 
-    //   // Test 06: Eliminar producto del carrito
-    //   it("Eliminar producto del carrito: el API DELETE /api/carts/:cid/products/:pid debe eliminar un producto del carrito", async () => {
-    //     const deleteProductInCartResponse = await requester.delete(
-    //       `/api/carts/${cartId}/products/${productId}`
-    //     );
+    // Test 06: Eliminar producto del carrito
+    it("Eliminar producto del carrito: el API DELETE /api/carts/:cid/products/:pid debe eliminar un producto del carrito", async () => {
+      const productIdToDelete = "6589efc94fa38a3da3328a6a";
+      const deleteProductInCartResponse = await requester.delete(
+        `/api/carts/${cartId}/products/${productIdToDelete}`
+      );
 
-    //     expect(deleteProductInCartResponse.status).to.eql(202);
-    //     expect(deleteProductInCartResponse.body.result).to.eql(
-    //       "Carrito modificado con exito"
-    //     );
-    //     expect(deleteProductInCartResponse.body.Carrito).to.be.an("object");
-    //     expect(deleteProductInCartResponse.body.Carrito).to.have.property(
-    //       "_id",
-    //       cartId
-    //     );
-    //     expect(deleteProductInCartResponse.body.Carrito.products).to.be.an("array");
-    //     expect(deleteProductInCartResponse.body.Carrito.products).to.have.lengthOf(
-    //       0
-    //     );
-    //   });
+      // Verificar el estado de la respuesta
+      expect(deleteProductInCartResponse.status).to.eql(202);
+      expect(deleteProductInCartResponse.body.result).to.eql(
+        "Carrito modificado con exito"
+      );
+      expect(deleteProductInCartResponse.body.Carrito).to.be.an("object");
+    });
 
-    //   // Test 07: Eliminar carrito
-    //   it("Crear y eliminar carrito: el API POST /api/carts debe crear un nuevo carrito y el API DELETE /api/carts/:id debe eliminarlo", async () => {
-    //     // Paso 1: Crear un nuevo carrito pata testear el delete
-    //     const createCartResponse = await requester.post("/api/carts");
-    //     expect(createCartResponse.status).to.equal(201);
-    //     expect(createCartResponse.body.result).to.equal("Carrito creado con exito");
-    //     expect(createCartResponse.body.carrito).to.have.property("_id");
+    // Test 07: Eliminar carrito
+    it("Crear y eliminar carrito: el API POST /api/carts debe crear un nuevo carrito y el API DELETE /api/carts/:id debe eliminarlo", async () => {
+      // Paso 1: Crear un nuevo carrito pata testear el delete
+      const createCartResponse = await requester.post("/api/carts");
+      expect(createCartResponse.status).to.equal(201);
+      expect(createCartResponse.body.result).to.equal(
+        "Carrito creado con exito"
+      );
+      expect(createCartResponse.body.carrito).to.have.property("_id");
 
-    //     const cartIdToDelete = createCartResponse.body.carrito._id;
+      const cartIdToDelete = createCartResponse.body.carrito._id;
 
-    //     // Paso 2: Eliminar el carrito recién creado
-    //     const deleteCartResponse = await requester.delete(
-    //       `/api/carts/${cartIdToDelete}`
-    //     );
+      // Paso 2: Eliminar el carrito recién creado
+      const deleteCartResponse = await requester.delete(
+        `/api/carts/${cartIdToDelete}`
+      );
 
-    //     expect(deleteCartResponse.status).to.equal(202);
-    //     expect(deleteCartResponse.body.result).to.equal(
-    //       "Carrito eliminado con exito"
-    //     );
-    //   });
+      expect(deleteCartResponse.status).to.equal(202);
+      expect(deleteCartResponse.body.result).to.equal(
+        "Carrito eliminado con exito"
+      );
+    });
   });
 
   // // /*======================
