@@ -41,7 +41,7 @@ router.get(
   async (req, res) => {
     const allProducts = await productService.getProducts(req.query);
     const user = req.user;
-    if (user.role !== "user") {
+    if (user.role != "user") {
       res.render("realtimeproducts", { allProducts, user });
     } else {
       res.render("error");
