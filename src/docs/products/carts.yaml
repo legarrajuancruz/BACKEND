@@ -1,0 +1,172 @@
+/api/carts/:
+  get:
+    summary: Obtiene los carritos existentes
+    tags:
+      - Cart
+    responses:
+      "202":
+        description: La operación fue exitosa. Se retorna un arreglo con los carritos
+        content:
+          application/json:
+            schema:
+              type: array
+      "500":
+        description: Error inesperado en el servidor, no se pudo manejar el proceso
+        content:
+          application/json:
+            schema:
+              type: object
+  post:
+    summary: Crea un nuevo carrito
+    tags:
+      - Cart
+    requestBody:
+      description: Datos del carrito a crear
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/definitions/CartInput"
+          example:
+            usuario: "Usuario Swagger"
+    responses:
+      "201":
+        description: El carrito fue creado correctamente
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                _id:
+                  type: string
+                  description: ID autogenerado del carrito
+                usuario:
+                  type: string
+                  description: Nombre del titular del carrito
+        "500":
+          description: No se pudo guardar el Carrito
+          content:
+            application/json:
+              schema:
+                type: object
+
+/api/carts/{cid}:
+  get:
+    summary: Obtiene los detalles de un carrito específico
+    tags:
+      - Cart
+    parameters:
+      - name: cid
+        in: path
+        required: true
+        description: ID del carrito
+        schema:
+          type: string
+          example: 657bd35e1b953e67d7ee2dbd
+    responses:
+      "202":
+        description: La operación fue exitosa! Retorna los detalles del carrito.
+        content:
+          application/json:
+            schema:
+              type: object
+      "500":
+        description: Error inesperado en el servidor, no se pudo manejar el proceso
+
+  delete:
+    summary: Eliminar el carrito por completo
+    tags:
+      - Cart
+    parameters:
+      - name: cid
+        in: path
+        required: true
+        description: ID del carrito
+        schema:
+          type: string
+          example: 655c27608435eafbe572e5b7
+    responses:
+      "202":
+        description: La operación fue exitosa! El carrito fue vaciado!
+        content:
+          application/json:
+            schema:
+              type: object
+      "500":
+        description: Error inesperado en el servidor, no se pudo manejar el proceso
+
+/api/carts/{cid}/products/{pid}:
+  post:
+    summary: Añade un producto al carrito
+    tags:
+      - Cart
+    parameters:
+      - name: cid
+        in: path
+        required: true
+        description: ID del carrito
+        schema:
+          type: string
+          example: 655c27608435eafbe572e5b7
+      - name: pid
+        in: path
+        required: true
+        description: ID del producto a añadir
+        schema:
+          type: string
+          example: 64fcc6422682b0514878fb15
+    responses:
+      "202":
+        description: Producto añadido al carrito correctamente
+      "500":
+        description: Error inesperado en el servidor, no se pudo manejar el proceso
+
+  put:
+    summary: Elimina un producto del carrito.
+    tags:
+      - Cart
+    parameters:
+      - name: cid
+        in: path
+        required: true
+        description: ID del carrito.
+        schema:
+          type: string
+          example: 655c253f0c3c557b01c2e255
+      - name: pid
+        in: path
+        required: true
+        description: ID del producto a eliminar
+        schema:
+          type: string
+          example: 64fcc6422682b0514878fb15
+    responses:
+      "202":
+        description: Producto Modificado del carrito exitosamente.
+      "500":
+        description: Error inesperado en el servidor, no se pudo manejar el proceso
+
+  delete:
+    summary: Elimina un producto del carrito.
+    tags:
+      - Cart
+    parameters:
+      - name: cid
+        in: path
+        required: true
+        description: ID del carrito.
+        schema:
+          type: string
+          example: 655c253f0c3c557b01c2e255
+      - name: pid
+        in: path
+        required: true
+        description: ID del producto a eliminar
+        schema:
+          type: string
+          example: 64fcc6422682b0514878fb15
+    responses:
+      "202":
+        description: Producto eliminado del carrito exitosamente.
+      "500":
+        description: Error inesperado en el servidor, no se pudo manejar el proceso

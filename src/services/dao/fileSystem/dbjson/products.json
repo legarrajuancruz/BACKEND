@@ -1,0 +1,93 @@
+[
+  {
+    "Title": "Leche",
+    "Description": "La serenisima",
+    "Price": "750",
+    "img": "C:\\Users\\LEGA\\Desktop\\Coderhouse - BACKEND\\src\\public\\img\\leche.jpg",
+    "id": 0
+  },
+  {
+    "Title": "Miel",
+    "Description": "Liquida",
+    "Price": "350\n",
+    "img": "C:\\Users\\LEGA\\Desktop\\Coderhouse - BACKEND\\src\\public\\img\\miel.jpeg",
+    "id": 1
+  },
+  {
+    "Title": "Jabon",
+    "Description": "Liquido",
+    "Price": "750",
+    "img": "C:\\Users\\LEGA\\Desktop\\Coderhouse - BACKEND\\src\\public\\img\\jabon.jpeg",
+    "id": 2
+  },
+  {
+    "Title": "Arroz",
+    "Description": "Gallo",
+    "Price": "840",
+    "img": "C:\\Users\\LEGA\\Desktop\\Coderhouse - BACKEND\\src\\public\\img\\arroz.jpg",
+    "id": 3
+  },
+  {
+    "Title": "CocaCola",
+    "Description": "Envase 1lt",
+    "Price": "650",
+    "img": "Sin imagen",
+    "id": 4
+  },
+  {
+    "Title": "Dulce de leche",
+    "Description": "La serenisima",
+    "Price": "1200",
+    "img": "C:\\Users\\LEGA\\Desktop\\BACKEND\\Desafio_06\\src\\public\\img\\DulceDeLechhe.jpg",
+    "id": 5
+  },
+  {
+    "Title": "CARBON",
+    "Description": "leña",
+    "Price": "123",
+    "img": "Sin imagen",
+    "id": 6
+  },
+  {
+    "Title": "CARBON",
+    "Description": "leña",
+    "Price": "123",
+    "img": "Sin imagen",
+    "id": 7
+  },
+  {
+    "Title": "CARBON",
+    "Description": "leña",
+    "Price": "123",
+    "img": "Sin imagen",
+    "id": 8
+  },
+  {
+    "Title": "CARBON",
+    "Description": "leña",
+    "Price": "123",
+    "img": "Sin imagen",
+    "id": 9
+  },
+  {
+    "Title": "CARBON",
+    "Description": "leña",
+    "Price": "123",
+    "img": "Sin imagen",
+    "id": 10
+  },
+  {
+    "Title": "CARBON",
+    "Description": "leña",
+    "Price": "123",
+    "img": "Sin imagen",
+    "id": 11
+  },
+  {
+    "Title": "sdf",
+    "Description": "Mulita",
+    "Price": "234",
+    "img": "Sin imagen",
+    "id": 12
+  }
+]

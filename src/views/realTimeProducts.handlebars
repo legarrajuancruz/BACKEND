@@ -1,0 +1,178 @@
+<div class="container">
+  <div class="productos">
+
+    <p style="visibility: hidden;" id="owner">{{user._id}}</p>
+    <p style="visibility: hidden;" id="role">{{user.role}}</p>
+    <h2>TODOS LOS PRODUCTOS</h2>
+    <div class="container py-5">
+      <div class="row justify-content-start">
+        {{#each allProducts}}
+          <div class="col-md-4 col-lg-3 col-xl-3 mb-4">
+            <div class="card h-100 border rounded" style="width: 95%;">
+              <div
+                class="bg-image hover-overlay ripple ripple-surface ripple-surface-light"
+              >
+                <img
+                  src={{this.img}}
+                  class="card-img-top border-top rounded-top"
+                  alt="product"
+                />
+              </div>
+              <div class="card-body pb-0">
+                <div class="d-flex justify-content-between">
+                  <div>
+                    <p class="text-dark font-weight-bold">{{this.title}}</p>
+                    <p class="small text-muted">{{this.description}}</p>
+                  </div>
+                </div>
+              </div>
+              <hr class="my-0" />
+              <div class="card-body pb-0">
+                <div class="d-flex justify-content-between">
+                  <p class="text-dark font-weight-bold"><span
+                      class="font-weight-bold"
+                    >PRECIO:</span>
+                    ${{this.price}}</p>
+                </div>
+                <p class="small text-muted"><span
+                    class="font-weight-bold"
+                  >ID:</span>
+                  {{this._id}}</p>
+                <p class="small text-muted"><span
+                    class="font-weight-bold"
+                  >OWNER:</span>
+                  {{this.owner}}</p>
+              </div>
+              <hr class="my-0" />
+              <div class="card-body">
+                <div
+                  class="d-flex justify-content-center align-items-center pb-2 mb-1"
+                >
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    onclick="deleteProductButton('{{this._id}}')"
+                  >Eliminar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+
+    <div class="container mt-5">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h3 class="card-title">NUEVO PRODUCTO</h3>
+              <form
+                id="miFormulario"
+                onsubmit="handleFormSubmission(event)"
+                enctype="multipart/form-data"
+              >
+                <div class="mb-3">
+                  <label for="title" class="form-label">Title:</label>
+                  <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label
+                    for="description"
+                    class="form-label"
+                  >Description:</label>
+                  <input
+                    type="text"
+                    id="description"
+                    name="description"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="price" class="form-label">Price:</label>
+                  <input
+                    type="text"
+                    id="price"
+                    name="price"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="stock" class="form-label">Stock:</label>
+                  <input
+                    type="text"
+                    id="stock"
+                    name="stock"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="category" class="form-label">Category:</label>
+                  <input
+                    type="text"
+                    id="category"
+                    name="category"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="img" class="form-label">Imagen:</label>
+                  <input
+                    type="file"
+                    id="img"
+                    name="img"
+                    class="form-control"
+                    accept="image/*"
+                    required
+                  />
+                </div>
+                <button
+                  id="btnCreate"
+                  type="submit"
+                  class="btn btn-primary"
+                >Enviar</button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h3 class="card-title">ELIMINAR PRODUCTO POR ID</h3>
+              <form id="miFormularioDos">
+                <div class="mb-3">
+                  <label for="id" class="form-label">ID:</label>
+                  <input
+                    type="text"
+                    id="id"
+                    name="id"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <button
+                  id="btn-ID"
+                  type="button"
+                  class="btn btn-primary"
+                >Enviar</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/js/realTimeProducts.js"></script>

@@ -1,0 +1,92 @@
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="font-src 'self' http://localhost:8080;"
+    />
+
+    <link rel="stylesheet" href="/css/style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+
+    <title>SUPERMARKET</title>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <a href="/" title="Logo Marketplace"><img
+              src="https://res.cloudinary.com/dl5zwia3m/image/upload/v1693524814/supermarket_cfo7on.png"
+              alt="Logo de la marca"
+              class="navbarLogo d-inline-block align-text-top"
+              width="300"
+            /></a>
+        </div>
+        <div class="col d-flex align-items-center justify-content-end">
+          <ul class="nav justify-content-end">
+            <li class="nav-item">
+              <a
+                class="nav-link active text-dark"
+                aria-current="page"
+                href="/users/login"
+              >Login</a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link active text-dark"
+                aria-current="page"
+                href="/products"
+              >Products</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark" href="/realtimeproducts">Real Times
+                Products</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark" href="/carts">Carrito</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark" href="/chat">Chat</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark" href="/cerrar">User</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container my-5">
+      <div class="row">
+        <div class="col text-center">
+          <h1 class="display-6">SUPERMARKET</h1>
+          <h2 class="display-8">SEGUIMOS SIENDO LA MEJOR OPCION</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col text-center">
+          <p>SUPERMARKET Desarrollado por <b>Coderhouse</b></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="container my-5">
+      {{{body}}}
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+
+</html>

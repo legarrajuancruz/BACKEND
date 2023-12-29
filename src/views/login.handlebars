@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="row">
+    <div>
+      <h3 class="col-md-4 offset-md-4"> Logueate</h3>
+      <form class="offset-md-4 w-50 p-3">
+        <div class="mb-3">
+
+          <label class="form-label">e-mail</label>
+          <input type="text" class="form-control" id="email" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Contraseña</label>
+          <input type="password" class="form-control" id="password" />
+        </div>
+
+        <button
+          type="button"
+          class="btn btn-primary"
+          id="btnLogin"
+        >Login</button>
+        <p>
+          Si no estas registrado
+          <a href="/users/register"> Ingrese aqui </a></p>
+
+        <p>
+          Olvidaste tu contraseña ?
+          <a href="/users/recuperar"> Ingrese aqui </a></p>
+
+        <p>
+          Login con Github
+          <a href="/github/login"> Ingrese aqui </a></p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/login.js"></script>
