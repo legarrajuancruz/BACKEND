@@ -1,0 +1,11 @@
+[
+  { "id": "HMPnKYp6t-Gpp9G-6Zyde", "products": [] },
+  {
+    "id": "yy2oEboSNLdaj6trbvUj-",
+    "products": [
+      { "id": 2, "cantidad": 3 },
+      { "id": 1, "cantidad": 2 }
+    ]
+  },
+  { "id": "xRdKG_4s67u1y8nk1WcRl", "products": [{ "id": 0, "cantidad": 1 }] }
+]

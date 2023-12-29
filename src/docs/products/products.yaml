@@ -1,0 +1,149 @@
+paths:
+  /api/products/:
+    get:
+      summary: Obtiene todos los productos disponibles
+      tags:
+        - Products
+      responses:
+        "201":
+          description: Los productos fueron obtenidos satisfactoriamente de la base de datos, se retorna arreglo con los productos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/schemas/product"
+        "500":
+          description: "Error interno del servidor, usualmente generado por una query  defectuosa o un fallo de conexion con la base de datos"
+    post:
+      summary: Permite agregar productos en la aplicación
+      tags:
+        - Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/product"
+      responses:
+        "201":
+          description: El producto se agregó correctamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/product"
+        "500":
+          description: Error inesperado en el servidor, no se pudo manejar el proceso
+
+  /api/products/{pid}:
+    get:
+      summary: Obtiene un producto específico en la aplicación
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: Id del producto
+          schema:
+            type: string
+            format: ObjectId
+            example: 64fcc6422682b0514878fb15
+      responses:
+        "201":
+          description: Los productos fueron obtenidos satisfactoriamente de la base de datos, se retorna arreglo con los productos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/schemas/product"
+        "500":
+          description: "Error interno del servidor, usualmente generado por una query  defectuosa o un fallo de conexion con la base de datos"
+
+    put:
+      summary: Actualiza un producto específico en la aplicación
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: ID del producto a actualizar
+          schema:
+            type: string
+            example: 64fcc6422682b0514878fb15
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/schemas/product"
+      responses:
+        "202":
+          description: El producto se actualizó correctamente
+          content:
+            application/json:
+              schema:
+                $ref: "#components/schemas/product"
+        "500":
+          description: Error inesperado en el servidor, no se pudo manejar el proceso
+
+    delete:
+      summary: Elimina un producto específico en la aplicación
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: ID del producto a eliminar
+          schema:
+            type: string
+            example: 64fcc6422682b0514878fb15
+      responses:
+        "202":
+          description: El producto se eliminó correctamente
+        "203":
+          description: El producto se eliminó correctamente por el administrador
+        "500":
+          description: Error inesperado en el servidor, no se pudo manejar el proceso
+
+components:
+  schemas:
+    product:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: Id autogenerado de mongo.
+        title:
+          type: String
+          description: Nombre del producto
+        description:
+          type: String
+          description: Descripcion del producto
+        price:
+          type: Number
+          description: Precio del producto
+        stock:
+          type: Number
+          description: Cantidad de stock del producto
+        category:
+          type: String
+          description: A que categoria corresponde el producto
+        img:
+          type: String
+          description: Imagen representativa del producto
+        owner:
+          type: User ObjectId
+          description: Role de usuario que creo el producto
+      example:
+        _id: ObjectId("654076edce44cbffed1e95a6")
+        title: Dulce de Leche
+        description: La serenisima
+        price: 950
+        stock: 21
+        category: Alimentos
+        img: /img/sprite.jpg
+        role: Admin

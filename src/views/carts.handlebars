@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="productos">
+
+    <h2 class="mb-4">Carrito de compras</h2>
+
+    <div id="listadoCarritos" class="mb-4">
+      <br />
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {{#each userCart.products}}
+          <div class="col mb-4">
+            <div class="card h-100">
+              <img src="{{product.img}}" class="card-img-top" alt="Producto" />
+              <div
+                class="card-body text-center d-flex flex-column justify-content-between p-3"
+              >
+                <div>
+                  <h5 class="card-title">{{product.title}}</h5>
+                  <p class="card-text">Cantidad: {{this.quantity}}</p>
+                </div>
+                <button
+                  onclick="eliminar(this)"
+                  data-id="{{this.id}}"
+                  class="btn btn-danger mt-2"
+                >Eliminar</button>
+              </div>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+      <input type="text" id="userID" value="{{userID._id}}" hidden />
+      <input type="text" id="cartID" value="{{userCart._id}}" hidden />
+      <button class="btn btn-primary mt-4" id="btnTerminarCompra">TERMINAR
+        COMPRA</button>
+    </div>
+
+  </div>
+</div>
+<script src="/js/comprar.js"></script>

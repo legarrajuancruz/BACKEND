@@ -1,0 +1,71 @@
+body {
+  margin-top: 50px;
+  background-color: antiquewhite;
+}
+
+span {
+  font-weight: bolder;
+  font-size: medium;
+}
+
+#nuevo {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 14px;
+  border: 1px solid;
+  width: 300px;
+  height: 250px;
+  margin-right: 1%;
+}
+
+#productos {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  object-fit: cover;
+}
+
+#listadoProductos {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 350px;
+  height: 450px;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  margin-left: 2%;
+  border: 2px dotted grey;
+}
+
+#listadoCarritos {
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 650px;
+  height: auto;
+  padding: 0 20 20 20;
+  border: 2px dotted grey;
+}
+
+#productoEnCarro {
+  border: 2px dotted grey;
+}
+
+#nuevoDos {
+  justify-content: space-around;
+  align-items: center;
+  font-size: 14px;
+  margin-right: 1%;
+}
+
+#acciones {
+  display: flex;
+  flex-direction: row;
+}

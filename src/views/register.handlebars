@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="row">
+    <div>
+      <h3 class="col-md-4 offset-md-4"> Registrate</h3>
+      <form class="offset-md-4 w-50 p-3">
+        <div class="mb-3">
+          <label class="form-label">Nombre</label>
+          <input type="text" class="form-control" id="first_name" />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Apellido</label>
+          <input type="text" class="form-control" id="last_name" />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input type="text" class="form-control" id="email" />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Edad</label>
+          <input type="text" class="form-control" id="edad" />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Contraseña</label>
+          <input type="password" class="form-control" id="password" />
+        </div>
+        <button
+          type="button"
+          class="btn btn-primary"
+          id="btnRegister"
+        >Registrar</button>
+        <p> Si ya estas registrado <a href="/users/login"> Ingrese aqui </a></p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/register.js"></script>

@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <div class="user-data">
+        <h1 class="pb-5">Bienvenido,
+          {{user.first_name}}
+          {{user.last_name}}
+        </h1>
+        <h3>ID: {{user._id}}</h3>
+        <h3 style="visibility: hidden;">{{user.cart}}</h3>
+        <h4>Tu correo electrónico es: {{user.email}}</h4>
+        <p>Tu rol es: {{user.role}}</p>
+      </div>
+      <p>
+        Completar perfil de usuario
+        <a href="/users/uploads">
+          Ingrese aqui
+        </a></p>
+      <p>
+        Quieres ser premium ?
+        <a href="/users/premium">
+          Ingrese aqui
+        </a></p>
+      <form
+        action="/api/sessions/logout"
+        method="POST"
+        class="col-md-4 offset-md-4"
+      >
+        <button type="submit" class="btn btn-primary">Cerrar Sesión</button>
+      </form>
+    </div>
+  </div>
+</div>

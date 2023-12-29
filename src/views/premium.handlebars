@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 mx-auto">
+      <form
+        action="/api/users/premium/{{user._id}}"
+        id="uploadForm"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <input type="hidden" name="uid" value="{{user._id}}" />
+        <h3 class="mb-4">UPLOAD PREMIUM DATA</h3>
+
+        <div class="mb-3">
+          <label
+            for="identificationDocument"
+            class="form-label"
+          >Identificación</label>
+          <input
+            type="file"
+            name="identificationDocument"
+            id="identificationDocument"
+            accept="image/*, .pdf"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="domicileDocument" class="form-label">Comprobante de
+            domicilio</label>
+          <input
+            type="file"
+            name="domicileDocument"
+            id="domicileDocument"
+            accept="image/*, .pdf"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="accountStatementDocument" class="form-label">Comprobante
+            de estado de cuenta</label>
+          <input
+            type="file"
+            name="accountStatementDocument"
+            id="accountStatementDocument"
+            accept="image/*, .pdf"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary m-4">Enviar documentos</button>
+      </form>
+    </div>
+  </div>
+</div>

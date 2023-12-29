@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 mx-auto">
+      <h1 class="mb-4">USER DATA</h1>
+      <div>
+        <form
+          action="/api/users/{{user._id}}/documents"
+          method="post"
+          enctype="multipart/form-data"
+        >
+          <input type="hidden" name="uid" value="{{user._id}}" />
+          <h4>Subir archivos</h4>
+          <div class="mb-3">
+            <label for="profileImage">Imagen de perfil:</label>
+            <input
+              type="file"
+              name="profiles"
+              id="profileImage"
+              accept="image/*"
+              required
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="document">Documento:</label>
+            <input
+              type="file"
+              name="document"
+              id="document"
+              accept=".pdf, .doc, .docx"
+              required
+            />
+          </div>
+          <button type="submit" class="btn btn-primary m-4">Enviar archivos</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
