@@ -50,7 +50,7 @@ app.set("views", __dirname + "/views");
 app.engine(
   "handlebars",
   expressHandlebars.engine({
-    // handlebars: allowInsecurePrototypeAccess(Handlebars),
+    handlebars: allowInsecurePrototypeAccess(Handlebars),
   })
 );
 app.set("view engine", "handlebars");
