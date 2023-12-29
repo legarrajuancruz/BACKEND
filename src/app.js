@@ -47,12 +47,12 @@ app.use(express.static(__dirname + "/uploads"));
 |    HANDLEBARS   |
 =================*/
 app.set("views", __dirname + "/views");
-// app.engine(
-//   "handlebars",
-//   expressHandlebars.engine({
-//     handlebars: allowInsecurePrototypeAccess(Handlebars),
-//   })
-// );
+app.engine(
+  "handlebars",
+  expressHandlebars.engine({
+    // handlebars: allowInsecurePrototypeAccess(Handlebars),
+  })
+);
 app.set("view engine", "handlebars");
 
 /*================
