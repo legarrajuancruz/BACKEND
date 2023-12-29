@@ -46,7 +46,8 @@ app.use(express.static(__dirname + "/uploads"));
 /*=================
 |    HANDLEBARS   |
 =================*/
-app.set("views", __dirname + "/views");
+//app.set("views", __dirname + "/views");
+app.set("views", process.env.RAILWAY ? "/app/src/views" : __dirname + "/views");
 app.engine(
   "handlebars",
   expressHandlebars.engine({
