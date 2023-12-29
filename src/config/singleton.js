@@ -20,7 +20,7 @@ export default class singleton {
 
   #connectMongoDB = async () => {
     try {
-      await mongoose.connect(processs.env.MONGO_URL);
+      await mongoose.connect(config.mongoUrl);
     } catch (error) {
       console.error("No se pudo conectar con la base de datos" + error);
       process.exit();
