@@ -67,7 +67,7 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const user = req.user;
-    if (user.role === "user") {
+    if (user.role === "user" || user.role === "premium") {
       res.render("messages", {});
     } else {
       res.render("error");
