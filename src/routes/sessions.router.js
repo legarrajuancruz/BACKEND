@@ -66,6 +66,9 @@ sessionsRouter.post("/register", async (req, res) => {
 });
 
 sessionsRouter.post("/logout", async (req, res) => {
+  //Eliminar la cookie
+  res.clearCookie("jwtCookieToken");
+  //Eliminar la session
   req.session.destroy((err) => {
     if (err) {
       return res.redirect("/");
