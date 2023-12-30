@@ -59,7 +59,8 @@ app.set("view engine", "handlebars");
 |      SERVER    |
 ================*/
 const PORT = process.env.PORT || 8080;
-const MONGO_url = config.mongoUrl;
+const MONGO_url =
+  "mongodb+srv://legarrajuan:legarrajuan@cluster0.ftgsun9.mongodb.net/ecommerse-dev";
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
