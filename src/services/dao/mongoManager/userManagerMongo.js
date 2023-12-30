@@ -156,7 +156,7 @@ class UserService {
         rejectUnauthorized: false,
       },
     });
-    //enviamos el email con el endpoint +token
+    //enviamos el email con el endpoint +token para entorno local
     // const recoverURL = `http://localhost:8080/users/newPassword/${resetToken}`;
     //aca puse la URL del deploy
     const recoverURL = `https://backend-production-f093.up.railway.app/users/newPassword/${resetToken}`;

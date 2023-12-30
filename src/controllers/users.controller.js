@@ -275,8 +275,7 @@ const deleteInactive = async (req, res) => {
     console.log(inactiveUsers);
     const result = [];
     if (inactiveUsers.length > 0) {
-      //ACTIVAR PARA BORRAR LOS USUARIOS
-      // await userService.deleteInactiveUsers(inactiveUsers);
+      await userService.deleteInactiveUsers(inactiveUsers);
       await userService.sendNotificationEmails(inactiveUsers);
     }
 
