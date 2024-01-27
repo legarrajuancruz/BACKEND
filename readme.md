@@ -60,8 +60,6 @@ El desarrollo de este proyecto utiliza las siguientes dependencias:
 chai: versión ^4.3.10
 mocha: versión ^10.2.0
 supertest: versión ^6.3.3
-Contribuir
-Si deseas contribuir al proyecto, sigue los pasos mencionados en la sección de "Contribuir" del README.
 
 Contacto
 Para cualquier pregunta o comentario, no dudes en ponerte en contacto conmigo:
