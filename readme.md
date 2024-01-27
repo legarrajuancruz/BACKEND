@@ -53,6 +53,7 @@ swagger-jsdoc: versión ^6.2.8
 swagger-ui-express: versión ^5.0.0
 sweetalert2: versión ^11.6.13
 winston: versión ^3.11.0
+
 Desarrollo y Pruebas
 El desarrollo de este proyecto utiliza las siguientes dependencias:
 
