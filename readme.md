@@ -63,9 +63,6 @@ supertest: versión ^6.3.3
 Contribuir
 Si deseas contribuir al proyecto, sigue los pasos mencionados en la sección de "Contribuir" del README.
 
-Licencia
-Este proyecto está bajo la licencia [ISC](URL de la licencia).
-
 Contacto
 Para cualquier pregunta o comentario, no dudes en ponerte en contacto conmigo:
 
